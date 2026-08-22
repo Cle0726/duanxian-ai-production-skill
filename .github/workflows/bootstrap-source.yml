@@ -5,12 +5,15 @@ on:
   push:
     paths:
       - '.github/workflows/bootstrap-source.yml'
+  issues:
+    types: [opened]
 
 permissions:
   contents: write
 
 jobs:
   bootstrap:
+    if: github.event_name != 'issues' || github.event.issue.title == '[bootstrap] publish v4.5.7 source'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
