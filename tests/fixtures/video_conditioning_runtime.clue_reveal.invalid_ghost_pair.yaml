@@ -1,0 +1,52 @@
+runtime_type: VIDEO_CONDITIONING_RUNTIME
+schema_version: 2
+skill_version: 4.5.2
+status: VALID
+scope:
+  episode_id: REGRESSION_NOT_CANON
+source_versions: {}
+source_fingerprints:
+  fixture: x
+runtime_fingerprint: fixture
+video_units:
+- video_unit_id: VU_A
+  shot_ids:
+  - REST_SHOT_A
+  conditioning_strategy: CUT_PAIR
+  time_scope: 0-6s
+  primary_assets:
+  - asset_id: ASSET_A_EXIT
+    role: VIDEO_CUT_EXIT_FRAME
+    approval_status: APPROVED_VIDEO_CONDITIONING
+    direct_video_eligible: true
+    fingerprint: null
+    time_scope: 0-6s
+  auxiliary_assets: []
+  qc_status: PASS
+  approval_ref: APR_A
+- video_unit_id: VU_B
+  shot_ids:
+  - CLOCK_SHOT_B
+  conditioning_strategy: CUT_PAIR
+  time_scope: 6-15s
+  primary_assets:
+  - asset_id: ASSET_B_ENTRY
+    role: VIDEO_CUT_ENTRY_FRAME
+    approval_status: APPROVED_VIDEO_CONDITIONING
+    direct_video_eligible: true
+    fingerprint: null
+    time_scope: 6-15s
+  auxiliary_assets: []
+  qc_status: PASS
+  approval_ref: APR_B
+readiness: PASS
+invalidation_triggers: []
+boundary_pairs:
+- relation_id: REL_A_B
+  from_video_unit_id: VU_A
+  to_video_unit_id: VU_B
+  exit_asset_id: GHOST_EXIT
+  entry_asset_id: GHOST_ENTRY
+  source_visual_fact: 深处指定窗口中的钟楼线索
+  destination_visual_fact: 同一钟楼内部机械室
+  alignment_status: PASS

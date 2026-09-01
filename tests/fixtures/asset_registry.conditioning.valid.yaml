@@ -1,0 +1,63 @@
+schema_version: 5
+skill_version: 4.5.2
+assets:
+- asset_id: VIDCOND_SH01_FIRST
+  asset_display_name: SH01视频首帧
+  asset_type: VIDEO_FIRST_FRAME
+  status: APPROVED_VIDEO_CONDITIONING
+  authority_role: PRIMARY_VISUAL_CONDITIONING
+  layout_type: SINGLE_FRAME
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles:
+  - PRIMARY_VISUAL_CONDITIONING
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: true
+    promotion_required: false
+    promoted_for_shot: SH01
+    promotion_qc: PASS
+  source_refs:
+  - PREVIS_SH01
+  parent_refs: []
+  shot_id: SH01
+  video_unit_id: VU01
+  time_scope: ENTRY
+  fingerprint_type: STRUCTURED_SHA256
+  fingerprint: f1
+  approval_ref: APR_COND_01
+  archive_status: NOT_REQUESTED
+  location_entity_id: null
+  relation_ids: []
+  obligation_ids: []
+  visual_relation_role: NONE
+- asset_id: COLOR_SC01
+  asset_display_name: SC01综合色板
+  asset_type: COLOR_STYLE_BOARD
+  status: APPROVED
+  authority_role: COLOR_AUTHORITY
+  layout_type: COLOR_SWATCH
+  transient_content_policy: NOT_APPLICABLE
+  allowed_roles:
+  - COLOR_AUTHORITY
+  forbidden_roles:
+  - PRIMARY_VISUAL_CONDITIONING
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  source_refs: []
+  parent_refs: []
+  shot_id: null
+  video_unit_id: null
+  time_scope: null
+  fingerprint_type: STRUCTURED_SHA256
+  fingerprint: c1
+  approval_ref: APR_COLOR
+  archive_status: NOT_REQUESTED
+  location_entity_id: null
+  relation_ids: []
+  obligation_ids: []
+  visual_relation_role: NONE

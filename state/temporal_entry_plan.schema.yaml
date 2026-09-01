@@ -1,0 +1,147 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/temporal_entry_plan.schema.yaml
+title: Duanxian Temporal Entry Plan V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- temporal_entry_plan_id
+- video_unit_id
+- entry_mode
+- model_t0_owner
+- prompt_profile
+- provider_transport
+- temporal_entry_plan_fingerprint
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  temporal_entry_plan_id:
+    type: string
+    minLength: 1
+  video_unit_id:
+    type: string
+    minLength: 1
+  scene_id:
+    type:
+    - string
+    - 'null'
+  shot_id:
+    type:
+    - string
+    - 'null'
+  entry_mode:
+    enum:
+    - SEAMLESS_EXTEND
+    - GUIDED_CONTINUATION
+    - CUT_REPROJECT
+    - SCENE_REBASE
+  model_t0_owner:
+    enum:
+    - PREVIOUS_ENDING_ANCHOR
+    - SHOT_EXECUTION_FRAME
+    - CANON_DERIVED_EXECUTION_FRAME
+  internal_conditioning_primary:
+    type:
+    - string
+    - 'null'
+  prompt_profile:
+    enum:
+    - DELTA_CONTINUATION_PROMPT
+    - TRANSITION_PROMPT
+    - FULL_SHOT_PROMPT
+  continuity_snapshot_ref:
+    type:
+    - string
+    - 'null'
+  continuity_snapshot_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  target_frame_ref:
+    type:
+    - string
+    - 'null'
+  target_frame_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  provider_transport:
+    type: object
+    additionalProperties: false
+    required:
+    - transport_type
+    - t0_semantics_verified
+    - capability_evidence_ref
+    properties:
+      transport_type:
+        enum:
+        - NATIVE_VIDEO_EXTEND
+        - FIRST_FRAME_INPUT
+        - FIRST_LAST_KEYFRAME
+        - TARGET_FRAME_INPUT
+        - NAMED_REFERENCE_WITH_T0_SEMANTICS
+        - ORDERED_REFERENCE_WITH_T0_SEMANTICS
+        - NAMED_ENDPOINT_TARGET
+        - ORDERED_ENDPOINT_TARGET
+        - MANUAL_VERIFIED
+        - GENERIC_REFERENCE
+      t0_semantics_verified:
+        type: boolean
+      capability_evidence_ref:
+        type:
+        - string
+        - 'null'
+      endpoint_semantics_verified:
+        type: boolean
+      endpoint_evidence_ref:
+        type:
+        - string
+        - 'null'
+  camera_topology:
+    type:
+    - object
+    - 'null'
+    additionalProperties: true
+    properties:
+      camera_zone:
+        type:
+        - string
+        - 'null'
+      viewing_direction:
+        type:
+        - string
+        - 'null'
+      axis_side:
+        type:
+        - string
+        - 'null'
+      target_anchor:
+        type:
+        - string
+        - 'null'
+  continuity_grace_window_sec:
+    type: number
+    minimum: 0
+    maximum: 3
+  generation_overlap_handle:
+    type:
+    - object
+    - 'null'
+    additionalProperties: false
+    properties:
+      enabled:
+        type: boolean
+      overlap_sec:
+        type: number
+        minimum: 0
+        maximum: 3
+  temporal_entry_plan_fingerprint:
+    type: string
+    pattern: ^[0-9a-f]{64}$

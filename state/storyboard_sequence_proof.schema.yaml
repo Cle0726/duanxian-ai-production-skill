@@ -1,0 +1,95 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/storyboard_sequence_proof.schema.yaml
+title: Duanxian Storyboard Sequence Proof V1 — Mandatory Grid for Multi-shot Sequences
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- storyboard_sequence_proof_id
+- episode_id
+- sequence_id
+- shot_order
+- panel_order
+- sequence_board_asset_id
+- sequence_board_fingerprint
+- assembly_tool
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  storyboard_sequence_proof_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type: string
+    minLength: 1
+  sequence_id:
+    type: string
+    minLength: 1
+  scene_id:
+    type:
+    - string
+    - 'null'
+  source_editorial_plan_ref:
+    type:
+    - string
+    - 'null'
+  source_editorial_fingerprint:
+    type:
+    - string
+    - 'null'
+  shot_order:
+    type: array
+    minItems: 2
+    uniqueItems: true
+    items:
+      type: string
+      minLength: 1
+  panel_order:
+    type: array
+    minItems: 2
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - shot_id
+      - panel_asset_id
+      properties:
+        shot_id:
+          type: string
+          minLength: 1
+        panel_asset_id:
+          type: string
+          minLength: 1
+        panel_role:
+          type:
+          - string
+          - 'null'
+  sequence_board_asset_id:
+    type: string
+    minLength: 1
+  sequence_board_fingerprint:
+    type: string
+    minLength: 16
+  assembly_tool:
+    type: string
+    const: tools/storyboard_grid_assembler.py
+  manifest_ref:
+    type:
+    - string
+    - 'null'
+  status:
+    enum:
+    - QC_PASS_WAITING_APPROVAL
+    - APPROVED
+    - FAIL
+    - STALE
+  storyboard_sequence_proof_fingerprint:
+    type:
+    - string
+    - 'null'

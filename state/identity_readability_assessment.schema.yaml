@@ -1,0 +1,174 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/identity_readability_assessment.schema.yaml
+title: Duanxian Identity Readability Assessment V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- assessment_id
+- shot_id
+- video_unit_id
+- primary_visual_asset_id
+- platform_scale
+- characters
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  assessment_id:
+    type: string
+    minLength: 1
+  shot_id:
+    type: string
+    minLength: 1
+  video_unit_id:
+    type: string
+    minLength: 1
+  primary_visual_asset_id:
+    type: string
+    minLength: 1
+  source_primary_visual_fingerprint:
+    type:
+    - string
+    - 'null'
+  target_platform_profile_id:
+    type: string
+    minLength: 1
+  platform_scale:
+    type: object
+    additionalProperties: false
+    required:
+    - evaluation_basis
+    - effective_width_px
+    - effective_height_px
+    properties:
+      evaluation_basis:
+        enum:
+        - PLATFORM_ACTUAL_SCALE
+        - PLATFORM_PROFILE_SIMULATION
+        - ORIGINAL_RESOLUTION_ONLY
+        - FILE_SIZE_ONLY
+        - UNKNOWN
+      source_width_px:
+        type:
+        - integer
+        - 'null'
+        minimum: 1
+      source_height_px:
+        type:
+        - integer
+        - 'null'
+        minimum: 1
+      effective_width_px:
+        type: integer
+        minimum: 1
+      effective_height_px:
+        type: integer
+        minimum: 1
+      scale_factor:
+        type:
+        - number
+        - 'null'
+        exclusiveMinimum: 0
+      original_file_size_bytes:
+        type:
+        - integer
+        - 'null'
+        minimum: 0
+      preview_path:
+        type:
+        - string
+        - 'null'
+      preview_manifest_ref:
+        type:
+        - string
+        - 'null'
+      scale_evidence_ref:
+        type:
+        - string
+        - 'null'
+  characters:
+    type: array
+    minItems: 0
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - entity_id
+      - required_for_identity
+      - visibility_status
+      - identity_readability_verdict
+      - identity_match_confidence
+      - evidence_ref
+      - reason
+      properties:
+        entity_id:
+          type: string
+          minLength: 1
+        required_for_identity:
+          type: boolean
+        visibility_status:
+          enum:
+          - VISIBLE
+          - PARTIALLY_OCCLUDED
+          - BACK_FACING
+          - SILHOUETTE
+          - NOT_VISIBLE
+          - UNKNOWN
+        face_box_at_effective_scale_px:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            x:
+              type: integer
+              minimum: 0
+            y:
+              type: integer
+              minimum: 0
+            width:
+              type: integer
+              minimum: 1
+            height:
+              type: integer
+              minimum: 1
+        identity_readability_verdict:
+          enum:
+          - PASS
+          - FAIL
+          - UNKNOWN
+          - NOT_APPLICABLE
+        identity_match_confidence:
+          enum:
+          - HIGH
+          - MEDIUM
+          - LOW
+          - UNKNOWN
+          - NOT_APPLICABLE
+        evidence_ref:
+          type: string
+          minLength: 1
+        reason:
+          type: string
+          minLength: 1
+        direct_identity_authority_asset_id:
+          type:
+          - string
+          - 'null'
+  status:
+    enum:
+    - PASS
+    - BLOCKED
+    - NEEDS_DIRECT_IDENTITY_SUPPORT
+    - STALE
+    - NOT_APPLICABLE
+  assessment_fingerprint:
+    type:
+    - string
+    - 'null'

@@ -1,0 +1,607 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/asset_registry.schema.yaml
+title: Duanxian Asset Registry V7 — Executable Generation Lineage + Color Authority
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- assets
+properties:
+  schema_version:
+    type: integer
+    enum:
+    - 5
+    - 6
+    - 7
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  assets:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - asset_id
+      - asset_type
+      - status
+      - authority_role
+      - video_usage
+      properties:
+        asset_id:
+          type: string
+        asset_display_name:
+          type:
+          - string
+          - 'null'
+        native_token:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type: string
+        scope:
+          type:
+          - string
+          - 'null'
+        reuse_key:
+          type:
+          - string
+          - 'null'
+        asset_family_id:
+          type:
+          - string
+          - 'null'
+        subject_entity_id:
+          type:
+          - string
+          - 'null'
+        population_policy:
+          enum:
+          - EMPTY_ENVIRONMENT_ONLY
+          - POPULATED_CANON
+          - NOT_APPLICABLE
+          - UNKNOWN
+          - null
+        readable_human_count:
+          type:
+          - integer
+          - 'null'
+          minimum: 0
+        authority_role:
+          type: string
+        version:
+          type:
+          - integer
+          - string
+          - 'null'
+        status:
+          enum:
+          - DRAFT
+          - QC_PASS_WAITING_APPROVAL
+          - APPROVED
+          - APPROVED_SUPPORT
+          - APPROVED_ASSEMBLY
+          - APPROVED_SCOPED_FIGURE
+          - APPROVED_VIDEO_CONDITIONING
+          - REVISE
+          - DEPRECATED
+        file_path:
+          type:
+          - string
+          - 'null'
+        fingerprint_type:
+          enum:
+          - FILE_SHA256
+          - STRUCTURED_SHA256
+          - CONTENT_SHA256
+          - UNKNOWN
+        fingerprint:
+          type:
+          - string
+          - 'null'
+        approval_ref:
+          type:
+          - string
+          - 'null'
+        source_refs:
+          type: array
+          items:
+            type: string
+        parent_refs:
+          type: array
+          items:
+            type: string
+        shot_id:
+          type:
+          - string
+          - 'null'
+        video_unit_id:
+          type:
+          - string
+          - 'null'
+        time_scope:
+          type:
+          - string
+          - 'null'
+        layout_type:
+          enum:
+          - SINGLE_FRAME
+          - MULTI_PANEL
+          - COLOR_SWATCH
+          - CONTACT_SHEET
+          - MAP
+          - UNKNOWN
+          - CLEAN_PANEL
+          - PLANNING_DIAGRAM
+        transient_content_policy:
+          enum:
+          - CLEAN_CANON
+          - STATE_VARIANT
+          - SHOT_SPECIFIC
+          - NOT_APPLICABLE
+          - UNKNOWN
+        allowed_roles:
+          type: array
+          items:
+            type: string
+        forbidden_roles:
+          type: array
+          items:
+            type: string
+        video_usage:
+          type: object
+          additionalProperties: true
+          required:
+          - direct_input_allowed
+          - primary_visual_eligible
+          properties:
+            direct_input_allowed:
+              type: boolean
+            primary_visual_eligible:
+              type: boolean
+            promotion_required:
+              type: boolean
+            promoted_for_shot:
+              type:
+              - string
+              - 'null'
+            promotion_qc:
+              enum:
+              - NOT_REQUIRED
+              - NOT_RUN
+              - PASS
+              - FAIL
+              - UNKNOWN
+        archive_status:
+          enum:
+          - NOT_REQUESTED
+          - ARCHIVE_PENDING
+          - ARCHIVED
+          - UNKNOWN
+        location_entity_id:
+          type:
+          - string
+          - 'null'
+        relation_ids:
+          type: array
+          items:
+            type: string
+        obligation_ids:
+          type: array
+          items:
+            type: string
+        visual_relation_role:
+          enum:
+          - NONE
+          - CLUE_SOURCE
+          - LOCATION_VISIBILITY_PROOF
+          - LOCATION_IDENTITY_PROOF
+          - CUT_EXIT
+          - CUT_ENTRY
+          - MATCH_MOTIF
+          - POV_TARGET
+          - OTHER
+          - UNKNOWN
+          - SPATIAL_CANON_DIAGRAM
+          - SCENE_CLUE_VIEW
+          - CLEAN_STORYBOARD_PANEL
+          - EVENT_NODE_VIEW
+          - RECIPROCAL_COVERAGE
+          - PREDICTIVE_COVERAGE
+          - SCENE_LOOK_REFERENCE
+          - VOICE_IDENTITY_REFERENCE
+          - OUTDOOR_TOPOLOGY_DIAGRAM
+          - FLOOR_PLAN_DIAGRAM
+          - CLEAN_STORYBOARD_SEQUENCE_BOARD
+        storyboard_render_mode:
+          type:
+          - string
+          - 'null'
+          enum:
+          - WHITE_LINE_STORYBOARD_ONLY
+          - null
+        storyboard_cleanliness:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            visible_text:
+              type: boolean
+            visible_numbers:
+              type: boolean
+            arrows_or_motion_lines:
+              type: boolean
+            timecode:
+              type: boolean
+            shot_or_panel_labels:
+              type: boolean
+            cut_or_camera_labels:
+              type: boolean
+            caption_boxes:
+              type: boolean
+            subtitle_or_logo:
+              type: boolean
+        media_kind:
+          enum:
+          - IMAGE
+          - AUDIO
+          - DIAGRAM
+          - DATA
+          - OTHER
+          - UNKNOWN
+          - VIDEO
+        look_domain:
+          enum:
+          - INTERIOR
+          - EXTERIOR
+          - MIXED
+          - NONE
+          - UNKNOWN
+        cascade_stage:
+          enum:
+          - SPATIAL_DIAGRAM
+          - CLEAN_CANON
+          - EVENT_VIEW
+          - COVERAGE
+          - LOOK
+          - VOICE
+          - STORYBOARD
+          - VIDEO_CONDITIONING
+          - OTHER
+          - UNKNOWN
+        justification:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            why_required:
+              type: string
+            required_by:
+              type: array
+              items:
+                type: string
+            source_requirement_refs:
+              type: array
+              items:
+                type: string
+            downstream_use:
+              type: array
+              items:
+                type: string
+            reuse_expectation:
+              enum:
+              - ONE_SHOT
+              - ONE_SCENE
+              - ONE_EPISODE
+              - MULTI_EPISODE
+              - PROJECT_CANON
+              - UNKNOWN
+        derivation:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          properties:
+            spatial_parent_refs:
+              type: array
+              items:
+                type: string
+            visual_parent_refs:
+              type: array
+              items:
+                type: string
+            coverage_reason_codes:
+              type: array
+              uniqueItems: true
+              items:
+                enum:
+                - EVENT_NODE
+                - RECIPROCAL
+                - PREDICTIVE
+                - CLUE_REVEAL
+                - LOCATION_VISIBILITY
+                - LOCATION_IDENTITY
+                - REQUIRED_VIEW
+                - SHOT_DIRECTION
+                - OTHER
+            event_node_ids:
+              type: array
+              items:
+                type: string
+            character_route_ids:
+              type: array
+              items:
+                type: string
+            camera_origin:
+              type:
+              - string
+              - 'null'
+            view_direction:
+              type:
+              - string
+              - 'null'
+            required_visible_anchor_ids:
+              type: array
+              items:
+                type: string
+            predicted_shot_ids:
+              type: array
+              items:
+                type: string
+            reciprocal_relation_id:
+              type:
+              - string
+              - 'null'
+            reciprocal_pair_asset_id:
+              type:
+              - string
+              - 'null'
+            view_requirement_ids:
+              type: array
+              items:
+                type: string
+              uniqueItems: true
+            view_role:
+              type:
+              - string
+              - 'null'
+            camera_origin_zone_id:
+              type:
+              - string
+              - 'null'
+            camera_origin_anchor_id:
+              type:
+              - string
+              - 'null'
+            view_target_entity_id:
+              type:
+              - string
+              - 'null'
+            view_target_anchor_id:
+              type:
+              - string
+              - 'null'
+            view_direction_code:
+              type:
+              - string
+              - 'null'
+            forbidden_visible_anchor_ids:
+              type: array
+              items:
+                type: string
+              uniqueItems: true
+            candidate_set_id:
+              type:
+              - string
+              - 'null'
+            candidate_index:
+              type:
+              - integer
+              - 'null'
+              minimum: 0
+        visual_evidence_ref:
+          type:
+          - string
+          - 'null'
+        visual_evidence_status:
+          enum:
+          - CURRENT
+          - STALE
+          - MISSING
+          - NOT_REQUIRED
+          - UNKNOWN
+        visual_evidence_source_fingerprint:
+          type:
+          - string
+          - 'null'
+        visual_fact_codes:
+          type: array
+          items:
+            type: string
+        visual_issue_codes:
+          type: array
+          items:
+            type: string
+        realism_contract_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        realism_qc_status:
+          enum:
+          - NOT_APPLICABLE
+          - NOT_RUN
+          - PASS
+          - FAIL
+          - UNKNOWN
+        realism_exception_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        functional_position_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        realism_applicability:
+          enum:
+          - REQUIRED
+          - NOT_APPLICABLE
+          - SCOPED_EXCEPTION
+          - UNKNOWN
+        realism_applicability_reason:
+          type:
+          - string
+          - 'null'
+        generation_job_id:
+          type:
+          - string
+          - 'null'
+        candidate_record_ids:
+          type: array
+          items:
+            type: string
+        scene_color_authority_id:
+          type:
+          - string
+          - 'null'
+        color_authority_level:
+          enum:
+          - GLOBAL_COLOR_CARD
+          - SCENE_COLOR_CARD
+          - NONE
+          - UNKNOWN
+        color_projection_mode:
+          enum:
+          - DIRECT_COLOR_REFERENCE
+          - VALUE_LIGHTING_LINEAGE_ONLY
+          - NOT_APPLICABLE
+          - UNKNOWN
+          - null
+        lineage:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            parent_asset_ids:
+              type: array
+              items:
+                type: string
+            derivation_kind:
+              enum:
+              - MASTER
+              - COVERAGE_FROM_MASTER
+              - SHOT_EXECUTION_FROM_CANON
+              - SCENE_COLOR_FROM_BASE
+              - VIDEO_FROM_SHOT_EXECUTION
+              - STATE_VARIANT
+              - OTHER
+              - STORYBOARD_GRID_FROM_CLEAN_PANELS
+              - STORYBOARD_PANELS_FROM_CONTACT_SHEET
+              - STORYBOARD_CONTACT_SHEET_MASTER
+            source_generation_job_ids:
+              type: array
+              items:
+                type: string
+        scene_id:
+          type:
+          - string
+          - 'null'
+        color_authority_id:
+          type:
+          - string
+          - 'null'
+        storyboard_contact_sheet_split:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            splitter_tool:
+              type:
+              - string
+              - 'null'
+            contact_sheet_asset_id:
+              type:
+              - string
+              - 'null'
+            contact_sheet_fingerprint:
+              type:
+              - string
+              - 'null'
+            panel_index:
+              type:
+              - integer
+              - 'null'
+            row:
+              type:
+              - integer
+              - 'null'
+            col:
+              type:
+              - integer
+              - 'null'
+            manifest_ref:
+              type:
+              - string
+              - 'null'
+        storyboard_grid_assembly:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            assembler_tool:
+              type:
+              - string
+              - 'null'
+            source_panel_asset_ids_ordered:
+              type: array
+              items:
+                type: string
+              uniqueItems: true
+            manifest_ref:
+              type:
+              - string
+              - 'null'
+            output_sha256:
+              type:
+              - string
+              - 'null'
+        performance_requirement_id:
+          type:
+          - string
+          - 'null'
+        performance_support_kind:
+          enum:
+          - EXPRESSION
+          - ACTION_POSE
+          - CONTACT_POSE
+          - NOT_APPLICABLE
+          - null
+        performance_interaction_entity_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        narrative_fx_id:
+          type:
+          - string
+          - 'null'
+        fx_state_ids:
+          type: array
+          uniqueItems: true
+          items:
+            enum:
+            - STATIC
+            - START
+            - DEVELOPING
+            - PEAK
+            - END
+            - AFTERMATH

@@ -1,0 +1,80 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/temporal_t0_sufficiency_assessment.schema.yaml
+title: Duanxian Temporal T0 Sufficiency Assessment V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- assessment_id
+- video_unit_id
+- temporal_entry_plan_ref
+- temporal_entry_plan_fingerprint
+- overall_verdict
+- entities
+- assessment_fingerprint
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  assessment_id:
+    type: string
+    minLength: 1
+  video_unit_id:
+    type: string
+    minLength: 1
+  temporal_entry_plan_ref:
+    type: string
+    minLength: 1
+  temporal_entry_plan_fingerprint:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  continuity_snapshot_ref:
+    type:
+    - string
+    - 'null'
+  continuity_snapshot_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  overall_verdict:
+    enum:
+    - SUFFICIENT
+    - RESET_REQUIRED
+    - NOT_APPLICABLE
+  entities:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - slot_id
+      - entity_id
+      - verdict
+      properties:
+        slot_id:
+          type: string
+          minLength: 1
+        entity_id:
+          type: string
+          minLength: 1
+        verdict:
+          enum:
+          - SUFFICIENT
+          - INSUFFICIENT
+          - NOT_APPLICABLE
+        evidence_ref:
+          type:
+          - string
+          - 'null'
+        reason:
+          type:
+          - string
+          - 'null'
+  assessment_fingerprint:
+    type: string
+    pattern: ^[0-9a-f]{64}$

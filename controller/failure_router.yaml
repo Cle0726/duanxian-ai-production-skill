@@ -1,0 +1,1824 @@
+schema_version: 1
+skill_version: 4.5.11
+owner: FAILURE_ROUTE
+principle: Minimum Necessary Rollback；先定位Owner，再重开最小范围，不默认从头重做。
+routes:
+  ASSET_COVERAGE_GAP:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+  LEGACY_COVERAGE_ASSET_REQUIRES_MIGRATION:
+    owner_stage: '03'
+    route: EXISTING_PROJECT_MIGRATION
+    reopen:
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: 将旧 ENVIRONMENT_MASTER/PROP_MASTER coverage 记录迁移为 ENVIRONMENT_COVERAGE，并保留来源与审核状态。
+  IDENTITY_READABILITY_FAIL:
+    owner_stage: 04/05
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: DIRECT_BIND_CHARACTER_IDENTITY_AUTHORITY_OR_REGENERATE_READABLE_PRIMARY
+  IDENTITY_READABILITY_EVIDENCE_BASIS_FAIL:
+    owner_stage: '04'
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+    reopen:
+    - VISUAL_EVIDENCE_RUNTIME
+    action: REASSESS_AT_PLATFORM_EFFECTIVE_SCALE
+  CHARACTER_IDENTITY_LOCK_GAP:
+    owner_stage: '03'
+    route: CHARACTER_MASTER
+    reopen:
+    - ASSET_RUNTIME
+  ADORNMENT_ASSET_GAP:
+    owner_stage: '03'
+    route: CHARACTER_MASTER
+    reopen:
+    - ASSET_RUNTIME
+  ENVIRONMENT_FUNCTIONAL_GEOGRAPHY_CONFLICT:
+    owner_stage: '03'
+    route: EPISODE_ASSET_FREEZE
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+  EPISODE_ASSET_FREEZE_BROKEN:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+  DIRECTOR_SHOT_CONTRACT_CONFLICT:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+  DIRECTOR_INVARIANT_SILENT_DRIFT:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+    - VIDEO_RUNTIME
+  REFERENCE_COVERAGE_GAP:
+    owner_stage: 03/04
+    route: PRODUCTION_SUPPORT_REFERENCE
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+  STORYBOARD_ENTITY_BINDING_CONFLICT:
+    owner_stage: '04'
+    route: STAGE_04_STORYBOARD
+    reopen:
+    - DIRECTOR_RUNTIME
+    - REFERENCE_RUNTIME
+    action: PATCH_OFF_IMAGE_BINDING_MAP_ONLY_THEN_REVALIDATE
+  VIDEO_ENTITY_BINDING_HANDOFF_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    - REFERENCE_RUNTIME
+    action: RERESOLVE_ENTITY_BINDING_AND_FRESH_COMPILE
+  REFERENCE_SLOT_OVERFLOW:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - REFERENCE_RUNTIME
+    - VIDEO_RUNTIME
+  ACTION_FEASIBILITY_FAIL:
+    owner_stage: 04/05
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+  NATURAL_MOTION_FAIL:
+    owner_stage: 04/05
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+  CROWD_PRESENCE_FAIL:
+    owner_stage: 04/05
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+  PROMPT_REDUNDANCY_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: FRESH_COMPILE
+  POST_COMPILE_CLOSURE_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: FRESH_COMPILE
+  VIDEO_EXECUTION_PLAN_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    - REFERENCE_RUNTIME
+    action: RETURN_TO_EXECUTION_PLAN_AND_RESOLVE_MINIMUM_CONFLICT
+  VIDEO_EXECUTION_FAIL:
+    owner_stage: '05'
+    route: REVISION_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    - QC_RUNTIME
+  VIDEO_PARTIAL_SALVAGE:
+    owner_stage: 05/06
+    route: STAGE_05_VIDEO_QC
+    reopen:
+    - QC_RUNTIME
+    action: TEMPORAL_SALVAGE_ANALYSIS
+  STALE_PROMPT_ARTIFACT:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: FRESH_COMPILE
+  AUTHORITY_VERSION_CHANGED:
+    owner_stage: CONTROL
+    route: EXISTING_PROJECT_MIGRATION
+    action: CHANGE_IMPACT_THEN_MINIMUM_REBUILD
+  SHOT_RELATION_GRAPH_GAP:
+    owner_stage: '02'
+    route: STAGE_02C_PRODUCTION_TRANSLATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    action: 补齐相邻Shot的Cut Motivation / Attention Target / World Relation后重新派生资产义务。
+  RELATION_ASSET_OBLIGATION_GAP:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    action: 只补缺失的Clue / Sightline / Location Identity / Coverage资产，不重做无关Canon。
+  SHOT_RELATION_STORYBOARD_MISMATCH:
+    owner_stage: '04'
+    route: STAGE_04_STORYBOARD
+    reopen:
+    - DIRECTOR_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: 修正Storyboard，使Attention Target、Reveal、POV、Match或Cut关系在相邻Panel中可读。
+  CUT_PAIR_ALIGNMENT_FAIL:
+    owner_stage: 04B
+    route: STAGE_04_VIDEO_CONDITIONING_BUILD
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - REFERENCE_RUNTIME
+    action: 只重做/调整受影响的Exit/Entry/First/Target静态执行帧，先证明边界关系。
+  SPATIAL_CANON_CONFLICT:
+    owner_stage: 03A
+    route: STAGE_03_SPATIAL_CANON_BUILD
+    reopen:
+    - SPATIAL_CANON_RUNTIME
+    - SCENE_RUNTIME
+    action: 修正Topology/Floor Plan/Sightline/Access等空间事实后重新验证Shot Relation；不先生成视觉资产。
+  SHOT_RELATION_SPATIAL_CONTRADICTION:
+    owner_stage: 02/03A
+    route: STAGE_03_SPATIAL_CANON_QC
+    reopen:
+    - DIRECTOR_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: 先判断是Director关系错误还是Spatial Canon错误；只改真正Owner，禁止用图片强行掩盖空间矛盾。
+  VISUAL_EVIDENCE_MISSING:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: 只把阻断当前任务的资产加入VISUAL_REVIEW_QUEUE；Text-only Controller不得猜图片内容。
+  VISUAL_EVIDENCE_STALE:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: 资产Fingerprint变化，重新视觉审计该版本；旧Evidence不得继续用于@资产选择。
+  VISUAL_FACT_CONFLICT:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: PRODUCTION_SUPPORT_REFERENCE
+    reopen:
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: 当前资产实际视觉事实与Shot需求冲突；换用有证据的其它资产或补最小静态资产，不改Canon来迁就错误图片。
+  REQUIRED_VIEW_COVERAGE_GAP:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: 只补缺失的Required View；先用View Coverage Matrix确认Camera Origin→Optical Axis→Must See，不重做已正确的其它方向。
+  REQUIRED_VIEW_VISUAL_MISMATCH:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Prompt/文件名声称的视角不算完成；根据Observed View Role/Camera Axis/Visible Anchors只重做错误视角，并重写Visual Evidence。
+  COVERAGE_BUDGET_STARVATION:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    action: 仍有Required View为MISSING时，禁止继续为已覆盖方向堆候选；先生成缺失P0/P1视角。
+  REALISM_CONTRACT_CONFLICT:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: 先修普通现实基线/Vehicle Functional Profile/人物功能位置；若Source明确则不得用图片改Canon。
+  ENVIRONMENT_REALISM_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: 先判断Spatial Canon是否本身不现实；Canon正确则拒绝错误Candidate，只重做受影响Environment/Coverage。
+  VEHICLE_REALISM_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: 核对具体Vehicle Type、驾驶区、乘员区、出入口、通道、容量与前后方向；禁止把Vehicle当普通房间自由重排。
+  HUMAN_SPATIAL_REALISM_FAIL:
+    owner_stage: 03/04
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: 核对人物数量、身份、Zone/Seat、支撑面、人体尺度、Reach与穿插；Canon正确则只重做/局部修补错误人物落位。
+  SOCIAL_SPATIAL_PLAUSIBILITY_FAIL:
+    owner_stage: 02/03/04
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: 先确认异常距离/朝向是否有剧情理由；无理由则修Blocking/资产，有明确导演理由则记录behavior_reason_ref。
+  MUNDANE_CONTINUITY_REALISM_FAIL:
+    owner_stage: 02/03/04/05
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - SCENE_RUNTIME
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: 回查World State的换位/持物/湿度/门窗/任务来源，禁止用CUT或新图当Reset。
+  REALISM_VISUAL_EVIDENCE_GAP:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: 只审当前P0/P1现实性被阻断的资产；纯文本模型不得根据Prompt猜现实性PASS。
+  VIEW_ASSET_REALISM_CONTRACT_GAP:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Bind the candidate to every Realism Contract required by its View Requirement before it can count as coverage.
+  REQUIRED_VIEW_REALISM_CONTRACT_GAP:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: A selected view cannot bypass ordinary-reality contracts; repair the binding or replace the asset.
+  REQUIRED_VIEW_REALISM_QC_NOT_PASS:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Correct camera direction is insufficient; the selected fulfillment asset must also pass Everyday Realism QC.
+  REALISM_CONTRACT_NOT_LOCKED:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    action: Lock or repair the governing REALISM_CONTRACT before any dependent image generation.
+  REALISM_CONTRACT_UNKNOWN_LOCATION:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Repair the contract-to-location binding; do not invent a location from the generated image.
+  REALISM_CONTRACT_UNKNOWN_EVENT_NODE:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Repair Event Node grounding before downstream assets are generated.
+  REALISM_EVENT_LOCATION_MISMATCH:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Reconcile the Event Node location with Source/Spatial Canon, then rederive only affected assets.
+  REALISM_EXCEPTION_UNSCOPED:
+    owner_stage: CONTROL
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    action: Replace broad realism waiver with an explicit local scope and allowed categories.
+  REALISM_EXCEPTION_EMPTY:
+    owner_stage: CONTROL
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    action: Declare exact waived realism categories or remove the exception.
+  REALISM_EXCEPTION_OVERBROAD_WITHOUT_APPROVAL:
+    owner_stage: CONTROL
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    action: Broad all-category realism waivers require explicit approval and local scope.
+  REALISM_EXCEPTION_MODE_WITHOUT_SCOPE:
+    owner_stage: CONTROL
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    action: Add a concrete transformation/combat/supernatural/dream/surreal scope; fantasy genre alone is not an exception.
+  REALISM_REQUIRED_ZONE_UNKNOWN:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Repair required Zone in Spatial Canon before generation.
+  REALISM_REQUIRED_ANCHOR_UNKNOWN:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Repair required functional Anchor in Spatial Canon before generation.
+  CHARACTER_REQUIRED_ZONE_UNKNOWN:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Ground the character to a real Zone before creating a seated/standing visual.
+  CHARACTER_FUNCTIONAL_POSITION_UNKNOWN:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Define the real functional position/seat/control point first.
+  CHARACTER_SUPPORT_SURFACE_UNKNOWN:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Define the support surface before asking a character to sit/lean/stand on it.
+  VEHICLE_PROFILE_LOCATION_KIND_MISMATCH:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Treat the location as a VEHICLE with a concrete vehicle type, not a generic room.
+  VEHICLE_TYPE_UNSPECIFIED:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    action: Resolve a concrete vehicle type from Source/period/function before layout generation.
+  VEHICLE_DRIVER_ZONE_UNSPECIFIED:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Define the driver/control Zone before generating the cabin.
+  VEHICLE_PASSENGER_ZONES_UNSPECIFIED:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Define real passenger Zones/capacity before generating the cabin.
+  VEHICLE_ZONE_UNKNOWN:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Repair vehicle Zone references in Spatial Canon.
+  VEHICLE_ENTRY_ANCHOR_UNKNOWN:
+    owner_stage: 03A
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    action: Define a plausible vehicle entry/exit anchor and circulation path.
+  CAST_COUNT_MISMATCH:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Reject the candidate; restore expected cast cardinality and regenerate only the affected asset.
+  CHARACTER_DUPLICATION_OR_COUNT_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Reject duplicated/missing character realization; do not normalize the error into Canon.
+  CHARACTER_ZONE_ASSIGNMENT_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Regenerate/patch the character into the required real Zone; do not move the Zone to fit a pretty image.
+  CHARACTER_FUNCTIONAL_POSITION_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Restore the required seat/control/work position and regenerate only the affected candidate.
+  CHARACTER_POSTURE_REALISM_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: Correct posture against support surface/available clearance before downstream use.
+  ERGONOMIC_SUPPORT_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Reject impossible sitting/leaning/standing support and repair the minimum affected asset.
+  HUMAN_ENVIRONMENT_INTERSECTION_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Reject human/furniture/wall intersection and regenerate or locally edit the affected visual.
+  HUMAN_SCALE_IMPLAUSIBLE:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: Check Canon dimensions first; if Canon is sane, reject the generated scale drift.
+  SPACE_CAPACITY_EXCEEDED:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: Respect seat/Zone/aisle capacity; do not enlarge the world implicitly to fit extra people.
+  SPACE_REQUIRED_OCCUPANCY_MISSING:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: Restore required functional occupancy or repair the source contract if the requirement was wrong.
+  VEHICLE_FUNCTIONAL_LAYOUT_DRIFT:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Reject vehicle-to-generic-room/tram/cabin drift; restore the locked vehicle type, driver/passenger zones, circulation and capacity.
+  VEHICLE_DRIVER_ZONE_DRIFT:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: Restore the locked driver/control Zone and view/access geometry.
+  VEHICLE_TYPE_VISUALLY_UNPROVEN:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Visually verify the concrete vehicle type before approval or @asset reuse.
+  ENVIRONMENT_KIND_VISUAL_MISMATCH:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: Reject the candidate if it depicts the wrong functional environment kind.
+  ENVIRONMENT_FUNCTIONAL_TYPE_DRIFT:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: Restore the locked real-world functional type rather than accepting a visually attractive substitution.
+  OBJECT_AFFORDANCE_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Repair reachability/support/operability of the object in the affected visual.
+  OBJECT_AFFORDANCE_UNPROVEN:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Obtain visual evidence for object usability before approval.
+  SOCIAL_SPATIAL_IMPLAUSIBILITY:
+    owner_stage: 02/03/04
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Ordinary people should occupy plausible conversational/personal distance and interaction access unless an explicit behavior reason
+      exists.
+  SOCIAL_SPATIAL_RELATION_UNPROVEN:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Verify ordinary social distance/interaction access when it is a P0/P1 requirement.
+  SOCIAL_EYELINE_ACCESS_FAIL:
+    owner_stage: 03/04
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: Repair ordinary body placement/orientation so required interaction is physically available.
+  MUNDANE_PHYSICS_FAIL:
+    owner_stage: 03/04/05
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SCENE_RUNTIME
+    - ASSET_RUNTIME
+    action: Restore ordinary cause-effect, support, gravity, wetness and material behavior unless an exact scoped exception applies.
+  MUNDANE_CONTINUITY_FAIL:
+    owner_stage: 02/03/04/05
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - SCENE_RUNTIME
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: Restore ordinary position/held-object/door/window/wetness continuity; a cut is not a reset.
+  REALISM_VISUAL_EVIDENCE_MISSING_OR_STALE:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Review only the blocking asset version; text-only controllers must not infer pixel reality from prompts.
+  REALISM_VISUAL_EVIDENCE_FIELDS_MISSING:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Capture observed realism fields for the current asset version before reality-sensitive reuse.
+  REALISM_HUMAN_COUNT_UNPROVEN:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Verify actual human count rather than trusting the prompt or asset name.
+  REALISM_CATEGORY_UNPROVEN:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Capture the unresolved P0/P1 realism category before approving the asset.
+  CHARACTER_VISUAL_PRESENCE_UNPROVEN:
+    owner_stage: CURRENT_VISUAL_DEPENDENCY
+    route: VISUAL_EVIDENCE_CAPTURE
+    reopen:
+    - REALISM_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Verify the expected character is actually present in the required visual.
+  REALISM_CONTRACT_ASSET_MISSING:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: Repair the contract/asset link or generate only the missing justified asset.
+  REALISM_CONTRACT_NO_FULFILLMENT_ASSET:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: Produce at least one approved fulfillment asset for every locked P0/P1 realism contract that requires pixels.
+  REALISM_ASSET_NOT_APPROVED:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: Do not count an unapproved candidate as realism fulfillment.
+  REALISM_ASSET_PRECHECK_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    action: Repair manifest/contract binding before producing more candidates.
+  ENVIRONMENT_FUNCTIONAL_REALISM_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: Reject nonfunctional ordinary environments; repair Canon only when the Canon itself is the root cause.
+  ARCHITECTURAL_REALISM_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - ASSET_RUNTIME
+    action: Repair impossible room connectivity, doors/windows/stairs/circulation before downstream use.
+  HUMAN_ERGONOMICS_FAIL:
+    owner_stage: '03'
+    route: EVERYDAY_REALISM_RECONCILIATION
+    reopen:
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    action: Repair support, clearance, reach, posture, scale or intersection in the affected asset.
+  VIDEO_EVERYDAY_REALISM_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO_QC
+    reopen:
+    - QC_RUNTIME
+    - VIDEO_RUNTIME
+    - REALISM_RUNTIME
+    action: Actual video take failed ordinary-reality evidence. Keep approved upstream assets unless evidence proves an upstream owner is wrong;
+      repair/salvage/regenerate only the affected take.
+  GENERATION_ROUTE_UNMAPPED:
+    rollback_state: EPISODE_ASSET_BUILD
+    route: GENERATION_JOB_DISPATCH
+    invalidate_runtime:
+    - GENERATION_RUNTIME
+  GENERATION_RESULT_MISSING:
+    rollback_state: EPISODE_ASSET_BUILD
+    route: GENERATION_JOB_EXECUTOR
+    invalidate_runtime:
+    - GENERATION_RUNTIME
+  GENERATION_CANDIDATE_CAPTURE_FAIL:
+    rollback_state: EPISODE_ASSET_BUILD
+    route: GENERATION_JOB_EXECUTOR
+    invalidate_runtime:
+    - GENERATION_RUNTIME
+    - ASSET_RUNTIME
+  SCENE_COLOR_AUTHORITY_GAP:
+    rollback_state: EPISODE_ASSET_BUILD
+    route: SCENE_COLOR_CARD_DERIVATION
+    invalidate_runtime:
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - GENERATION_RUNTIME
+  SCENE_COLOR_BINDING_MISSING:
+    rollback_state: EPISODE_ASSET_BUILD
+    route: GENERATION_JOB_DISPATCH
+    invalidate_runtime:
+    - REFERENCE_RUNTIME
+    - GENERATION_RUNTIME
+  VIDEO_COLOR_BINDING_MISSING:
+    rollback_state: VIDEO_CONDITIONING_IN_PROGRESS
+    route: STAGE_04_VIDEO_CONDITIONING_BUILD
+    invalidate_runtime:
+    - VIDEO_CONDITIONING_RUNTIME
+    - REFERENCE_RUNTIME
+    - GENERATION_RUNTIME
+  ASSET_LINEAGE_GAP:
+    rollback_state: EPISODE_ASSET_BUILD
+    route: GENERATION_JOB_DISPATCH
+    invalidate_runtime:
+    - ASSET_RUNTIME
+    - GENERATION_RUNTIME
+  IMAGE_EXECUTION_FAIL:
+    owner_stage: 03/04B
+    route: REVISION_IMAGE
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    - GENERATION_RUNTIME
+    - QC_RUNTIME
+    action: MINIMUM_IMAGE_REVISION_THROUGH_GENERATION_JOB
+  GENERATION_ENVELOPE_CONFLICT:
+    owner_stage: 04B
+    route: STAGE_04_VIDEO_CONDITIONING_BUILD
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - DIRECTOR_RUNTIME
+    action: REBUILD_ONLY_AFFECTED_GENERATION_ENVELOPE_FROM_LOCKED_EDITORIAL_PLAN
+  MULTISHOT_STORYBOARD_GRID_FAIL:
+    owner_stage: 04/04B
+    route: STAGE_04_VIDEO_CONDITIONING_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - VIDEO_CONDITIONING_RUNTIME
+    action: REPAIR_MISSING_OR_MISORDERED_CLEAN_PANELS_THEN_REASSEMBLE_DETERMINISTIC_GRID; DO_NOT_REDESIGN_UNAFFECTED_SHOTS
+  MULTISHOT_PROVIDER_CAPABILITY_FAIL:
+    owner_stage: 04B/05
+    route: STAGE_04_VIDEO_CONDITIONING_BUILD
+    reopen:
+    - VIDEO_RUNTIME
+    action: DOWNGRADE_TO_SPLIT_SINGLE_SHOT_ENVELOPES_OR_ASSEMBLY_FIRST_WITHOUT_CHANGING_EDITORIAL_PLAN
+  MULTISHOT_EXECUTION_PLAN_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: RECOMPILE_ONLY_AFFECTED_ENVELOPE_CUT_BLOCKS_AND_TIMING
+  STORYBOARD_SEQUENCE_GRID_FAIL:
+    owner_stage: '04'
+    route: STAGE_04_STORYBOARD
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    action: GENERATE_OR_REPAIR_ONLY_MISSING_CLEAN_PANELS_THEN_REASSEMBLE_SEQUENCE_GRID_IN_FORMAL_SHOT_ORDER
+  DIRECTOR_PERCEPTION_CONFLICT:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+    action: PATCH_ONLY_AFFECTED_DIRECTOR_PERCEPTION_OR_SHOT_CONTRACT_THEN_REVALIDATE
+  SHOT_SCALE_JUSTIFICATION_FAIL:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+    action: REDESIGN_ONLY_AFFECTED_SHOT_SCALE_WITHOUT_CHANGING_STORY_TRUTH
+  EDITORIAL_CAUSALITY_FAIL:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+    action: REBUILD_ONLY_AFFECTED_INFORMATION_DELTA_OR_SEQUENCE_ORDER
+  UNRESOLVED_STATE_GAP: DIRECTOR_PERCEPTION_CONFLICT
+  RELATIONAL_PRESSURE_GAP: DIRECTOR_PERCEPTION_CONFLICT
+  SHOT_PERCEPTION_CONTRACT_GAP: DIRECTOR_PERCEPTION_CONFLICT
+  CAMERA_ETHICS_GAP: DIRECTOR_PERCEPTION_CONFLICT
+  ATTENTION_FLOW_GAP: DIRECTOR_PERCEPTION_CONFLICT
+  CAMERA_PLACEMENT_JUSTIFICATION_GAP: DIRECTOR_PERCEPTION_CONFLICT
+  VISUAL_FORCE_STACK_GAP: DIRECTOR_PERCEPTION_CONFLICT
+  VISUAL_FORCE_STACK_OVERLOAD: DIRECTOR_PERCEPTION_CONFLICT
+  VISUAL_SALIENCE_BUDGET_GAP: DIRECTOR_PERCEPTION_CONFLICT
+  SHOT_SCALE_CONTRACT_MISMATCH: SHOT_SCALE_JUSTIFICATION_FAIL
+  SHOT_SCALE_JUSTIFICATION_GAP: SHOT_SCALE_JUSTIFICATION_FAIL
+  CLOSEUP_JUSTIFICATION_WEAK: SHOT_SCALE_JUSTIFICATION_FAIL
+  CLOSEUP_SPATIAL_COST_GAP: SHOT_SCALE_JUSTIFICATION_FAIL
+  SEQUENCE_LOGIC_GAP: EDITORIAL_CAUSALITY_FAIL
+  SHOT_INFORMATION_STATE_GAP: EDITORIAL_CAUSALITY_FAIL
+  SEQUENCE_SHUFFLE_TEST_GAP: EDITORIAL_CAUSALITY_FAIL
+  SEQUENCE_SHUFFLE_TEST_FAIL: EDITORIAL_CAUSALITY_FAIL
+  DIRECTOR_RUNTIME_TYPE_FAIL: DIRECTOR_PERCEPTION_CONFLICT
+  DIRECTOR_RUNTIME_NOT_VALID: DIRECTOR_PERCEPTION_CONFLICT
+  EDITORIAL_WEIGHT_GAP: EDITORIAL_CAUSALITY_FAIL
+  BREATHING_FUNCTION_GAP: EDITORIAL_CAUSALITY_FAIL
+  STYLE_ESCALATION_ADJECTIVE_ONLY: PROMPT_REDUNDANCY_FAIL
+  VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - REFERENCE_RUNTIME
+    - VIDEO_CONDITIONING_RUNTIME
+    - GENERATION_RUNTIME
+    action: REBUILD_MINIMUM_SUFFICIENT_REFERENCE_SET_WITHOUT_DROPPING_COLOR_AUTHORITY
+  VIDEO_COLOR_REFERENCE_MODE_CONFLICT: VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT
+  VIDEO_COLOR_REFERENCE_MODE_INVALID: VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT
+  VIDEO_COLOR_DIRECT_REFERENCE_TRIGGER_MISSING: VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT
+  VIDEO_COLOR_REFERENCE_REASON_MISSING: VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT
+  VIDEO_COLOR_NON_DIRECT_REQUIRED_FLAG_MISMATCH: VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT
+  VIDEO_COLOR_DIRECT_REFERENCE_REQUIRED_FLAG_MISMATCH: VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT
+  VIDEO_COLOR_NON_DIRECT_BINDING_STATUS_CONFLICT: VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT
+  VIDEO_COLOR_REFERENCE_REASON_CONFLICT: VIDEO_COLOR_REFERENCE_BUDGET_CONFLICT
+  PERFORMANCE_REQUIREMENT_DEFINITION_FAIL:
+    owner_stage: '02'
+    route: STAGE_02C_PRODUCTION_TRANSLATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    action: REBUILD_PERFORMANCE_ASSET_REQUIREMENT_SET
+  PERFORMANCE_REQUIREMENT_DUPLICATE_ID: PERFORMANCE_REQUIREMENT_DEFINITION_FAIL
+  PERFORMANCE_NONE_STATUS_INVALID: PERFORMANCE_REQUIREMENT_DEFINITION_FAIL
+  PERFORMANCE_NONE_HAS_SUPPORT_ASSET: PERFORMANCE_REQUIREMENT_DEFINITION_FAIL
+  PERFORMANCE_REQUIREMENT_TRIGGER_MISSING: PERFORMANCE_REQUIREMENT_DEFINITION_FAIL
+  PERFORMANCE_CONTACT_ENTITY_MISSING: PERFORMANCE_REQUIREMENT_DEFINITION_FAIL
+  PERFORMANCE_REQUIREMENT_NOT_APPROVED: PERFORMANCE_REQUIREMENT_DEFINITION_FAIL
+  PERFORMANCE_ASSET_REQUIREMENT_SET_NOT_FROZEN: PERFORMANCE_REQUIREMENT_DEFINITION_FAIL
+  PERFORMANCE_REQUIREMENT_ASSET_REF_MISMATCH: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_NOT_APPROVED: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_MEDIA_KIND_FAIL: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_AUTHORITY_ROLE_FAIL: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_PRIMARY_VISUAL_FORBIDDEN: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_TYPE_MISMATCH: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_PACK_INCOMPLETE: PERFORMANCE_SUPPORT_GAP
+  NARRATIVE_FX_DEFINITION_FAIL:
+    owner_stage: '02'
+    route: STAGE_02C_PRODUCTION_TRANSLATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    action: REBUILD_NARRATIVE_FX_ASSET_MANIFEST
+  NARRATIVE_FX_DUPLICATE_ID: NARRATIVE_FX_DEFINITION_FAIL
+  NARRATIVE_FX_REUSE_KEY_COLLISION: NARRATIVE_FX_DEFINITION_FAIL
+  NARRATIVE_FX_AUTHORITY_MODE_INVALID: NARRATIVE_FX_DEFINITION_FAIL
+  NARRATIVE_FX_TEXT_ONLY_HAS_ASSET: NARRATIVE_FX_DEFINITION_FAIL
+  NARRATIVE_FX_TEXT_ONLY_STATUS_INVALID: NARRATIVE_FX_DEFINITION_FAIL
+  NARRATIVE_FX_NOT_APPROVED: NARRATIVE_FX_DEFINITION_FAIL
+  NARRATIVE_FX_MANIFEST_NOT_FROZEN: NARRATIVE_FX_DEFINITION_FAIL
+  NARRATIVE_FX_ASSET_NOT_APPROVED: NARRATIVE_FX_ASSET_GAP
+  NARRATIVE_FX_ASSET_TYPE_FAIL: NARRATIVE_FX_ASSET_GAP
+  NARRATIVE_FX_MEDIA_KIND_FAIL: NARRATIVE_FX_ASSET_GAP
+  NARRATIVE_FX_AUTHORITY_ROLE_FAIL: NARRATIVE_FX_ASSET_GAP
+  NARRATIVE_FX_ENTITY_SCOPE_MISMATCH: NARRATIVE_FX_ASSET_GAP
+  NARRATIVE_FX_PRIMARY_VISUAL_FORBIDDEN: NARRATIVE_FX_ASSET_GAP
+  ASSET_LIBRARY_BASE_VISUAL_NOT_FROZEN: ASSET_LIBRARY_UNDERBUILD
+  ASSET_LIBRARY_PERFORMANCE_SET_NOT_FROZEN: ASSET_LIBRARY_UNDERBUILD
+  ASSET_LIBRARY_NARRATIVE_FX_NOT_FROZEN: ASSET_LIBRARY_UNDERBUILD
+  ASSET_LIBRARY_NON_WAIVABLE_OBLIGATION_WAIVED: ASSET_LIBRARY_UNDERBUILD
+  ASSET_LIBRARY_REFERENCED_ASSET_NOT_APPROVED: ASSET_LIBRARY_UNDERBUILD
+  ASSET_LIBRARY_FULFILLMENT_ASSET_MISSING: ASSET_LIBRARY_UNDERBUILD
+  ASSET_LIBRARY_PERFORMANCE_REQUIREMENT_OPEN: ASSET_LIBRARY_UNDERBUILD
+  ASSET_LIBRARY_NARRATIVE_FX_REQUIREMENT_OPEN: ASSET_LIBRARY_UNDERBUILD
+  PERFORMANCE_SUPPORT_GAP:
+    owner_stage: '03'
+    route: PERFORMANCE_SUPPORT_ASSET
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: GENERATE_REQUIRED_PERFORMANCE_SUPPORT_THEN_REFREEZE
+  PERFORMANCE_SUPPORT_REQUIRED_MISSING: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_ASSET_MISSING: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_ENTITY_MISMATCH: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_SUPPORT_ROLE_MISMATCH: PERFORMANCE_SUPPORT_GAP
+  PERFORMANCE_MULTIPANEL_DIRECT_REFERENCE_FORBIDDEN:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - REFERENCE_RUNTIME
+    - VIDEO_RUNTIME
+    action: REMOVE_MULTIPANEL_SUPPORT_FROM_DIRECT_PACK_AND_USE_SINGLE_FRAME_OR_EXECUTION_FRAME
+  NARRATIVE_FX_ASSET_GAP:
+    owner_stage: '03'
+    route: NARRATIVE_FX_ASSET
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: GENERATE_OR_COMPLETE_NARRATIVE_FX_STATIC_CANON_THEN_REFREEZE
+  NARRATIVE_FX_REFERENCE_REQUIRED: NARRATIVE_FX_ASSET_GAP
+  NARRATIVE_FX_ASSET_MISSING: NARRATIVE_FX_ASSET_GAP
+  NARRATIVE_FX_STATE_COVERAGE_GAP: NARRATIVE_FX_ASSET_GAP
+  NARRATIVE_FX_STATE_SHEET_DIRECT_REFERENCE_FORBIDDEN:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - REFERENCE_RUNTIME
+    - VIDEO_RUNTIME
+    action: REMOVE_FX_STATE_SHEET_FROM_DIRECT_PACK_AND_USE_SINGLE_STATE_OR_EXECUTION_FRAME
+  ASSET_LIBRARY_UNDERBUILD:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: COMPLETE_REQUIRED_STAGE03_AUTHORITIES_THEN_REFREEZE
+  ASSET_LIBRARY_STAGE03_OBLIGATIONS_UNRESOLVED: ASSET_LIBRARY_UNDERBUILD
+  ASSET_LIBRARY_COMPLETENESS_FAIL: ASSET_LIBRARY_UNDERBUILD
+  EMPTY_ENVIRONMENT_MASTER_GAP:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: GENERATE_OR_REUSE_EMPTY_ENVIRONMENT_MASTER_THEN_REFREEZE
+  FUNCTIONAL_MINOR_HUMAN_MASTER_GAP:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: GENERATE_OR_REUSE_FMH_MASTER_THEN_REFREEZE
+  BASE_VISUAL_AUTHORITY_CONFLICT:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: RECONCILE_ENTITY_REUSE_AND_ACTIVE_MASTER_THEN_REFREEZE
+  EMPTY_ENVIRONMENT_MASTER_REQUIREMENT_MISSING:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: BUILD_EMPTY_ENVIRONMENT_MASTER_REQUIREMENT
+  EMPTY_ENVIRONMENT_MASTER_OBLIGATION_MISSING:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: BUILD_EMPTY_ENVIRONMENT_MASTER_OBLIGATION
+  EMPTY_ENVIRONMENT_MASTER_ASSET_MISSING:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: GENERATE_EMPTY_ENVIRONMENT_MASTER
+  EMPTY_ENVIRONMENT_MASTER_CONTAINS_HUMAN:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REGENERATE_CLEAN_EMPTY_ENVIRONMENT_MASTER
+  EMPTY_ENVIRONMENT_MASTER_POPULATION_POLICY_FAIL:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REGENERATE_CLEAN_EMPTY_ENVIRONMENT_MASTER
+  FUNCTIONAL_MINOR_HUMAN_MASTER_ID_MISSING:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: CREATE_FMH_MASTER_REQUIREMENT
+  FUNCTIONAL_MINOR_HUMAN_MASTER_OBLIGATION_MISSING:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: CREATE_FMH_MASTER_OBLIGATION
+  FUNCTIONAL_MINOR_HUMAN_MASTER_ASSET_MISSING:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: GENERATE_FMH_MASTER
+  READABLE_MINOR_HUMAN_OWNER_MUST_BE_FMH_ASSET:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: ROUTE_READABLE_MINOR_TO_FMH_MASTER
+  BASE_VISUAL_DUPLICATE_ENTITY_REQUIREMENT:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: DEDUP_BY_ENTITY_AND_REUSE_KEY
+  BASE_VISUAL_REUSE_KEY_COLLISION:
+    owner_stage: '03'
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REPAIR_REUSE_KEY_COLLISION
+  ACTOR_BASE_AUTHORITY_CLASSIFICATION_MISSING:
+    owner_stage: 02/03
+    route: STAGE_02C_PRODUCTION_TRANSLATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    action: CLASSIFY_ACTOR_AND_CREATE_BASE_AUTHORITY_REQUIREMENT
+  ACTOR_MINOR_HUMAN_REQUIREMENT_MISSING:
+    owner_stage: 02/03
+    route: STAGE_02C_PRODUCTION_TRANSLATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    action: CREATE_SCOPED_CAST_AND_FMH_REQUIREMENT
+  ACTOR_MINOR_HUMAN_REQUIREMENT_REF_MISMATCH:
+    owner_stage: 02/03
+    route: STAGE_02C_PRODUCTION_TRANSLATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    action: REPAIR_MINOR_HUMAN_REQUIREMENT_BINDING
+  ACTOR_MINOR_HUMAN_AUTHORITY_KIND_INVALID:
+    owner_stage: 02/03
+    route: STAGE_02C_PRODUCTION_TRANSLATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    action: ROUTE_READABLE_MINOR_TO_FMH_ASSET
+  LONG_VIDEO_QUOTA_CONFIRMATION_REQUIRED:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: ASK_USER_IF_SUFFICIENT_VIDEO_GENERATION_QUOTA_FOR_GT15S_AND_WAIT
+  LONG_VIDEO_QUOTA_NOT_AVAILABLE:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: DO_NOT_GENERATE; ASK_USER_WHETHER_TO_SPLIT_ON_NATURAL_BEAT_OR_SHORTEN
+  IDENTITY_READABILITY_SCALE_EVIDENCE_MISSING:
+    owner_stage: 04/05
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REASSESS_IDENTITY_AT_PLATFORM_SCALE_OR_DIRECT_BIND_CORRECT_PERSON_AUTHORITY
+  IDENTITY_READABILITY_PASS_CONFIDENCE_TOO_LOW:
+    owner_stage: 04/05
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REASSESS_IDENTITY_AT_PLATFORM_SCALE_OR_DIRECT_BIND_CORRECT_PERSON_AUTHORITY
+  IDENTITY_READABILITY_PASS_FACE_EVIDENCE_MISSING:
+    owner_stage: 04/05
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REASSESS_IDENTITY_AT_PLATFORM_SCALE_OR_DIRECT_BIND_CORRECT_PERSON_AUTHORITY
+  IDENTITY_READABILITY_PASS_VISIBILITY_INVALID:
+    owner_stage: 04/05
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REASSESS_IDENTITY_AT_PLATFORM_SCALE_OR_DIRECT_BIND_CORRECT_PERSON_AUTHORITY
+  IDENTITY_READABILITY_STATUS_MISMATCH:
+    owner_stage: 04/05
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REASSESS_IDENTITY_AT_PLATFORM_SCALE_OR_DIRECT_BIND_CORRECT_PERSON_AUTHORITY
+  IDENTITY_READABILITY_ASSESSMENT_REQUIRED:
+    owner_stage: 04/05
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+    reopen:
+    - VIDEO_CONDITIONING_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REASSESS_IDENTITY_AT_PLATFORM_SCALE_OR_DIRECT_BIND_CORRECT_PERSON_AUTHORITY
+  IDENTITY_AUTHORITY_ENTITY_OR_ROLE_MISMATCH:
+    owner_stage: 03/04
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: BIND_EXACT_ENTITY_IDENTITY_AUTHORITY
+  VIDEO_UNREADABLE_IDENTITY_NOT_DIRECT_BOUND:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    - REFERENCE_RUNTIME
+    action: FORCE_DIRECT_IDENTITY_REFERENCE_OR_REGENERATE_PRIMARY
+  VIDEO_IDENTITY_DIRECT_ASSET_ENTITY_OR_ROLE_MISMATCH:
+    owner_stage: 03/05
+    route: STAGE_05_VIDEO
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    - VIDEO_RUNTIME
+    action: RESELECT_EXACT_ENTITY_IDENTITY_AUTHORITY
+  REFERENCE_VIDEO_FORBIDDEN:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - REFERENCE_RUNTIME
+    - VIDEO_RUNTIME
+    action: REMOVE_REFERENCE_VIDEO_AND_RECOMPILE_WITH_IMAGE_METADATA_TEXT_OR_AUDIO
+  AUDIO_REFERENCE_NOT_READY:
+    owner_stage: 03/05
+    route: EPISODE_ASSET_BUILD
+    reopen:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    action: REGISTER_APPROVE_AND_BIND_AUDIO_ASSET
+  AUDIO_REFERENCE_NOT_IN_MANIFEST: AUDIO_REFERENCE_NOT_READY
+  GENERATION_REQUIRED_BINDING_ASSET_UNKNOWN: AUDIO_REFERENCE_NOT_READY
+  GENERATION_REQUIRED_BINDING_DUPLICATE_ASSET: AUDIO_REFERENCE_NOT_READY
+  VIDEO_REFERENCE_MEDIA_KIND_FORBIDDEN: REFERENCE_VIDEO_FORBIDDEN
+  AUDIO_REFERENCE_ASSET_KIND_MISMATCH: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REFERENCE_JOB_TOKEN_MISSING: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REFERENCE_REGISTRY_NOT_APPROVED: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REFERENCE_REGISTRY_DIRECT_INPUT_FORBIDDEN: AUDIO_REFERENCE_NOT_READY
+  AUDIO_SUBJECT_ENTITY_MISMATCH: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REFERENCE_SCOPE_MISMATCH: AUDIO_REFERENCE_NOT_READY
+  AUDIO_MANIFEST_NOT_READY_FOR_VIDEO: AUDIO_REFERENCE_NOT_READY
+  AUDIO_TYPE_AUTHORITY_ROLE_MISMATCH: AUDIO_REFERENCE_NOT_READY
+  AUDIO_SCOPE_OWNER_MISSING: AUDIO_REFERENCE_NOT_READY
+  AUDIO_VIDEO_REFERENCE_INTENDED_USE_MISSING: AUDIO_REFERENCE_NOT_READY
+  AUDIO_APPROVED_FINGERPRINT_MISSING: AUDIO_REFERENCE_NOT_READY
+  AUDIO_DIRECT_ELIGIBILITY_POLICY_CONFLICT: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REFERENCE_NATIVE_BINDING_NOT_READY: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REFERENCE_NATIVE_TOKEN_MISSING: AUDIO_REFERENCE_NOT_READY
+  AUDIO_MANIFEST_MEDIA_KIND_FAIL: AUDIO_REFERENCE_NOT_READY
+  AUDIO_MANIFEST_DUPLICATE_ASSET: AUDIO_REFERENCE_NOT_READY
+  AUDIO_MANIFEST_ASSET_UNKNOWN: AUDIO_REFERENCE_NOT_READY
+  AUDIO_MANIFEST_APPROVED_BUT_REGISTRY_NOT_APPROVED: AUDIO_REFERENCE_NOT_READY
+  AUDIO_NATIVE_TOKEN_MISMATCH: AUDIO_REFERENCE_NOT_READY
+  AUDIO_VIDEO_REFERENCE_NOT_APPROVED: AUDIO_REFERENCE_NOT_READY
+  AUDIO_VIDEO_REFERENCE_NOT_ELIGIBLE: AUDIO_REFERENCE_NOT_READY
+  AUDIO_NATIVE_TOKEN_MISSING: AUDIO_REFERENCE_NOT_READY
+  VOICE_AUDIO_SUBJECT_ENTITY_MISSING: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REUSE_KEY_CONFLICT: AUDIO_REFERENCE_NOT_READY
+  AUDIO_NATIVE_TOKEN_COLLISION: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REFERENCE_JOB_TOKEN_MISMATCH: AUDIO_REFERENCE_NOT_READY
+  AUDIO_REFERENCE_ROLE_UNDECLARED: AUDIO_REFERENCE_NOT_READY
+  VOICE_DIRECTION_PLAN_FAIL:
+    owner_stage: 02/05
+    route: STAGE_02C_PRODUCTION_TRANSLATION
+    reopen:
+    - DIRECTOR_RUNTIME
+    - VIDEO_RUNTIME
+    action: PATCH_ONLY_AFFECTED_DIALOGUE_LINES_THEN_RECOMPILE
+  VOICE_PROMPT_HANDOFF_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: RECOMPILE_VOICE_PROMPT_HANDOFF_AND_FINAL_PROMPT
+  VOICE_TTS_HANDOFF_FAIL:
+    owner_stage: '06'
+    route: STAGE_06_POST
+    reopen:
+    - QC_RUNTIME
+    action: REBUILD_PICTURE_LOCK_VOICE_HANDOFF_WITHOUT_CHANGING_APPROVED_INTENT
+  TEMPORAL_SNAPSHOT_INTEGRITY_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: 重新验证/提取真实 Ending Anchor 与递归 Snapshot 链；不得手工改 fingerprint/lineage。
+  TEMPORAL_ENTRY_PLAN_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    - REFERENCE_RUNTIME
+    action: 重建 Temporal Entry Plan；确认 continuation mode、Provider transport 与 t=0 owner。
+  TEMPORAL_T0_SUFFICIENCY_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    - REFERENCE_RUNTIME
+    action: 重新评估 Ending Anchor 的实体可读证据；不足则寻找合法 Cut/Rebase，不叠加竞争静态图。
+  TEMPORAL_VISUAL_ISOLATION_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    - REFERENCE_RUNTIME
+    action: 移除 Same-take 第二 Primary、辅助静态视觉或 Direct Color，恢复唯一 t=0 owner。
+  TEMPORAL_PROVIDER_TRANSPORT_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO
+    reopen:
+    - VIDEO_RUNTIME
+    action: 确认 Provider-specific first-frame/endpoint 语义；Generic Reference 不得冒充 t=0。
+  EXPERIENCE_PRESSURE_CONFLICT:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+    action: PATCH_ONLY_AFFECTED_EXPERIENCE_PRESSURE_PLAN_WITHOUT_CHANGING_CANON
+  CREATURE_PERFORMANCE_CONFLICT:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+    action: PATCH_CREATURE_BEHAVIOR_OR_REQUIRED_ACTION_ANCHOR
+  EXPERIENCE_STORYBOARD_COVERAGE_FAIL:
+    owner_stage: '04'
+    route: STAGE_04_STORYBOARD
+    reopen:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    action: RESTORE_PROTECTED_EXPERIENCE_SHOT_COVERAGE
+  CONTEXT_LOAD_PLAN_FAIL:
+    owner_stage: CONTROL
+    route: CURRENT_ROUTE
+    reopen:
+    - CURRENT_RUNTIME
+    action: REBUILD_CONTEXT_LOAD_PLAN_FROM_CURRENT_ROUTE_AND_CAPABILITIES_WITHOUT_GLOBAL_SOURCE_LOAD
+  EXPERIENCE_COMPLETENESS_FAIL:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+    action: EXPAND_OR_REMAP_PROTECTED_EXPERIENCE_BEATS_UNTIL_COVERAGE_DEBT_IS_ZERO; DO_NOT_ADD_CANON_OR_USE_COST_AS_COMPRESSION_REASON
+  VIDEO_EXPERIENCE_EXECUTION_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO_QC
+    reopen:
+    - QC_RUNTIME
+    - VIDEO_RUNTIME
+    action: REJECT_ACTUAL_TAKE_EXPERIENCE_EXECUTION; PRESERVE_LOCKED_EXPERIENCE_PLAN; DIAGNOSE_PROMPT_ERROR_VS_MODEL_EXECUTION_VARIANCE_BEFORE_MINIMUM_REVISION_OR_RETRY
+  VIDEO_CREATURE_EXECUTION_FAIL:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO_QC
+    reopen:
+    - QC_RUNTIME
+    - VIDEO_RUNTIME
+    action: REJECT_ACTUAL_TAKE_CREATURE_EXECUTION; PRESERVE_LOCKED_CREATURE_PLAN; DIAGNOSE_PROMPT_OR_REFERENCE_ERROR_VS_MODEL_EXECUTION_VARIANCE_BEFORE_MINIMUM_REVISION_OR_RETRY
+  VIDEO_QC_STATE_CONFLICT:
+    owner_stage: '05'
+    route: STAGE_05_VIDEO_QC
+    reopen:
+    - QC_RUNTIME
+    action: REBUILD_ONLY_CURRENT_VIDEO_QC_EVIDENCE_AND_READINESS; DO_NOT_CHANGE_APPROVED_DIRECTOR_OR_EXPERIENCE_PLAN
+v44_conditioning_failures:
+  PRIMARY_VISUAL_CONDITIONING_GAP:
+    rollback_state: VIDEO_CONDITIONING_IN_PROGRESS
+    route: STAGE_04_VIDEO_CONDITIONING_BUILD
+  VIDEO_CONDITIONING_FRAME_FAIL:
+    rollback_state: VIDEO_CONDITIONING_IN_PROGRESS
+    route: STAGE_04_VIDEO_CONDITIONING_BUILD
+  ASSET_ROLE_ESCALATION_FAIL:
+    rollback_state: VIDEO_CONDITIONING_IN_PROGRESS
+    route: STAGE_04_VIDEO_CONDITIONING_QC
+  CUT_TIME_SCOPE_REFERENCE_BLEED:
+    rollback_state: VIDEO_CONDITIONING_IN_PROGRESS
+    route: STAGE_04_VIDEO_CONDITIONING_BUILD
+  EDITORIAL_PLAN_CONFLICT:
+    owner_stage: '02'
+    route: STAGE_02B_DIRECTOR_ARCHITECTURE
+    reopen:
+    - DIRECTOR_RUNTIME
+    action: RETURN_TO_EDITORIAL_INTENT_OR_MINIMUM_SHOT_PATCH
+  EDITORIAL_EXECUTION_BOUNDARY_FAIL:
+    owner_stage: 04/05
+    route: STAGE_05_VIDEO
+    reopen:
+    - DIRECTOR_RUNTIME
+    - VIDEO_RUNTIME
+    action: RESTORE_EDIT_ENTRY_EXIT_AND_PROTECTED_MOMENT
+code_aliases:
+  EDITORIAL_PLAN_NOT_LOCKED: EDITORIAL_PLAN_CONFLICT
+  EDITORIAL_SHOT_VIEWPOINT_GAP: EDITORIAL_PLAN_CONFLICT
+  EDITORIAL_UNKNOWN_SHOT: EDITORIAL_PLAN_CONFLICT
+  EDITORIAL_DUPLICATE_EDIT_PAIR: EDITORIAL_PLAN_CONFLICT
+  EDITORIAL_EDIT_NOT_LOCKED: EDITORIAL_PLAN_CONFLICT
+  EDITORIAL_EDIT_POINT_GAP: EDITORIAL_PLAN_CONFLICT
+  EDITORIAL_NON_ADJACENT_EDIT: EDITORIAL_PLAN_CONFLICT
+  CUT_TRIGGER_MISSING: EDITORIAL_PLAN_CONFLICT
+  CUT_TIMING_MISSING: EDITORIAL_PLAN_CONFLICT
+  CUT_INFORMATION_FUNCTION_GAP: EDITORIAL_PLAN_CONFLICT
+  EDIT_CONTINUITY_STRATEGY_MISSING: EDITORIAL_PLAN_CONFLICT
+  INTENTIONAL_DISCONTINUITY_EFFECT_MISSING: EDITORIAL_PLAN_CONFLICT
+  EDIT_RELATION_MISMATCH: EDITORIAL_PLAN_CONFLICT
+  EDIT_CONTINUITY_CONFLICT: EDITORIAL_PLAN_CONFLICT
+  EDITORIAL_BOUNDARY_EXECUTION_GAP: EDITORIAL_EXECUTION_BOUNDARY_FAIL
+  IN_MODEL_MULTISHOT_EVIDENCE_GAP: EDITORIAL_EXECUTION_BOUNDARY_FAIL
+  REFERENCE_EXECUTION_CONFLICT: VIDEO_EXECUTION_PLAN_FAIL
+  EXECUTION_SPATIAL_PATH_CONFLICT: VIDEO_EXECUTION_PLAN_FAIL
+  EXECUTION_LIMB_OCCUPANCY_CONFLICT: VIDEO_EXECUTION_PLAN_FAIL
+  EXECUTION_PERFORMANCE_CAUSALITY_GAP: VIDEO_EXECUTION_PLAN_FAIL
+  EXECUTION_CAMERA_COMPETITION_CONFLICT: VIDEO_EXECUTION_PLAN_FAIL
+  EXECUTION_TIMING_BUDGET_OVERFLOW: VIDEO_EXECUTION_PLAN_FAIL
+  EXECUTION_CAUSAL_SYNC_CONFLICT: VIDEO_EXECUTION_PLAN_FAIL
+  EXECUTION_PLAN_UNRESOLVED_CONFLICTS: VIDEO_EXECUTION_PLAN_FAIL
+  EXECUTION_ENDING_STATE_GAP: VIDEO_EXECUTION_PLAN_FAIL
+  CHARACTER_REQUIRED_EYELINE_TARGET_GAP: HUMAN_SPATIAL_REALISM_FAIL
+  CHARACTER_ROUTE_DUPLICATE_ORDER: SPATIAL_CANON_CONFLICT
+  CHARACTER_ROUTE_NOT_LOCKED: SPATIAL_CANON_CONFLICT
+  CHARACTER_ROUTE_UNKNOWN_ANCHOR: SPATIAL_CANON_CONFLICT
+  CHARACTER_ROUTE_UNKNOWN_EVENT_NODE: SPATIAL_CANON_CONFLICT
+  CHARACTER_ROUTE_UNKNOWN_LOCATION: SPATIAL_CANON_CONFLICT
+  CHARACTER_ROUTE_UNKNOWN_SPATIAL_RELATION: SPATIAL_CANON_CONFLICT
+  CIRCULATION_PATH_STRUCTURE_MISSING: REALISM_CONTRACT_CONFLICT
+  CIRCULATION_PLAUSIBILITY_FAIL: ENVIRONMENT_REALISM_FAIL
+  COVERAGE_ASSET_UNKNOWN_VIEW_REQUIREMENT: REQUIRED_VIEW_COVERAGE_GAP
+  COVERAGE_ASSET_UNLINKED_TO_VIEW_REQUIREMENT: REQUIRED_VIEW_COVERAGE_GAP
+  COVERAGE_BUDGET_STARVES_REQUIRED_VIEW: COVERAGE_BUDGET_STARVATION
+  DERIVED_REALITY_BASIS_OPEN: REALISM_CONTRACT_CONFLICT
+  DUPLICATE_CHARACTER_ROUTE_ID: SPATIAL_CANON_CONFLICT
+  DUPLICATE_ID: SPATIAL_CANON_CONFLICT
+  DUPLICATE_REALISM_CONTRACT_ID: REALISM_CONTRACT_CONFLICT
+  DUPLICATE_REALISM_EXCEPTION_ID: REALISM_CONTRACT_CONFLICT
+  DUPLICATE_SPATIAL_ACCESS_PATH_ID: SPATIAL_CANON_CONFLICT
+  DUPLICATE_SPATIAL_ANCHOR_ID: SPATIAL_CANON_CONFLICT
+  DUPLICATE_SPATIAL_DIAGRAM_ID: SPATIAL_CANON_CONFLICT
+  DUPLICATE_VIEW_REQUIREMENT_ID: REQUIRED_VIEW_COVERAGE_GAP
+  ENVIRONMENT_FUNCTIONAL_LAYOUT_FAIL: ENVIRONMENT_REALISM_FAIL
+  ENVIRONMENT_SCALE_PLAUSIBILITY_FAIL: ENVIRONMENT_REALISM_FAIL
+  EVENT_NODE_UNKNOWN_CHARACTER_ROUTE: SPATIAL_CANON_CONFLICT
+  EVENT_NODE_UNKNOWN_LOCATION: SPATIAL_CANON_CONFLICT
+  EVENT_NODE_UNKNOWN_SPATIAL_RELATION: SPATIAL_CANON_CONFLICT
+  EVENT_REQUIRED_VIEW_UNMATERIALIZED: REQUIRED_VIEW_COVERAGE_GAP
+  INGRESS_EGRESS_PLAUSIBILITY_FAIL: ENVIRONMENT_REALISM_FAIL
+  INGRESS_EGRESS_STRUCTURE_MISSING: REALISM_CONTRACT_CONFLICT
+  MUNDANE_CHARACTER_RELOCATION_FAIL: MUNDANE_CONTINUITY_REALISM_FAIL
+  MUNDANE_CONTINUITY_WORLD_STATE_REF_MISSING: REALISM_CONTRACT_CONFLICT
+  MUNDANE_ENVIRONMENT_RESET_FAIL: MUNDANE_CONTINUITY_REALISM_FAIL
+  MUNDANE_PROP_STATE_CHANGE_FAIL: MUNDANE_CONTINUITY_REALISM_FAIL
+  MUNDANE_TASK_CONTINUITY_FAIL: MUNDANE_CONTINUITY_REALISM_FAIL
+  MUNDANE_WETNESS_DAMAGE_RESET_FAIL: MUNDANE_CONTINUITY_REALISM_FAIL
+  REALISM_APPLICABILITY_INVALID: REALISM_CONTRACT_CONFLICT
+  REALISM_APPLICABILITY_UNDECLARED: REALISM_CONTRACT_CONFLICT
+  REALISM_ASSET_CONTRACT_BINDING_MISSING: REALISM_CONTRACT_CONFLICT
+  REALISM_ASSET_QC_STATUS_NOT_PASS: REALISM_CONTRACT_CONFLICT
+  REALISM_ASSET_UNKNOWN_CONTRACT: REALISM_CONTRACT_CONFLICT
+  REALISM_CONTRACT_ASSET_BACKREF_MISSING: REALISM_CONTRACT_CONFLICT
+  REALISM_CONTRACT_INVALID_PLANNING_STATUS: REALISM_CONTRACT_CONFLICT
+  REALISM_CONTRACT_REVISE_REQUIRED: REALISM_CONTRACT_CONFLICT
+  REALISM_EXCEPTION_IDS_REQUIRE_SCOPED_APPLICABILITY: REALISM_CONTRACT_CONFLICT
+  REALISM_EXCEPTION_SCOPE_MISMATCH: REALISM_CONTRACT_CONFLICT
+  REALISM_EXCEPTION_UNKNOWN: REALISM_CONTRACT_CONFLICT
+  REALISM_NOT_APPLICABLE_HAS_ACTIVE_BINDING: REALISM_CONTRACT_CONFLICT
+  REALISM_NOT_APPLICABLE_STATUS_MISMATCH: REALISM_CONTRACT_CONFLICT
+  REALISM_NOT_APPLICABLE_WITHOUT_REASON: REALISM_CONTRACT_CONFLICT
+  REALISM_REQUIRED_ACCESS_PATH_UNKNOWN: REALISM_CONTRACT_CONFLICT
+  REALISM_SCOPED_EXCEPTION_ID_MISSING: REALISM_CONTRACT_CONFLICT
+  REALISM_SUMMARY_CONTRADICTS_OBSERVATION: REALISM_VISUAL_EVIDENCE_GAP
+  REALITY_BASIS_MISSING: REALISM_CONTRACT_CONFLICT
+  REALITY_BASIS_REFERENCE_MISSING: REALISM_CONTRACT_CONFLICT
+  REALITY_REFERENCE_NOT_VERIFIED: REALISM_CONTRACT_CONFLICT
+  REALITY_REFERENCE_REQUIRED_BUT_MISSING: REALISM_CONTRACT_CONFLICT
+  REQUIRED_ACCESS_PATH_VISUAL_GAP: ENVIRONMENT_REALISM_FAIL
+  REQUIRED_VIEW_ASSET_MISSING: REQUIRED_VIEW_COVERAGE_GAP
+  REQUIRED_VIEW_AXIS_VISUALLY_UNPROVEN: REQUIRED_VIEW_VISUAL_MISMATCH
+  REQUIRED_VIEW_FORBIDDEN_ANCHOR_VISIBLE: REQUIRED_VIEW_VISUAL_MISMATCH
+  REQUIRED_VIEW_FULFILLMENT_NOT_SELECTED: REQUIRED_VIEW_COVERAGE_GAP
+  REQUIRED_VIEW_ROLE_VISUALLY_UNPROVEN: REQUIRED_VIEW_VISUAL_MISMATCH
+  REQUIRED_VIEW_SELECTED_ASSET_MISSING: REQUIRED_VIEW_COVERAGE_GAP
+  REQUIRED_VIEW_SELECTED_ASSET_NOT_APPROVED: REQUIRED_VIEW_COVERAGE_GAP
+  REQUIRED_VIEW_SELECTED_ASSET_NOT_LINKED: REQUIRED_VIEW_COVERAGE_GAP
+  REQUIRED_VIEW_SET_MISSING: REQUIRED_VIEW_COVERAGE_GAP
+  REQUIRED_VIEW_TARGET_ENTITY_NOT_VISUALLY_PROVEN: REQUIRED_VIEW_VISUAL_MISMATCH
+  REQUIRED_VIEW_VISIBLE_ANCHOR_GAP: REQUIRED_VIEW_VISUAL_MISMATCH
+  REQUIRED_VIEW_VISUAL_EVIDENCE_MISSING_OR_STALE: REQUIRED_VIEW_VISUAL_MISMATCH
+  REQUIRED_VIEW_VISUAL_FACT_CONFLICT: REQUIRED_VIEW_VISUAL_MISMATCH
+  REQUIRED_VIEW_VISUAL_FACT_GAP: REQUIRED_VIEW_VISUAL_MISMATCH
+  REUSABLE_SET_PLANNING_DIAGRAM_MISSING: SPATIAL_CANON_CONFLICT
+  SHOT_RELATION_SPATIAL_CONTRADICTION: SHOT_RELATION_SPATIAL_CONTRADICTION
+  SHOT_RELATION_SPATIAL_PROOF_REF_MISSING: SHOT_RELATION_SPATIAL_CONTRADICTION
+  SIGHTLINE_TARGET_NOT_DECLARED_ON_ANCHOR: SPATIAL_CANON_CONFLICT
+  SOCIAL_SPATIAL_PLAUSIBILITY_FAIL: SOCIAL_SPATIAL_PLAUSIBILITY_FAIL
+  SPATIAL_ACCESS_PATH_ANCHOR_OUT_OF_SCOPE: SPATIAL_CANON_CONFLICT
+  SPATIAL_ACCESS_PATH_NOT_PASSABLE: SPATIAL_CANON_CONFLICT
+  SPATIAL_ACCESS_PATH_UNKNOWN_ANCHOR: SPATIAL_CANON_CONFLICT
+  SPATIAL_ACCESS_PATH_UNKNOWN_ZONE: SPATIAL_CANON_CONFLICT
+  SPATIAL_CANON_NOT_LOCKED: SPATIAL_CANON_CONFLICT
+  SPATIAL_DIAGRAM_ANCHOR_OUT_OF_SCOPE: SPATIAL_CANON_CONFLICT
+  SPATIAL_DIAGRAM_EDGE_NODE_MISSING: SPATIAL_CANON_CONFLICT
+  SPATIAL_DIAGRAM_EDGE_RELATION_MISSING: SPATIAL_CANON_CONFLICT
+  SPATIAL_DIAGRAM_UNKNOWN_ANCHOR: SPATIAL_CANON_CONFLICT
+  SPATIAL_DIAGRAM_UNKNOWN_CHARACTER_ROUTE: SPATIAL_CANON_CONFLICT
+  SPATIAL_DIAGRAM_UNKNOWN_LOCATION: SPATIAL_CANON_CONFLICT
+  SPATIAL_DIAGRAM_UNKNOWN_NODE_REF: SPATIAL_CANON_CONFLICT
+  SPATIAL_DIAGRAM_UNKNOWN_ZONE: SPATIAL_CANON_CONFLICT
+  SPATIAL_LOCATION_NOT_LOCKED: SPATIAL_CANON_CONFLICT
+  SPATIAL_RELATION_NOT_LOCKED: SPATIAL_CANON_CONFLICT
+  SPATIAL_RELATION_UNKNOWN_ANCHOR: SPATIAL_CANON_CONFLICT
+  SPATIAL_RELATION_UNKNOWN_FROM: SPATIAL_CANON_CONFLICT
+  SPATIAL_RELATION_UNKNOWN_TO: SPATIAL_CANON_CONFLICT
+  VEHICLE_DRIVER_FORWARD_VISIBILITY_FAIL: VEHICLE_REALISM_FAIL
+  VEHICLE_ENTRY_ANCHOR_VISUAL_GAP: VEHICLE_REALISM_FAIL
+  VEHICLE_FRONT_DIRECTION_DRIFT: VEHICLE_REALISM_FAIL
+  VEHICLE_FRONT_DIRECTION_UNSPECIFIED: REALISM_CONTRACT_CONFLICT
+  VEHICLE_PASSENGER_CAPACITY_CONTRACT_FAIL: REALISM_CONTRACT_CONFLICT
+  VEHICLE_PASSENGER_CAPACITY_EXCEEDED: VEHICLE_REALISM_FAIL
+  VEHICLE_REALISM_FAIL: VEHICLE_REALISM_FAIL
+  VIDEO_REALISM_CATEGORY_FAIL: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_CATEGORY_UNPROVEN: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_CONTRACT_SCOPE_MISSING: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_EVIDENCE_NOT_CURRENT: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_EVIDENCE_STALE: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_INSPECTOR_INVALID: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_OPEN_ISSUES: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_OVERALL_NOT_PASS: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_QC_RUNTIME_NOT_PASS: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_REALISM_SCOPE_MISSING: VIDEO_EVERYDAY_REALISM_FAIL
+  VIDEO_TAKE_FINGERPRINT_MISSING: VIDEO_EVERYDAY_REALISM_FAIL
+  VIEW_ASSET_AXIS_METADATA_MISMATCH: REQUIRED_VIEW_VISUAL_MISMATCH
+  VIEW_ASSET_LOCATION_MISMATCH: REQUIRED_VIEW_VISUAL_MISMATCH
+  VIEW_ASSET_REQUIRED_ANCHOR_METADATA_GAP: REQUIRED_VIEW_VISUAL_MISMATCH
+  VIEW_ASSET_ROLE_METADATA_MISMATCH: REQUIRED_VIEW_VISUAL_MISMATCH
+  VIEW_REQUIREMENT_CAMERA_ORIGIN_MISSING: REQUIRED_VIEW_COVERAGE_GAP
+  VIEW_REQUIREMENT_CANDIDATE_BUDGET_EXCEEDED: COVERAGE_BUDGET_STARVATION
+  VIEW_REQUIREMENT_OPTICAL_AXIS_UNDERSPECIFIED: REQUIRED_VIEW_COVERAGE_GAP
+  VIEW_REQUIREMENT_UNKNOWN_ANCHOR: REQUIRED_VIEW_VISUAL_MISMATCH
+  VIEW_REQUIREMENT_UNKNOWN_EVENT_NODE: REQUIRED_VIEW_COVERAGE_GAP
+  VIEW_REQUIREMENT_UNKNOWN_LOCATION: REQUIRED_VIEW_COVERAGE_GAP
+  VIEW_REQUIREMENT_WAIVER_WITHOUT_AUTHORITY: REQUIRED_VIEW_COVERAGE_GAP
+  VISIBLE_FROM_ANCHOR_MISSING: SPATIAL_CANON_CONFLICT
+  VISIBLE_FROM_ANCHOR_OWNER_MISMATCH: SPATIAL_CANON_CONFLICT
+  GENERATION_ENVELOPE_FORMAT_CONFLICT: GENERATION_ENVELOPE_CONFLICT
+  GENERATION_ENVELOPE_SHOT_SET_CONFLICT: GENERATION_ENVELOPE_CONFLICT
+  CUT_CONTRACT_GAP: GENERATION_ENVELOPE_CONFLICT
+  CUT_ORDER_CONFLICT: GENERATION_ENVELOPE_CONFLICT
+  GENERATION_ENVELOPE_EDITORIAL_SHOT_UNKNOWN: GENERATION_ENVELOPE_CONFLICT
+  MULTISHOT_NOT_AUTHORIZED_BY_EDITORIAL_PLAN: GENERATION_ENVELOPE_CONFLICT
+  MULTISHOT_STORYBOARD_PANEL_GAP: MULTISHOT_STORYBOARD_GRID_FAIL
+  STORYBOARD_PANEL_GAP: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_GRID_MISSING: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_GRID_ORDER_MISMATCH: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_GRID_QC_FAIL: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_GRID_ASSEMBLER_MISMATCH: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_ASSET_TYPE_MISMATCH: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_NOT_WHITE_LINE: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_CLEANLINESS_QC_MISSING: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_PIXEL_ANNOTATION_FAIL: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_PRIMARY_VISUAL_FORBIDDEN: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_PANEL_SHOT_MISMATCH: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_PANEL_NOT_APPROVED: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_GRID_LAYOUT_FAIL: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_GRID_NOT_APPROVED: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_STORYBOARD_GRID_FINGERPRINT_MISMATCH: MULTISHOT_STORYBOARD_GRID_FAIL
+  ONER_STORYBOARD_GRID_POLICY_CONFLICT: MULTISHOT_STORYBOARD_GRID_FAIL
+  MULTISHOT_FORMAT_CAPABILITY_UNSUPPORTED: MULTISHOT_PROVIDER_CAPABILITY_FAIL
+  MULTISHOT_TIMING_BUDGET_FAIL: MULTISHOT_EXECUTION_PLAN_FAIL
+  MULTISHOT_REFERENCE_SCOPE_CONFLICT: MULTISHOT_EXECUTION_PLAN_FAIL
+  VIDEO_EXECUTION_PLAN_ENVELOPE_MISMATCH: MULTISHOT_EXECUTION_PLAN_FAIL
+  VIDEO_EXECUTION_PLAN_FORMAT_MISMATCH: MULTISHOT_EXECUTION_PLAN_FAIL
+  VIDEO_EXECUTION_PLAN_ENVELOPE_FINGERPRINT_MISMATCH: MULTISHOT_EXECUTION_PLAN_FAIL
+  VIDEO_EXECUTION_PLAN_STORYBOARD_GRID_MISMATCH: MULTISHOT_EXECUTION_PLAN_FAIL
+  VIDEO_JOB_ENVELOPE_MISMATCH: MULTISHOT_EXECUTION_PLAN_FAIL
+  VIDEO_JOB_FORMAT_MISMATCH: MULTISHOT_EXECUTION_PLAN_FAIL
+  GENERATION_ENVELOPE_JOB_MEDIA_KIND_MISMATCH: MULTISHOT_EXECUTION_PLAN_FAIL
+  MULTISHOT_SEQUENCE_STORYBOARD_GRID_MISSING: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_NOT_WHITE_LINE: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_CLEANLINESS_QC_MISSING: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PIXEL_ANNOTATION_FAIL: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PRIMARY_VISUAL_FORBIDDEN: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PROOF_SEQUENCE_MISMATCH: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_SHOT_ORDER_MISMATCH: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_UNKNOWN_SHOT: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_SHOT_COVERAGE_GAP: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PANEL_SHOT_ORDER_MISMATCH: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PANEL_MISSING: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PANEL_TYPE_FAIL: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PANEL_SHOT_MISMATCH: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PANEL_STATUS_FAIL: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_GRID_TYPE_FAIL: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_GRID_LAYOUT_FAIL: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_GRID_STATUS_FAIL: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_GRID_FINGERPRINT_MISMATCH: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_GRID_ASSEMBLER_MISMATCH: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_GRID_PANEL_ORDER_MISMATCH: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PROOF_NOT_APPROVED: STORYBOARD_SEQUENCE_GRID_FAIL
+  SEQUENCE_STORYBOARD_PROOF_NOT_QC_READY: STORYBOARD_SEQUENCE_GRID_FAIL
+  STORYBOARD_FRAME_PROJECTION_AUTHORITY_INVALID: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_SLOT_DUPLICATE: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_ENTITY_MULTI_SLOT_ALIAS: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_SLOT_PREFIX_KIND_MISMATCH: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_SLOT_ENTITY_TYPE_MISMATCH: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_PREFERRED_ASSET_NOT_IN_AUTHORITY_SET: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_CRITICAL_ENTITY_VISUAL_AUTHORITY_GAP: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_PANEL_SLOT_DUPLICATE: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_PANEL_UNKNOWN_SLOT: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_RELATION_TARGET_UNKNOWN: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_HELD_PROP_SLOT_INVALID: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_HUMAN_BLOCKING_UNDERSPECIFIED: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_HUMAN_ACTION_DIRECTION_GAP: STORYBOARD_ENTITY_BINDING_CONFLICT
+  STORYBOARD_IDENTITY_DETAIL_IN_METADATA_FAIL: STORYBOARD_ENTITY_BINDING_CONFLICT
+  VIDEO_ENTITY_BINDING_MAP_MISMATCH: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_BINDING_DUPLICATE_SLOT: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  STORYBOARD_SLOT_LEAK_TO_VIDEO_PROMPT: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_BINDING_HANDOFF_GAP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_SLOT_ENTITY_MISMATCH: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_CRITICAL_ENTITY_REFERENCE_CLOSURE_GAP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_CRITICAL_HUMAN_TEXT_ONLY_FORBIDDEN: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_HUMAN_PROMPT_RECOVERABILITY_GAP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_PROMPT_ANCHOR_MISSING: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_DIRECT_ASSET_NOT_AUTHORIZED: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_DIRECT_ASSET_NOT_IN_REFERENCE_PACK: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_DIRECT_TOKEN_MISSING_FROM_PROMPT: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_DIRECT_ASSET_NOT_APPROVED: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_NATIVE_TOKEN_MISMATCH: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_BAKED_WITHOUT_PRIMARY_VISUAL: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_JOB_ENTITY_DIRECT_BINDING_MISSING: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_JOB_ENTITY_NATIVE_TOKEN_MISMATCH: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_PROMPT_ENTITY_NATIVE_TOKEN_MISSING: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_BINDING_HANDOFF_MISSING_OR_MISMATCH: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_BINDING_HANDOFF_MISSING: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_BINDING_SLOT_MISSING: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_BINDING_SLOT_DUPLICATE: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_DIRECT_REFERENCE_INCOMPLETE: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_ENTITY_DIRECT_REFERENCE_NOT_DECLARED: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  BOUNDARY_WORLD_ZONE_JUMP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  BOUNDARY_WORLD_ANCHOR_RELATION_JUMP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  BOUNDARY_BODY_ORIENTATION_JUMP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  BOUNDARY_CONTACT_STATE_JUMP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  BOUNDARY_HELD_PROP_JUMP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  BOUNDARY_TRACKED_ENTITY_SET_CHANGED: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  NEAREST_VISUAL_PARENT_NOT_FOUND: REFERENCE_COVERAGE_GAP
+  NEAREST_VISUAL_PARENT_TOO_FAR: REFERENCE_COVERAGE_GAP
+  VISUAL_PARENT_TARGET_YAW_INVALID: REFERENCE_COVERAGE_GAP
+  STORYBOARD_ENTITY_BINDING_NOT_LOCKED: STORYBOARD_ENTITY_BINDING_CONFLICT
+  ENTITY_ALWAYS_DIRECT_POLICY_VIOLATION: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  ENTITY_NEVER_DIRECT_POLICY_VIOLATION: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  ENTITY_CRITICAL_BAKED_EVIDENCE_MISSING: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VIDEO_CRITICAL_BAKED_EVIDENCE_MISSING: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  VOICE_DIRECTION_DUPLICATE_LINE_ID: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_NOT_REQUIRED_BUT_LINES_PRESENT: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_NOT_REQUIRED_STATUS_FAIL: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_LINES_MISSING: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_PLAN_NOT_READY: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_DIALOGUE_COVERAGE_GAP: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_IMPORTANT_LINE_COVERAGE_GAP: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_EMOTIONAL_CAUSALITY_GAP: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_PROSODY_UNDERDIRECTED: VOICE_DIRECTION_PLAN_FAIL
+  TERMINAL_INTONATION_FAIL: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_BODY_PERFORMANCE_CAUSALITY_GAP: VOICE_DIRECTION_PLAN_FAIL
+  PAUSE_DECORATION_FAIL: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_STRESS_TEXT_SPAN_NOT_IN_DIALOGUE: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_STRESS_REASON_MISSING: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_INTERACTION_TARGET_MISSING: VOICE_DIRECTION_PLAN_FAIL
+  DIALOGUE_TURN_TAKING_MECHANICAL: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_ASSET_REQUIRED: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_AUDIO_MANIFEST_NOT_READY: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_ASSET_NOT_IN_AUDIO_MANIFEST: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_ASSET_ROLE_FAIL: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_SUBJECT_MISMATCH: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_ASSET_NOT_APPROVED: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_REGISTRY_ASSET_MISSING: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_REGISTRY_MEDIA_KIND_FAIL: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_REGISTRY_NOT_APPROVED: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_IDENTITY_REGISTRY_SUBJECT_MISMATCH: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_PROMPT_PLAN_ID_MISMATCH: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_VIDEO_UNIT_MISMATCH: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_UNEXPECTED_DIALOGUE_HANDOFF: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_HANDOFF_NOT_READY: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_UNKNOWN_LINE_ID: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_DIALOGUE_TEXT_MISSING: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_SPEAKER_ANCHOR_MISSING: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_TERMINAL_ANCHOR_MISSING: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_DELIVERY_ANCHOR_MISSING: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_TTS_PLAN_ID_MISMATCH: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_NOT_REQUIRED_STATUS_FAIL: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_HANDOFF_NOT_READY: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_LINE_COVERAGE_GAP: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_UNKNOWN_LINE_ID: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_TIMING_INVALID: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_SPEAKER_MISMATCH: VOICE_TTS_HANDOFF_FAIL
+  VOICE_IDENTITY_DRIFT: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_INTENT_DRIFT: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_REQUIRED_PAUSE_DROPPED: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_REQUIRED_STRESS_DROPPED: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_INTENT_NOT_PRESERVED: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_UNAUTHORIZED_OVERLAP: VOICE_TTS_HANDOFF_FAIL
+  VOICE_PROMPT_HANDOFF_FALSE_NOT_REQUIRED: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_NOT_REQUIRED_STATE_CONFLICT: VOICE_PROMPT_HANDOFF_FAIL
+  LEGACY_COVERAGE_ASSET_REQUIRES_MIGRATION: AUTHORITY_VERSION_CHANGED
+  VOICE_DIRECTION_FALSE_NOT_REQUIRED_WITH_DECLARED_DIALOGUE: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_UNDECLARED_LINE: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_EXCLUDED_LINE_NOT_DECLARED: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_EXCLUDED_LINE_PLANNED: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_IMPORTANT_LINE_NOT_DECLARED: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_IMPORTANT_LINE_EXCLUDED: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_IMPORTANCE_INDEX_MISMATCH: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_LINE_NOT_READY: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_DIRECTION_VIDEO_SCOPE_MISSING: VOICE_DIRECTION_PLAN_FAIL
+  VOICE_PROMPT_DUPLICATE_LINE_ID: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_DIALOGUE_REQUIRED_MISMATCH: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_LINE_COVERAGE_GAP: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_UNEXPECTED_LINE: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_LINE_OUT_OF_VIDEO_UNIT: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_LINE_IDENTITY_MISMATCH: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_HANDOFF_COMPILER_DRIFT: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_TTS_DUPLICATE_LINE_ID: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_DIALOGUE_REQUIRED_MISMATCH: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_NOT_REQUIRED_LINES_PRESENT: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_PICTURE_LOCK_FINGERPRINT_REQUIRED: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_TEXT_DRIFT: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_TEXTURE_DRIFT: VOICE_TTS_HANDOFF_FAIL
+  VOICE_TTS_TIMING_DUPLICATE_LINE_ID: VOICE_TTS_HANDOFF_FAIL
+  LEGACY_COVERAGE_OBLIGATION_REQUIRES_MIGRATION: AUTHORITY_VERSION_CHANGED
+  LEGACY_COVERAGE_TYPE_NEW_PRODUCTION: REQUIRED_VIEW_COVERAGE_GAP
+  VIDEO_PROMPT_VOICE_HANDOFF_NOT_VALID: VOICE_PROMPT_HANDOFF_FAIL
+  VIDEO_PROMPT_VOICE_BINDING_MISSING: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_HANDOFF_FINGERPRINT_MISSING: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_PROMPT_HANDOFF_FINGERPRINT_INVALID: VOICE_PROMPT_HANDOFF_FAIL
+  VOICE_TTS_HANDOFF_FINGERPRINT_INVALID: VOICE_TTS_HANDOFF_FAIL
+  CONTINUITY_SNAPSHOT_MISSING: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  CONTINUITY_SNAPSHOT_PARSE_FAIL: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  CONTINUITY_ENDING_ANCHOR_MISSING: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  CONTINUITY_ENDING_ANCHOR_FILE_MISSING: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  CONTINUITY_ENDING_ANCHOR_HASH_MISMATCH: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  CONTINUITY_SOURCE_VIDEO_FINGERPRINT_MISSING: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  CONTINUITY_PROVENANCE_INVALID: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  CONTINUITY_PLATFORM_EXTRACTION_PROOF_MISSING: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  CONTINUITY_SNAPSHOT_FINGERPRINT_INVALID: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_SNAPSHOT_CHAIN_CYCLE: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_PREVIOUS_SNAPSHOT_FINGERPRINT_MISMATCH: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_PIXEL_LINEAGE_DERIVATION_FAIL: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_PIXEL_LINEAGE_ROOT_INVALID: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_LINEAGE_EVIDENCE_MODE_INVALID: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_PREVIOUS_SNAPSHOT_REF_MISSING: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_DEGRADATION_DEBT_INVALID: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_DEGRADATION_DEPTH_MISMATCH: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_CONTINUITY_SNAPSHOT_STALE: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_ENTRY_MODE_INVALID: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_PROMPT_PROFILE_MISMATCH: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_T0_OWNER_INVALID: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_CONTINUITY_SNAPSHOT_REQUIRED: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_CONTINUITY_SNAPSHOT_FINGERPRINT_MISMATCH: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_GUIDED_TARGET_REQUIRED: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_CUT_CAMERA_TOPOLOGY_GAP: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_ENTRY_PLAN_FINGERPRINT_INVALID: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_EXECUTION_BINDING_MISSING: TEMPORAL_ENTRY_PLAN_FAIL
+  TEMPORAL_T0_ENTRY_PLAN_REQUIRED: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_ENTRY_PLAN_FINGERPRINT_MISMATCH: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_SNAPSHOT_FINGERPRINT_MISMATCH: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_VERDICT_INVALID_FOR_SAME_TAKE: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_NON_SAME_TAKE_MUST_BE_NOT_APPLICABLE: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_SNAPSHOT_REQUIRED: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_DUPLICATE_SLOT: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_SUFFICIENT_EVIDENCE_MISSING: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_ASSESSMENT_FINGERPRINT_INVALID: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_ASSESSMENT_REQUIRED_OR_STALE: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_RESET_REQUIRED: TEMPORAL_T0_SUFFICIENCY_FAIL
+  TEMPORAL_T0_MULTIPLE_PRIMARY_VISUAL_CONFLICT: TEMPORAL_VISUAL_ISOLATION_FAIL
+  TEMPORAL_CONTINUITY_AUXILIARY_VISUAL_REFERENCE_CONFLICT: TEMPORAL_VISUAL_ISOLATION_FAIL
+  TEMPORAL_CONTINUITY_DIRECT_COLOR_REFERENCE_CONFLICT: TEMPORAL_VISUAL_ISOLATION_FAIL
+  TEMPORAL_VISUAL_ISOLATION_NOT_PASS: TEMPORAL_VISUAL_ISOLATION_FAIL
+  TEMPORAL_JOB_BINDING_FINGERPRINT_MISMATCH: TEMPORAL_VISUAL_ISOLATION_FAIL
+  TEMPORAL_PROMPT_BINDING_FINGERPRINT_MISMATCH: TEMPORAL_VISUAL_ISOLATION_FAIL
+  TEMPORAL_EXECUTION_PLAN_FINGERPRINT_INVALID: TEMPORAL_VISUAL_ISOLATION_FAIL
+  TEMPORAL_PROVIDER_T0_TRANSPORT_UNVERIFIED: TEMPORAL_PROVIDER_TRANSPORT_FAIL
+  TEMPORAL_PROVIDER_ENDPOINT_TRANSPORT_UNVERIFIED: TEMPORAL_PROVIDER_TRANSPORT_FAIL
+  COMBAT_SEGMENT_CONTRACT_REQUIRED: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_SEGMENT_CONTRACT_WITHOUT_COMBAT_SEGMENT: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_SEGMENT_ROLE_INVALID: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_SEGMENT_ROLE_FIELD_MISSING: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_CONTACT_ROLE_WITHOUT_CONTACT: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_CONSEQUENCE_PROOF_MISSING: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_GENERATION_RISK_OVERLOAD: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_GENERATIVE_BRIDGE_REASON_MISSING: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_VFX_COVERAGE_GAP: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_SEGMENT_VIDEO_UNIT_MISMATCH: VIDEO_EXECUTION_PLAN_FAIL
+  COMBAT_SEGMENT_SHOT_MISMATCH: VIDEO_EXECUTION_PLAN_FAIL
+  MATCH_ON_ACTION_CONTRACT_MISSING: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  MATCH_ON_ACTION_MOTION_EVIDENCE_GAP: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  MATCH_ON_ACTION_PHASE_DISCONTINUITY: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  MATCH_ON_ACTION_VECTOR_DISCONTINUITY: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  MATCH_ON_ACTION_MOMENTUM_DISCONTINUITY: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  MATCH_ON_ACTION_ORIENTATION_DISCONTINUITY: VIDEO_ENTITY_BINDING_HANDOFF_FAIL
+  TEMPORAL_ENDING_ANCHOR_SELECTION_POLICY_INVALID: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_ENDING_ANCHOR_VISUAL_INELIGIBLE: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  TEMPORAL_ENDING_ANCHOR_QUALITY_EVIDENCE_INVALID: TEMPORAL_SNAPSHOT_INTEGRITY_FAIL
+  SCREEN_EXPERIENCE_CANON_OVERREACH: EXPERIENCE_PRESSURE_CONFLICT
+  SCREEN_EXPERIENCE_PADDING_FAIL: EXPERIENCE_PRESSURE_CONFLICT
+  QUALITY_FIRST_COST_BACKDRIVE_FAIL: EXPERIENCE_PRESSURE_CONFLICT
+  THREAT_PRESSURE_PLAN_GAP: EXPERIENCE_PRESSURE_CONFLICT
+  THREAT_REVEAL_TOO_IMMEDIATE: EXPERIENCE_PRESSURE_CONFLICT
+  PROTECTED_EXPERIENCE_BEAT_DROPPED: EXPERIENCE_PRESSURE_CONFLICT
+  EXPERIENCE_DURATION_FORCED_COMPRESSION: EXPERIENCE_PRESSURE_CONFLICT
+  QUALITY_FIRST_PROFILE_MISSING: EXPERIENCE_PRESSURE_CONFLICT
+  EXPERIENCE_RUNTIME_HARD_CAP_FORBIDDEN: EXPERIENCE_PRESSURE_CONFLICT
+  EXPERIENCE_RUNTIME_FORCED_COMPRESSION_POLICY: EXPERIENCE_PRESSURE_CONFLICT
+  EPISODE_RUNTIME_PREFERENCE_INVALID: EXPERIENCE_PRESSURE_CONFLICT
+  EPISODE_RUNTIME_REVIEW_BAND_INVALID: EXPERIENCE_PRESSURE_CONFLICT
+  EXPERIENCE_PRESSURE_NOT_REQUIRED_STATUS_INVALID: EXPERIENCE_PRESSURE_CONFLICT
+  EXPERIENCE_PRESSURE_NOT_REQUIRED_HAS_BEATS: EXPERIENCE_PRESSURE_CONFLICT
+  THREAT_PRESSURE_PLAN_NOT_LOCKED: EXPERIENCE_PRESSURE_CONFLICT
+  THREAT_PRESSURE_SOURCE_FACT_GAP: EXPERIENCE_PRESSURE_CONFLICT
+  THREAT_PRESSURE_DUPLICATE_BEAT_ID: EXPERIENCE_PRESSURE_CONFLICT
+  EXPERIENCE_BEAT_SHOT_MAPPING_GAP: EXPERIENCE_PRESSURE_CONFLICT
+  CREATURE_STATIC_PROP_FAIL: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_PERFORMANCE_FIELD_GAP: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_PREDATORY_STILLNESS_JUSTIFICATION_GAP: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_SCALE_READ_GAP: CREATURE_PERFORMANCE_CONFLICT
+  STATIC_CANON_POSE_CONFLICT: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_THREAT_COVERAGE_BINDING_GAP: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_PERFORMANCE_NOT_REQUIRED_STATUS_INVALID: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_PERFORMANCE_NOT_REQUIRED_HAS_CREATURES: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_PERFORMANCE_PLAN_NOT_LOCKED: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_PERFORMANCE_PLAN_GAP: CREATURE_PERFORMANCE_CONFLICT
+  EXPERIENCE_STORYBOARD_COVERAGE_GAP: EXPERIENCE_STORYBOARD_COVERAGE_FAIL
+  SHOT_EXPERIENCE_STATE_GAP: EDITORIAL_CAUSALITY_FAIL
+  PROTECTED_EXPERIENCE_BEAT_FLAG_GAP: EDITORIAL_CAUSALITY_FAIL
+  EXPERIENCE_VIDEO_PROMPT_PROTECTED_BEAT_MISSING: EXPERIENCE_STORYBOARD_COVERAGE_FAIL
+  EXPERIENCE_VIDEO_PROMPT_CONCEPT_MISSING: EXPERIENCE_STORYBOARD_COVERAGE_FAIL
+  EXPERIENCE_VIDEO_PROMPT_ROLE_READ_MISSING: EXPERIENCE_STORYBOARD_COVERAGE_FAIL
+  CREATURE_VIDEO_PROMPT_CONCEPT_MISSING: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_VIDEO_PROMPT_COMMITMENT_GAP: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_VIDEO_PROMPT_STILLNESS_FUNCTION_MISSING: CREATURE_PERFORMANCE_CONFLICT
+  UNKNOWN_ROUTE: CONTEXT_LOAD_PLAN_FAIL
+  UNKNOWN_RUNTIME_STATE: CONTEXT_LOAD_PLAN_FAIL
+  FORBIDDEN_CONTEXT_CAPABILITY: CONTEXT_LOAD_PLAN_FAIL
+  CONTEXT_LOAD_PLAN_SCHEMA_FAIL: CONTEXT_LOAD_PLAN_FAIL
+  CONTEXT_ROUTE_UNKNOWN: CONTEXT_LOAD_PLAN_FAIL
+  CONTEXT_REFERENCED_FILE_MISSING: CONTEXT_LOAD_PLAN_FAIL
+  MACHINE_CONTROL_PLANE_IN_CREATIVE_CONTEXT: CONTEXT_LOAD_PLAN_FAIL
+  FRESH_RUNTIME_FALLBACK_SOURCE_CONFLICT: CONTEXT_LOAD_PLAN_FAIL
+  STALE_RUNTIME_FALLBACK_SOURCE_GAP: CONTEXT_LOAD_PLAN_FAIL
+  ACTIVE_CONDITIONAL_AUTHORITY_MISSING: CONTEXT_LOAD_PLAN_FAIL
+  INACTIVE_CONDITIONAL_AUTHORITY_LEAK: CONTEXT_LOAD_PLAN_FAIL
+  CONTEXT_LOAD_PLAN_FINGERPRINT_MISMATCH: CONTEXT_LOAD_PLAN_FAIL
+  CONTEXT_MODULE_PACK_UNKNOWN: CONTEXT_LOAD_PLAN_FAIL
+  ANTI_SHORTCUT_POLICY_WEAKENED: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_DURATION_BUDGET_UNDERRUN: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_COVERAGE_DEBT: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_COVERAGE_NOT_APPLICABLE_UNJUSTIFIED: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_LANDING_CONTRACT_GAP: EXPERIENCE_COMPLETENESS_FAIL
+  PROTECTED_EXPERIENCE_BEAT_DELETE_FORBIDDEN: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_COMPRESSION_JUSTIFICATION_GAP: EXPERIENCE_COMPLETENESS_FAIL
+  COST_DRIVEN_EXPERIENCE_COMPRESSION_FORBIDDEN: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_COMPRESSION_TARGET_GAP: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_KEEP_HAS_MERGE_TARGETS: EXPERIENCE_COMPLETENESS_FAIL
+  PROTECTED_BEAT_COLLAPSE_UNJUSTIFIED: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_EDITORIAL_BEAT_MAPPING_GAP: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_EDITORIAL_PROTECTION_GAP: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_EDITORIAL_STATE_GAP: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_EDITORIAL_NO_EFFECT: EXPERIENCE_COMPLETENESS_FAIL
+  EXPERIENCE_HOLD_FUNCTION_UNDERDEVELOPED: EXPERIENCE_COMPLETENESS_FAIL
+  CREATURE_BEHAVIOR_BEAT_COVERAGE_GAP: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_BEHAVIOR_BEAT_FIELD_GAP: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_BEHAVIOR_TEMPLATE_REPETITION: CREATURE_PERFORMANCE_CONFLICT
+  CREATURE_BEHAVIOR_BEAT_DUPLICATE: CREATURE_PERFORMANCE_CONFLICT
+  EXPERIENCE_STORYBOARD_PANEL_COLLAPSE: EXPERIENCE_STORYBOARD_COVERAGE_FAIL
+  VIDEO_EXPERIENCE_TAKE_FINGERPRINT_MISSING: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_SCOPE_MISSING: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_EVIDENCE_NOT_CURRENT: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_EVIDENCE_STALE: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_INSPECTOR_INVALID: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_PROTECTED_EXPERIENCE_BEAT_UNPROVEN: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_PROTECTED_EXPERIENCE_BEAT_EXECUTION_FAIL: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_LANDING_UNPROVEN: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_STATE_CHANGE_UNPROVEN: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_OVERALL_NOT_PASS: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_OPEN_ISSUES: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_QC_RUNTIME_NOT_PASS: VIDEO_EXPERIENCE_EXECUTION_FAIL
+  VIDEO_CREATURE_PERFORMANCE_UNPROVEN: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_BEAT_COVERAGE_GAP: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_PERCEPTION_TRACKING_FAIL: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_LOCOMOTION_BODY_FAIL: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_WEIGHT_ENVIRONMENT_FAIL: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_APPROACH_PAUSE_FAIL: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_ATTACK_COMMITMENT_FAIL: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_PREDATORY_STILLNESS_FAIL: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_OVERALL_NOT_PASS: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_CREATURE_QC_RUNTIME_NOT_PASS: VIDEO_CREATURE_EXECUTION_FAIL
+  VIDEO_EXPERIENCE_NOT_APPLICABLE_READINESS_CONFLICT: VIDEO_QC_STATE_CONFLICT
+  VIDEO_CREATURE_NOT_APPLICABLE_READINESS_CONFLICT: VIDEO_QC_STATE_CONFLICT
+alias_resolution_policy: Resolve exact emitted code in routes first; otherwise code_aliases -> canonical route key. Unknown P0/P1 code is a release-blocking
+  integrity failure.

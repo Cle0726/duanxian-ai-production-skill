@@ -1,0 +1,20 @@
+schema_version: 1
+skill_version: '4.5.7'
+state_id: S_AFTER
+entity_states:
+  - entity_id: CHAR_A
+    entity_type: CHARACTER
+    world_position: {zone_id: CONTROL_LEFT, anchor_id: CONSOLE_01, relation: BESIDE_LEFT}
+    frame_projection: {horizontal_region: RIGHT, depth_region: MG}
+    body_orientation: TOWARD_CHAR_B
+    contact_state: HOLDING_PROP_SCORE
+    motion_phase: REACH_60_PERCENT
+    held_prop_ids: [PROP_SCORE]
+  - entity_id: CHAR_B
+    entity_type: CHARACTER
+    world_position: {zone_id: CONTROL_CENTER, anchor_id: CONSOLE_01, relation: BESIDE_CENTER}
+    frame_projection: {horizontal_region: LEFT, depth_region: MG}
+    body_orientation: TOWARD_CHAR_A
+    contact_state: FREE_HANDS
+    motion_phase: RECEIVE_PREP_30_PERCENT
+    held_prop_ids: []

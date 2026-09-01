@@ -1,0 +1,432 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/voice_direction_plan.schema.yaml
+title: Duanxian Voice Direction Plan V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- voice_direction_plan_id
+- episode_id
+- dialogue_required
+- coverage
+- lines
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  voice_direction_plan_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type: string
+    minLength: 1
+  sequence_id:
+    type:
+    - string
+    - 'null'
+  scene_id:
+    type:
+    - string
+    - 'null'
+  source_performance_ref:
+    type:
+    - string
+    - 'null'
+  source_screenplay_ref:
+    type:
+    - string
+    - 'null'
+  dialogue_required:
+    type: boolean
+  coverage:
+    type: object
+    additionalProperties: false
+    required:
+    - declared_dialogue_line_ids
+    - important_line_ids
+    - excluded_lines
+    properties:
+      declared_dialogue_line_ids:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+          minLength: 1
+      important_line_ids:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+          minLength: 1
+      excluded_lines:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - line_id
+          - reason
+          properties:
+            line_id:
+              type: string
+              minLength: 1
+            reason:
+              enum:
+              - BACKGROUND_UNREADABLE
+              - NON_SPEECH
+              - NO_VOICE_EXECUTION_REQUIRED
+              - OTHER
+            note:
+              type:
+              - string
+              - 'null'
+  lines:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - line_id
+      - speaker_entity_id
+      - speaker_prompt_label
+      - importance
+      - spoken_text
+      - voice_identity_required
+      - emotional_causality
+      - delivery
+      - interaction
+      - body_voice_coupling
+      - status
+      properties:
+        line_id:
+          type: string
+          minLength: 1
+        sequence_id:
+          type:
+          - string
+          - 'null'
+        scene_id:
+          type:
+          - string
+          - 'null'
+        shot_id:
+          type:
+          - string
+          - 'null'
+        speaker_entity_id:
+          type: string
+          minLength: 1
+        speaker_prompt_label:
+          type: string
+          minLength: 1
+        importance:
+          enum:
+          - BACKGROUND
+          - NORMAL
+          - IMPORTANT
+          - CRITICAL
+        spoken_text:
+          type: string
+          minLength: 1
+        transcript_ref:
+          type:
+          - string
+          - 'null'
+        voice_identity_required:
+          type: boolean
+        voice_identity_asset_id:
+          type:
+          - string
+          - 'null'
+        emotional_causality:
+          type: object
+          additionalProperties: false
+          required:
+          - trigger_event
+          - meaning_appraisal
+          - objective
+          - tactic
+          - subtext
+          - affect_label
+          - arousal
+          - control
+          properties:
+            trigger_event:
+              type: string
+              minLength: 1
+            meaning_appraisal:
+              type: string
+              minLength: 1
+            objective:
+              type: string
+              minLength: 1
+            tactic:
+              type: string
+              minLength: 1
+            subtext:
+              type: string
+              minLength: 1
+            affect_label:
+              type: string
+              minLength: 1
+            arousal:
+              enum:
+              - LOW
+              - MEDIUM
+              - HIGH
+            control:
+              enum:
+              - CONTAINED
+              - LEAKING
+              - OPEN
+              - BREAKING
+        delivery:
+          type: object
+          additionalProperties: false
+          required:
+          - performance_loudness
+          - pace_curve
+          - pause_map
+          - stress_map
+          - pitch_energy_contour
+          - terminal_intonation
+          - terminal_reason
+          - texture_adjustments
+          - landing_carryover
+          properties:
+            performance_loudness:
+              enum:
+              - HUSHED
+              - SOFT
+              - NEUTRAL
+              - FIRM
+              - RAISED
+              - SHOUT
+              - CALL
+            pace_curve:
+              type: object
+              additionalProperties: false
+              required:
+              - entry
+              - mid
+              - terminal
+              - reason
+              properties:
+                entry:
+                  enum:
+                  - VERY_SLOW
+                  - SLOW
+                  - BASELINE
+                  - QUICK
+                  - FAST
+                mid:
+                  enum:
+                  - VERY_SLOW
+                  - SLOW
+                  - BASELINE
+                  - QUICK
+                  - FAST
+                terminal:
+                  enum:
+                  - VERY_SLOW
+                  - SLOW
+                  - BASELINE
+                  - QUICK
+                  - FAST
+                  - CLIPPED
+                reason:
+                  type: string
+                  minLength: 1
+            speech_phrases:
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                required:
+                - phrase_id
+                - text_span
+                - speech_action
+                properties:
+                  phrase_id:
+                    type: string
+                    minLength: 1
+                  text_span:
+                    type: string
+                    minLength: 1
+                  speech_action:
+                    type: string
+                    minLength: 1
+                  breath_required:
+                    type: boolean
+                    default: false
+            pause_map:
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                required:
+                - position
+                - pause_type
+                - duration_class
+                - reason
+                properties:
+                  position:
+                    type: string
+                    minLength: 1
+                  pause_type:
+                    enum:
+                    - PRE_LINE_PROCESSING
+                    - THOUGHT_PAUSE
+                    - HESITATION
+                    - LISTENING_PAUSE
+                    - IMPACT_PROCESSING
+                    - BREATH_PAUSE
+                    - INTERRUPTED
+                    - POST_LINE_HOLD
+                  duration_class:
+                    enum:
+                    - MICRO
+                    - SHORT
+                    - MEDIUM
+                    - LONG
+                  reason:
+                    type: string
+                    minLength: 1
+            stress_map:
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                required:
+                - text_span
+                - stress_level
+                - reason
+                properties:
+                  text_span:
+                    type: string
+                    minLength: 1
+                  stress_level:
+                    enum:
+                    - PRIMARY_STRESS
+                    - SECONDARY_STRESS
+                    - DE_EMPHASIS
+                  reason:
+                    type: string
+                    minLength: 1
+            pitch_energy_contour:
+              enum:
+              - LEVEL
+              - RISING_PRESSURE
+              - FALLING_ENERGY
+              - SPIKE_THEN_CONTROL
+              - SUSPENDED
+              - BREAK_CRACK
+            terminal_intonation:
+              enum:
+              - FALL
+              - RISE
+              - FALL_RISE
+              - LEVEL
+              - CLIPPED
+              - BREATH_RELEASED
+              - SUSPENDED
+            terminal_reason:
+              type: string
+              minLength: 1
+            texture_adjustments:
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                required:
+                - adjustment
+                - reason
+                properties:
+                  adjustment:
+                    enum:
+                    - BREATHINESS_UP
+                    - BREATHINESS_DOWN
+                    - ARTICULATION_CLEARER
+                    - ARTICULATION_SOFTENED
+                    - CONSONANT_ATTACK_HARDER
+                    - CONSONANT_ATTACK_SOFTER
+                    - RESONANCE_NARROWER
+                    - RESONANCE_OPENER
+                    - DRYNESS
+                    - STRAIN
+                    - TEMPORARY_INSTABILITY
+                  reason:
+                    type: string
+                    minLength: 1
+            landing_carryover:
+              type: string
+              minLength: 1
+        interaction:
+          type: object
+          additionalProperties: false
+          required:
+          - mode
+          - reason
+          properties:
+            mode:
+              enum:
+              - NONE
+              - LISTENING_DELAY
+              - QUICK_PICKUP
+              - INTERRUPT
+              - OVERLAP
+            target_line_id:
+              type:
+              - string
+              - 'null'
+            reason:
+              type: string
+            listening_response:
+              type:
+              - string
+              - 'null'
+        body_voice_coupling:
+          type: object
+          additionalProperties: false
+          required:
+          - same_trigger_required
+          - visual_behavior_anchor
+          properties:
+            same_trigger_required:
+              type: boolean
+              const: true
+            visual_behavior_anchor:
+              type: string
+              minLength: 1
+            coupling_note:
+              type:
+              - string
+              - 'null'
+        status:
+          enum:
+          - PLANNED
+          - READY_FOR_COMPILE
+          - APPROVED
+          - STALE
+          - BLOCKED
+        video_unit_id:
+          type:
+          - string
+          - 'null'
+  status:
+    enum:
+    - PLANNED
+    - READY_FOR_COMPILE
+    - APPROVED
+    - NOT_REQUIRED
+    - STALE
+    - BLOCKED
+  plan_fingerprint:
+    type:
+    - string
+    - 'null'

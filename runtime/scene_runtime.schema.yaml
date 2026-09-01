@@ -1,0 +1,80 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/scene_runtime.schema.yaml
+title: SCENE_RUNTIME
+type: object
+additionalProperties: true
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- scope
+- source_fingerprints
+- runtime_fingerprint
+properties:
+  runtime_type:
+    const: SCENE_RUNTIME
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  scope:
+    type: object
+    additionalProperties: true
+  source_versions:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  world_state:
+    type: object
+    additionalProperties: true
+  geography:
+    type: object
+    additionalProperties: true
+  style:
+    type: object
+    additionalProperties: true
+  color:
+    type: object
+    additionalProperties: true
+  continuity_delta:
+    type: object
+    additionalProperties: true
+  invalidation_triggers:
+    type: array
+    items:
+      type: string
+  location_relations:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  location_identity_families:
+    type: object
+    additionalProperties: true
+  spatial_canon_ref:
+    type:
+    - string
+    - 'null'
+  spatial_canon_fingerprint:
+    type:
+    - string
+    - 'null'
+  realism:
+    type: object
+    additionalProperties: true
+  realism_contract_ref:
+    type:
+    - string
+    - 'null'

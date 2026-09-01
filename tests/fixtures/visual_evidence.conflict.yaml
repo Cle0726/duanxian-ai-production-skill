@@ -1,0 +1,35 @@
+schema_version: 1
+skill_version: 4.5.3
+records:
+  - evidence_id: VE_RESTAURANT_BAD
+    asset_id: RESTAURANT_CLOCK_VIEW_01
+    source_fingerprint_type: FILE_SHA256
+    source_fingerprint: hash_restaurant_v1
+    evidence_status: CURRENT
+    inspector: {mode: MULTIMODAL_MODEL}
+    observed:
+      fact_codes: [EMPTY_RESTAURANT, CLOCK_TOWER_SIGHTLINE]
+      issue_codes: [HAS_UNSCRIPTED_TRANSIENT_PEOPLE]
+      summary: 画面虽有钟楼视线，但后景残留临时人物。
+    role_assessment:
+      safe_roles: [SHOT_VIEW_AUTHORITY]
+      unsafe_roles: [PRIMARY_VISUAL]
+      primary_visual_eligible: false
+      direct_video_eligible: true
+    confidence: HIGH
+  - evidence_id: VE_COLOR_01
+    asset_id: COLOR_RESTAURANT_01
+    source_fingerprint_type: FILE_SHA256
+    source_fingerprint: hash_color_v1
+    evidence_status: CURRENT
+    inspector: {mode: HUMAN}
+    observed:
+      fact_codes: [WARM_INTERIOR_COOL_RAIN_LOOK]
+      issue_codes: []
+      summary: 色板有效。
+    role_assessment:
+      safe_roles: [COLOR_AUTHORITY]
+      unsafe_roles: [PRIMARY_VISUAL]
+      primary_visual_eligible: false
+      direct_video_eligible: true
+    confidence: HIGH

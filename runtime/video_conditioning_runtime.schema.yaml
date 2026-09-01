@@ -1,0 +1,248 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/video_conditioning_runtime.schema.yaml
+title: VIDEO_CONDITIONING_RUNTIME
+type: object
+additionalProperties: true
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- scope
+- source_fingerprints
+- runtime_fingerprint
+- video_units
+- readiness
+properties:
+  runtime_type:
+    const: VIDEO_CONDITIONING_RUNTIME
+  schema_version:
+    type: integer
+    const: 2
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  scope:
+    type: object
+    additionalProperties: true
+  source_versions:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  video_units:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - video_unit_id
+      - shot_ids
+      - conditioning_strategy
+      - primary_assets
+      - qc_status
+      properties:
+        video_unit_id:
+          type: string
+        shot_ids:
+          type: array
+          minItems: 1
+          items:
+            type: string
+        conditioning_strategy:
+          enum:
+          - FIRST_FRAME
+          - FIRST_TARGET
+          - FIRST_LAST
+          - KEY_POSE_CHAIN
+          - CONTACT_CHAIN
+          - TRANSFORMATION_CHAIN
+          - CUT_PAIR
+          - VERIFIED_MULTI_SHOT
+          - CUSTOM
+        time_scope:
+          type:
+          - string
+          - 'null'
+        primary_assets:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            additionalProperties: true
+            required:
+            - asset_id
+            - role
+            - approval_status
+            - direct_video_eligible
+            properties:
+              asset_id:
+                type: string
+              role:
+                enum:
+                - VIDEO_FIRST_FRAME
+                - VIDEO_SHOT_EXECUTION_FRAME
+                - VIDEO_TARGET_FRAME
+                - VIDEO_LAST_FRAME
+                - VIDEO_KEY_POSE
+                - VIDEO_CONTACT_FRAME
+                - VIDEO_CUT_EXIT_FRAME
+                - VIDEO_CUT_ENTRY_FRAME
+              approval_status:
+                enum:
+                - APPROVED
+                - APPROVED_VIDEO_CONDITIONING
+              direct_video_eligible:
+                const: true
+              fingerprint:
+                type:
+                - string
+                - 'null'
+              time_scope:
+                type:
+                - string
+                - 'null'
+        auxiliary_assets:
+          type: array
+          items:
+            type: string
+        qc_status:
+          enum:
+          - PASS
+          - FAIL
+          - NOT_RUN
+          - UNKNOWN
+        approval_ref:
+          type:
+          - string
+          - 'null'
+        scene_color_authority_id:
+          type:
+          - string
+          - 'null'
+        required_reference_bindings:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+            required:
+            - asset_id
+            - role
+            properties:
+              asset_id:
+                type: string
+              role:
+                type: string
+              native_token:
+                type:
+                - string
+                - 'null'
+              binding_status:
+                enum:
+                - BOUND
+                - PENDING_NATIVE_BINDING
+                - UNKNOWN
+        scene_color_reference_mode:
+          enum:
+          - LINEAGE_ONLY
+          - TEXT_CONTROL
+          - DIRECT_REFERENCE
+        scene_color_reference_reason:
+          type:
+          - string
+          - 'null'
+        identity_readability_assessment_ref:
+          type:
+          - string
+          - 'null'
+        identity_readability_status:
+          enum:
+          - PASS
+          - PRIMARY_PLUS_DIRECT_IDENTITY
+          - FAIL
+          - UNKNOWN
+          - NOT_APPLICABLE
+        reference_budget:
+          type: object
+          additionalProperties: true
+          properties:
+            policy:
+              enum:
+              - MINIMUM_SUFFICIENT_REFERENCE_SET
+              - PROVIDER_FIXED
+              - USER_FIXED
+            selected_direct_reference_ids:
+              type: array
+              items:
+                type: string
+            omitted_authority_ids:
+              type: array
+              items:
+                type: string
+            slot_limit:
+              type:
+              - integer
+              - 'null'
+              minimum: 1
+            slots_used:
+              type:
+              - integer
+              - 'null'
+              minimum: 0
+  readiness:
+    enum:
+    - PASS
+    - BLOCKED
+    - UNKNOWN
+  invalidation_triggers:
+    type: array
+    items:
+      type: string
+  boundary_pairs:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - relation_id
+      - from_video_unit_id
+      - to_video_unit_id
+      - alignment_status
+      properties:
+        relation_id:
+          type: string
+        from_video_unit_id:
+          type: string
+        to_video_unit_id:
+          type: string
+        exit_asset_id:
+          type:
+          - string
+          - 'null'
+        entry_asset_id:
+          type:
+          - string
+          - 'null'
+        source_visual_fact:
+          type:
+          - string
+          - 'null'
+        destination_visual_fact:
+          type:
+          - string
+          - 'null'
+        alignment_status:
+          enum:
+          - PASS
+          - FAIL
+          - NOT_RUN
+          - UNKNOWN

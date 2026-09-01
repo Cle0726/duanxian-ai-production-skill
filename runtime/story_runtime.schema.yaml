@@ -1,0 +1,19 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "duanxian/runtime/story_runtime.schema.yaml"
+title: STORY_RUNTIME
+type: object
+additionalProperties: true
+required: [runtime_type, schema_version, skill_version, status, scope, source_fingerprints, runtime_fingerprint]
+properties:
+  runtime_type: {const: STORY_RUNTIME}
+  schema_version: {type: integer, const: 1}
+  skill_version: {type: string, pattern: '^4\.5\.'}
+  status: {enum: [VALID, STALE, REBUILD_REQUIRED]}
+  scope: {type: object, additionalProperties: true}
+  source_versions: {type: object, additionalProperties: true}
+  source_fingerprints: {type: object, additionalProperties: true}
+  runtime_fingerprint: {type: string}
+  story_facts: {type: object, additionalProperties: true}
+  screenplay_lock_ref: {type: [string, 'null']}
+  canon_boundaries: {type: array, items: {type: string}}
+  invalidation_triggers: {type: array, items: {type: string}}

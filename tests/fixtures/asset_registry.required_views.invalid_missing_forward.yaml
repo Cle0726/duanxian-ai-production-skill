@@ -1,0 +1,186 @@
+schema_version: 5
+skill_version: 4.5.4
+assets:
+- asset_id: ASSET_WAGON_LAYOUT
+  asset_display_name: ASSET_WAGON_LAYOUT
+  native_token: '@ASSET_WAGON_LAYOUT'
+  asset_type: ROOM_LAYOUT_DIAGRAM
+  scope: EPISODE
+  authority_role: SPATIAL_PLANNING
+  version: 1
+  status: APPROVED
+  file_path: ASSET_WAGON_LAYOUT.png
+  fingerprint_type: FILE_SHA256
+  fingerprint: hash-layout
+  approval_ref: APR_ASSET_WAGON_LAYOUT
+  source_refs: []
+  parent_refs: []
+  shot_id: null
+  video_unit_id: null
+  time_scope: null
+  layout_type: PLANNING_DIAGRAM
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles: []
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: false
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  archive_status: UNKNOWN
+  location_entity_id: WAGON_INTERIOR_01
+  relation_ids: []
+  obligation_ids: []
+  visual_relation_role: SPATIAL_CANON_DIAGRAM
+  storyboard_cleanliness: null
+  media_kind: DIAGRAM
+  look_domain: INTERIOR
+  cascade_stage: SPATIAL_DIAGRAM
+  justification:
+    why_required: regression
+    required_by:
+    - EV_WAGON_DIALOG
+    source_requirement_refs:
+    - EV_WAGON_DIALOG
+    downstream_use:
+    - STORYBOARD
+    - VIDEO_CONDITIONING
+    reuse_expectation: ONE_EPISODE
+  derivation: null
+  visual_evidence_ref: null
+  visual_evidence_status: NOT_REQUIRED
+  visual_evidence_source_fingerprint: null
+  visual_fact_codes: []
+  visual_issue_codes: []
+- asset_id: ASSET_WAGON_CANON
+  asset_display_name: ASSET_WAGON_CANON
+  native_token: '@ASSET_WAGON_CANON'
+  asset_type: ENV_CANON_MASTER
+  scope: EPISODE
+  authority_role: SPATIAL_PLANNING
+  version: 1
+  status: APPROVED
+  file_path: ASSET_WAGON_CANON.png
+  fingerprint_type: FILE_SHA256
+  fingerprint: hash-canon
+  approval_ref: APR_ASSET_WAGON_CANON
+  source_refs: []
+  parent_refs: []
+  shot_id: null
+  video_unit_id: null
+  time_scope: null
+  layout_type: SINGLE_FRAME
+  transient_content_policy: CLEAN_CANON
+  allowed_roles: []
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  archive_status: UNKNOWN
+  location_entity_id: WAGON_INTERIOR_01
+  relation_ids: []
+  obligation_ids: []
+  visual_relation_role: NONE
+  storyboard_cleanliness: null
+  media_kind: IMAGE
+  look_domain: INTERIOR
+  cascade_stage: CLEAN_CANON
+  justification:
+    why_required: regression
+    required_by:
+    - EV_WAGON_DIALOG
+    source_requirement_refs:
+    - EV_WAGON_DIALOG
+    downstream_use:
+    - STORYBOARD
+    - VIDEO_CONDITIONING
+    reuse_expectation: ONE_EPISODE
+  derivation: null
+  visual_evidence_ref: null
+  visual_evidence_status: NOT_REQUIRED
+  visual_evidence_source_fingerprint: null
+  visual_fact_codes: []
+  visual_issue_codes: []
+- asset_id: ASSET_WAGON_REVERSE
+  asset_display_name: ASSET_WAGON_REVERSE
+  native_token: '@ASSET_WAGON_REVERSE'
+  asset_type: DERIVED_COVERAGE_VIEW
+  scope: EPISODE
+  authority_role: PRIMARY_VIEW
+  version: 1
+  status: APPROVED
+  file_path: ASSET_WAGON_REVERSE.png
+  fingerprint_type: FILE_SHA256
+  fingerprint: hash-rev
+  approval_ref: APR_ASSET_WAGON_REVERSE
+  source_refs: []
+  parent_refs: []
+  shot_id: null
+  video_unit_id: null
+  time_scope: null
+  layout_type: SINGLE_FRAME
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles: []
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: true
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  archive_status: UNKNOWN
+  location_entity_id: WAGON_INTERIOR_01
+  relation_ids: []
+  obligation_ids: []
+  visual_relation_role: NONE
+  storyboard_cleanliness: null
+  media_kind: IMAGE
+  look_domain: INTERIOR
+  cascade_stage: COVERAGE
+  justification:
+    why_required: regression
+    required_by:
+    - EV_WAGON_DIALOG
+    source_requirement_refs:
+    - EV_WAGON_DIALOG
+    downstream_use:
+    - STORYBOARD
+    - VIDEO_CONDITIONING
+    reuse_expectation: ONE_EPISODE
+  derivation:
+    spatial_parent_refs:
+    - ASSET_WAGON_LAYOUT
+    visual_parent_refs:
+    - ASSET_WAGON_CANON
+    event_node_ids:
+    - EV_WAGON_DIALOG
+    character_route_ids: []
+    camera_origin: FRONT_CABIN
+    view_direction: AXIS_TO_REAR_BENCH
+    required_visible_anchor_ids:
+    - REAR_BENCH_ANCHOR
+    predicted_shot_ids:
+    - SH05
+    reciprocal_relation_id: null
+    reciprocal_pair_asset_id: null
+    view_requirement_ids:
+    - VR_WAGON_REVERSE
+    view_role: REVERSE
+    camera_origin_zone_id: FRONT_CABIN
+    camera_origin_anchor_id: CAM_FRONT_CENTER
+    view_target_entity_id: WAGON_INTERIOR_01
+    view_target_anchor_id: REAR_BENCH_ANCHOR
+    view_direction_code: AXIS_TO_REAR_BENCH
+    forbidden_visible_anchor_ids: []
+    candidate_set_id: CSET_VR_WAGON_REVERSE
+    candidate_index: 0
+  visual_evidence_ref: VE_ASSET_WAGON_REVERSE
+  visual_evidence_status: CURRENT
+  visual_evidence_source_fingerprint: hash-rev
+  visual_fact_codes:
+  - CABIN_REVERSE_AXIS_READABLE
+  visual_issue_codes: []

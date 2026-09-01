@@ -1,0 +1,77 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/prop_canon_view_set.schema.yaml
+title: Duanxian Prop Canon View Set
+type: object
+required:
+- schema_version
+- skill_version
+- prop_id
+- surface_inventory
+- closure_status
+- views
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  prop_id:
+    type: string
+  closure_status:
+    enum:
+    - OPEN
+    - PARTIAL
+    - CLOSED
+  nearest_visual_parent_routing:
+    type: boolean
+  surface_inventory:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required:
+      - surface_id
+      - criticality
+      properties:
+        surface_id:
+          type: string
+        criticality:
+          enum:
+          - CRITICAL
+          - OPTIONAL
+          - NOT_REQUIRED
+        covered_by_view_ids:
+          type: array
+          items:
+            type: string
+  views:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required:
+      - view_id
+      - view_role
+      properties:
+        view_id:
+          type: string
+        view_role:
+          enum:
+          - HERO_3Q_FRONT
+          - REVERSE_3Q
+          - FUNCTIONAL_SIDE
+          - TOP_MECHANISM
+          - OPEN_STATE
+          - ACTIVE_STATE
+          - OTHER
+        view_yaw_deg:
+          type:
+          - number
+          - 'null'
+          minimum: -180
+          maximum: 180
+        asset_id:
+          type:
+          - string
+          - 'null'

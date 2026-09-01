@@ -1,0 +1,143 @@
+schema_version: 5
+skill_version: 4.5.2
+assets:
+- asset_id: ASSET_RESTAURANT_CLOCK_SIGHTLINE
+  asset_display_name: ASSET_RESTAURANT_CLOCK_SIGHTLINE
+  native_token: null
+  asset_type: SCENE_CLUE_VIEW
+  scope: REGRESSION_NOT_CANON
+  authority_role: RELATION_VISUAL_PROOF
+  version: 1
+  status: APPROVED
+  file_path: null
+  fingerprint_type: STRUCTURED_SHA256
+  fingerprint: ASSET_RESTAURANT_CLOCK_SIGHTLINE
+  approval_ref: APR_ASSET_RESTAURANT_CLOCK_SIGHTLINE
+  source_refs: []
+  parent_refs: []
+  shot_id: REST_SHOT_A
+  video_unit_id: null
+  time_scope: null
+  layout_type: SINGLE_FRAME
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles:
+  - SCENE_CLUE_VIEW
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: false
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  archive_status: NOT_REQUESTED
+  location_entity_id: CLOCK_TOWER_01
+  relation_ids:
+  - REL_A_B
+  obligation_ids:
+  - OB_CLUE
+  visual_relation_role: SCENE_CLUE_VIEW
+- asset_id: ASSET_CLOCK_IDENTITY_BRIDGE
+  asset_display_name: ASSET_CLOCK_IDENTITY_BRIDGE
+  native_token: null
+  asset_type: LOCATION_IDENTITY_VIEW
+  scope: REGRESSION_NOT_CANON
+  authority_role: RELATION_VISUAL_PROOF
+  version: 1
+  status: APPROVED
+  file_path: null
+  fingerprint_type: STRUCTURED_SHA256
+  fingerprint: ASSET_CLOCK_IDENTITY_BRIDGE
+  approval_ref: APR_ASSET_CLOCK_IDENTITY_BRIDGE
+  source_refs: []
+  parent_refs: []
+  shot_id: CLOCK_SHOT_B
+  video_unit_id: null
+  time_scope: null
+  layout_type: SINGLE_FRAME
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles:
+  - LOCATION_IDENTITY_PROOF
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: false
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  archive_status: NOT_REQUESTED
+  location_entity_id: CLOCK_TOWER_01
+  relation_ids:
+  - REL_A_B
+  obligation_ids:
+  - OB_IDENTITY
+  visual_relation_role: LOCATION_IDENTITY_PROOF
+- asset_id: ASSET_A_EXIT
+  asset_display_name: ASSET_A_EXIT
+  native_token: null
+  asset_type: VIDEO_CUT_EXIT_FRAME
+  scope: REGRESSION_NOT_CANON
+  authority_role: PRIMARY_VISUAL_CONDITIONING
+  version: 1
+  status: APPROVED_VIDEO_CONDITIONING
+  file_path: null
+  fingerprint_type: STRUCTURED_SHA256
+  fingerprint: ASSET_A_EXIT
+  approval_ref: APR_ASSET_A_EXIT
+  source_refs: []
+  parent_refs: []
+  shot_id: REST_SHOT_A
+  video_unit_id: VU_A
+  time_scope: null
+  layout_type: SINGLE_FRAME
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles:
+  - CUT_EXIT
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: true
+    promotion_required: false
+    promoted_for_shot: REST_SHOT_A
+    promotion_qc: PASS
+  archive_status: NOT_REQUESTED
+  location_entity_id: CLOCK_TOWER_01
+  relation_ids:
+  - REL_A_B
+  obligation_ids:
+  - OB_EXIT
+  visual_relation_role: CUT_EXIT
+- asset_id: ASSET_B_ENTRY
+  asset_display_name: ASSET_B_ENTRY
+  native_token: null
+  asset_type: VIDEO_CUT_ENTRY_FRAME
+  scope: REGRESSION_NOT_CANON
+  authority_role: PRIMARY_VISUAL_CONDITIONING
+  version: 1
+  status: APPROVED_VIDEO_CONDITIONING
+  file_path: null
+  fingerprint_type: STRUCTURED_SHA256
+  fingerprint: ASSET_B_ENTRY
+  approval_ref: APR_ASSET_B_ENTRY
+  source_refs: []
+  parent_refs: []
+  shot_id: CLOCK_SHOT_B
+  video_unit_id: VU_B
+  time_scope: null
+  layout_type: SINGLE_FRAME
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles:
+  - CUT_ENTRY
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: true
+    promotion_required: false
+    promoted_for_shot: CLOCK_SHOT_B
+    promotion_qc: PASS
+  archive_status: NOT_REQUESTED
+  location_entity_id: CLOCK_TOWER_01
+  relation_ids:
+  - REL_A_B
+  obligation_ids:
+  - OB_ENTRY
+  visual_relation_role: CUT_ENTRY

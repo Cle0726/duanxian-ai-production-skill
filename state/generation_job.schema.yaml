@@ -1,0 +1,382 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/generation_job.schema.yaml
+title: Duanxian Generation Job V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- generation_job_id
+- media_kind
+- target_asset_id
+- target_asset_type
+- route
+- status
+- required_bindings
+- lineage
+- color_binding
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  generation_job_id:
+    type: string
+    minLength: 1
+  media_kind:
+    enum:
+    - IMAGE
+    - VIDEO
+  target_asset_id:
+    type: string
+    minLength: 1
+  target_asset_type:
+    type: string
+    minLength: 1
+  route:
+    type: string
+    minLength: 1
+  scene_id:
+    type:
+    - string
+    - 'null'
+  shot_id:
+    type:
+    - string
+    - 'null'
+  video_unit_id:
+    type:
+    - string
+    - 'null'
+  attempt_no:
+    type: integer
+    minimum: 1
+    default: 1
+  status:
+    enum:
+    - PLANNED
+    - READY
+    - RUNNING
+    - RESULT_AVAILABLE
+    - CANDIDATE_CAPTURED
+    - QC_PASS_WAITING_APPROVAL
+    - APPROVED_PROMOTED
+    - VIDEO_TAKE_CAPTURED
+    - RETRY_REQUIRED
+    - BLOCKED
+    - CANCELLED
+  host_profile:
+    type:
+    - string
+    - 'null'
+  prompt_ref:
+    type:
+    - string
+    - 'null'
+  prompt_fingerprint:
+    type:
+    - string
+    - 'null'
+  required_bindings:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - asset_id
+      - role
+      - binding_mode
+      properties:
+        asset_id:
+          type: string
+        role:
+          type: string
+        binding_mode:
+          enum:
+          - MUST_BIND
+          - DIRECT_BIND
+          - EDIT_TARGET
+          - CONTINUITY_ENTRY
+          - PRIMARY_VIEW
+          - SPATIAL_AUTHORITY
+          - COLOR_AUTHORITY
+          - STYLE_AUTHORITY
+          - AUDIO_AUTHORITY
+          - VOICE_AUTHORITY
+          - RHYTHM_AUTHORITY
+          - AMBIENCE_AUTHORITY
+          - MUSIC_AUTHORITY
+          - SFX_AUTHORITY
+        native_token:
+          type:
+          - string
+          - 'null'
+        asset_display_name:
+          type:
+          - string
+          - 'null'
+        time_scope:
+          type:
+          - string
+          - 'null'
+  color_binding:
+    type: object
+    additionalProperties: false
+    required:
+    - required
+    - authority_level
+    properties:
+      required:
+        type: boolean
+      authority_level:
+        enum:
+        - GLOBAL_COLOR_CARD
+        - SCENE_COLOR_CARD
+        - NONE
+      color_asset_id:
+        type:
+        - string
+        - 'null'
+      scene_scope:
+        type:
+        - string
+        - 'null'
+      native_token:
+        type:
+        - string
+        - 'null'
+      binding_status:
+        enum:
+        - BOUND
+        - PENDING_NATIVE_BINDING
+        - NOT_REQUIRED
+        - UNKNOWN
+      projection_mode:
+        enum:
+        - DIRECT_COLOR_REFERENCE
+        - TEXT_COLOR_CONTROL
+        - LINEAGE_ONLY
+        - VALUE_LIGHTING_LINEAGE_ONLY
+        - NOT_APPLICABLE
+        - UNKNOWN
+      reference_reason_code:
+        enum:
+        - PRIMARY_VISUAL_INHERITS_COLOR
+        - COLOR_DRIFT_OBSERVED
+        - COLOR_NARRATIVE_CRITICAL
+        - MULTISHOT_COLOR_DRIFT_RISK
+        - PRIMARY_VISUAL_COLOR_UNRELIABLE
+        - REFERENCE_SLOT_PRESSURE
+        - PROVIDER_DIRECT_COLOR_REQUIRED
+        - PROVIDER_DIRECT_COLOR_UNSUPPORTED
+        - USER_REQUIRED
+        - OTHER
+        - NONE
+  lineage:
+    type: object
+    additionalProperties: false
+    required:
+    - parent_asset_ids
+    properties:
+      parent_asset_ids:
+        type: array
+        items:
+          type: string
+      derivation_kind:
+        enum:
+        - MASTER
+        - COVERAGE_FROM_MASTER
+        - SHOT_EXECUTION_FROM_CANON
+        - SCENE_COLOR_FROM_BASE
+        - VIDEO_FROM_SHOT_EXECUTION
+        - STATE_VARIANT
+        - OTHER
+        - VIDEO_FROM_GENERATION_ENVELOPE
+        - STORYBOARD_CONTACT_SHEET_MASTER
+        - STORYBOARD_PANELS_FROM_CONTACT_SHEET
+      source_generation_job_ids:
+        type: array
+        items:
+          type: string
+  result_handles:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - candidate_id
+      properties:
+        candidate_id:
+          type: string
+        tool_result_handle:
+          type:
+          - string
+          - 'null'
+        file_path:
+          type:
+          - string
+          - 'null'
+        fingerprint:
+          type:
+          - string
+          - 'null'
+        captured:
+          type: boolean
+        attempt_no:
+          type: integer
+          minimum: 1
+        eligible_for_selection:
+          type: boolean
+  selected_candidate_id:
+    type:
+    - string
+    - 'null'
+  approval_ref:
+    type:
+    - string
+    - 'null'
+  failure_code:
+    type:
+    - string
+    - 'null'
+  location_entity_id:
+    type:
+    - string
+    - 'null'
+  look_domain:
+    enum:
+    - INTERIOR
+    - EXTERIOR
+    - MIXED
+    - NONE
+    - UNKNOWN
+    - null
+  execution_plan_ref:
+    type:
+    - string
+    - 'null'
+  execution_plan_fingerprint:
+    type:
+    - string
+    - 'null'
+  prompt_artifact_ref:
+    type:
+    - string
+    - 'null'
+  generation_envelope_id:
+    type:
+    - string
+    - 'null'
+  format_mode:
+    type:
+    - string
+    - 'null'
+    enum:
+    - ONER
+    - SEQUENTIAL_MULTISHOT
+    - TIMED_MULTISHOT
+    - FREESTYLE_BROLL
+    - null
+  episode_id:
+    type:
+    - string
+    - 'null'
+  sequence_id:
+    type:
+    - string
+    - 'null'
+  temporal_binding:
+    type:
+    - object
+    - 'null'
+    additionalProperties: false
+    required:
+    - entry_mode
+    - prompt_profile
+    - temporal_entry_plan_ref
+    - temporal_entry_plan_fingerprint
+    - provider_transport
+    properties:
+      entry_mode:
+        enum:
+        - SEAMLESS_EXTEND
+        - GUIDED_CONTINUATION
+        - CUT_REPROJECT
+        - SCENE_REBASE
+      prompt_profile:
+        enum:
+        - DELTA_CONTINUATION_PROMPT
+        - TRANSITION_PROMPT
+        - FULL_SHOT_PROMPT
+      temporal_entry_plan_ref:
+        type: string
+        minLength: 1
+      temporal_entry_plan_fingerprint:
+        type: string
+        pattern: ^[0-9a-f]{64}$
+      temporal_t0_sufficiency_ref:
+        type:
+        - string
+        - 'null'
+      temporal_t0_sufficiency_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+      continuity_snapshot_ref:
+        type:
+        - string
+        - 'null'
+      continuity_snapshot_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+      target_frame_ref:
+        type:
+        - string
+        - 'null'
+      target_frame_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+      provider_transport:
+        type: object
+        additionalProperties: true
+allOf:
+- if:
+    properties:
+      media_kind:
+        const: VIDEO
+    required:
+    - media_kind
+  then:
+    required:
+    - video_unit_id
+    - prompt_ref
+    - prompt_fingerprint
+    - execution_plan_ref
+    - execution_plan_fingerprint
+    - prompt_artifact_ref
+    properties:
+      video_unit_id:
+        type: string
+        minLength: 1
+      prompt_ref:
+        type: string
+        minLength: 1
+      prompt_fingerprint:
+        type: string
+        minLength: 16
+      execution_plan_ref:
+        type: string
+        minLength: 1
+      execution_plan_fingerprint:
+        type: string
+        minLength: 16
+      prompt_artifact_ref:
+        type: string
+        minLength: 1

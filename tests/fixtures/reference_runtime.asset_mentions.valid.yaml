@@ -1,0 +1,46 @@
+runtime_type: REFERENCE_RUNTIME
+schema_version: 3
+skill_version: 4.5.2
+status: VALID
+scope:
+  episode: EP01
+  shot: SH01
+source_fingerprints:
+  assets: abc
+runtime_fingerprint: ref123
+reference_surface_mode: NAMED_ASSET_MENTION_REQUIRED
+bindings:
+- asset_id: CHAR_MUYIN_MASTER
+  asset_display_name: 穆音角色母图
+  native_token: '@穆音角色母图'
+  binding_mode: MUST_BIND
+  emit_on_prompt: true
+  token_status: VERIFIED
+  primary_visual: false
+  direct_video_eligible: false
+- asset_id: ENV_STAGE_REVERSE
+  asset_display_name: 剧院舞台侧后方场景
+  native_token: '@剧院舞台侧后方场景'
+  binding_mode: DIRECT_BIND
+  emit_on_prompt: true
+  token_status: VERIFIED
+  primary_visual: false
+  direct_video_eligible: false
+- asset_id: VIDCOND_SH01_FIRST
+  asset_display_name: SH01视频首帧
+  native_token: '@SH01视频首帧'
+  asset_type: VIDEO_FIRST_FRAME
+  authority_role: PRIMARY_VISUAL_CONDITIONING
+  binding_mode: MUST_BIND
+  primary_visual: true
+  direct_video_eligible: true
+  video_unit_id: VU01
+  time_scope: ENTRY
+  emit_on_prompt: true
+  token_status: VERIFIED
+  short_execution_clause: 以此作为当前Video Unit最终开场画面。
+unresolved_fields: []
+missing_required_mentions: []
+slot_status: PASS
+invalidation_triggers: []
+primary_visual_status: PASS

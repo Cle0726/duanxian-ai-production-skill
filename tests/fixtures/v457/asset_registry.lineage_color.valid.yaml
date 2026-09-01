@@ -1,0 +1,127 @@
+schema_version: 7
+skill_version: 4.5.7
+assets:
+- asset_id: COLOR-GLOBAL-01
+  asset_display_name: 基础色卡
+  native_token: '@基础色卡'
+  asset_type: GLOBAL_COLOR_CARD
+  status: APPROVED
+  authority_role: COLOR
+  media_kind: IMAGE
+  scene_color_authority_id: null
+  color_authority_level: GLOBAL_COLOR_CARD
+  generation_job_id: JOB-COLOR-GLOBAL
+  candidate_record_ids:
+  - CAND-COLOR-G
+  lineage:
+    parent_asset_ids: []
+    derivation_kind: MASTER
+    source_generation_job_ids: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+  color_authority_id: null
+- asset_id: COLOR-SCENE-01
+  asset_display_name: 酒吧场景色卡
+  native_token: '@酒吧场景色卡'
+  asset_type: SCENE_COLOR_EXTENSION_CARD
+  status: APPROVED
+  authority_role: COLOR
+  media_kind: IMAGE
+  location_entity_id: LOC-BAR
+  look_domain: INTERIOR
+  scene_color_authority_id: null
+  color_authority_level: SCENE_COLOR_CARD
+  generation_job_id: JOB-COLOR-SCENE-01
+  candidate_record_ids:
+  - CAND-COLOR-S1
+  lineage:
+    parent_asset_ids:
+    - COLOR-GLOBAL-01
+    derivation_kind: SCENE_COLOR_FROM_BASE
+    source_generation_job_ids:
+    - JOB-COLOR-SCENE-01
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+  scene_id: SCENE-BAR
+  color_authority_id: COLOR-GLOBAL-01
+- asset_id: ENV-BAR-MASTER
+  asset_display_name: 酒吧场景母图
+  native_token: '@酒吧场景母图'
+  asset_type: ENVIRONMENT_CLEAN_CANON
+  status: APPROVED
+  authority_role: ENVIRONMENT
+  media_kind: IMAGE
+  location_entity_id: LOC-BAR
+  look_domain: INTERIOR
+  scene_color_authority_id: COLOR-SCENE-01
+  color_authority_level: SCENE_COLOR_CARD
+  generation_job_id: JOB-ENV-BAR
+  candidate_record_ids:
+  - CAND-ENV-BAR
+  lineage:
+    parent_asset_ids: []
+    derivation_kind: MASTER
+    source_generation_job_ids:
+    - JOB-ENV-BAR
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+  scene_id: SCENE-BAR
+  color_authority_id: COLOR-SCENE-01
+- asset_id: ENV-BAR-COV-DOOR
+  asset_display_name: 酒吧门侧覆盖图
+  native_token: '@酒吧门侧覆盖图'
+  asset_type: ENVIRONMENT_COVERAGE
+  status: APPROVED
+  authority_role: ENVIRONMENT
+  media_kind: IMAGE
+  location_entity_id: LOC-BAR
+  look_domain: INTERIOR
+  scene_color_authority_id: COLOR-SCENE-01
+  color_authority_level: SCENE_COLOR_CARD
+  generation_job_id: JOB-ENV-COV-01
+  candidate_record_ids:
+  - CAND-COV-01
+  lineage:
+    parent_asset_ids:
+    - ENV-BAR-MASTER
+    derivation_kind: COVERAGE_FROM_MASTER
+    source_generation_job_ids:
+    - JOB-ENV-COV-01
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+  scene_id: SCENE-BAR
+  color_authority_id: COLOR-SCENE-01
+- asset_id: VIDEO-SH017-FIRST
+  asset_display_name: SH017视频首帧
+  native_token: '@SH017视频首帧'
+  asset_type: VIDEO_SHOT_EXECUTION_FRAME
+  status: APPROVED_VIDEO_CONDITIONING
+  authority_role: VIDEO_CONDITIONING
+  media_kind: IMAGE
+  location_entity_id: LOC-BAR
+  look_domain: INTERIOR
+  scene_color_authority_id: COLOR-SCENE-01
+  color_authority_level: SCENE_COLOR_CARD
+  generation_job_id: JOB-SH017-FRAME
+  candidate_record_ids:
+  - CAND-SH017
+  lineage:
+    parent_asset_ids:
+    - ENV-BAR-COV-DOOR
+    derivation_kind: SHOT_EXECUTION_FROM_CANON
+    source_generation_job_ids:
+    - JOB-SH017-FRAME
+  shot_id: SH017
+  video_unit_id: VU017
+  time_scope: t0
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: true
+    promotion_required: false
+    promotion_qc: PASS
+  scene_id: SCENE-BAR
+  color_authority_id: COLOR-SCENE-01

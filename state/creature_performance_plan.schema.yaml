@@ -1,0 +1,226 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/creature_performance_plan.schema.yaml
+title: Duanxian Creature Performance Plan
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- creature_performance_plan_id
+- episode_id
+- scene_id
+- status
+- active_threat_present
+- creatures
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  creature_performance_plan_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type: string
+    minLength: 1
+  scene_id:
+    type: string
+    minLength: 1
+  experience_pressure_plan_ref:
+    type:
+    - string
+    - 'null'
+  status:
+    enum:
+    - LOCKED
+    - NOT_REQUIRED
+    - REVISE_REQUIRED
+  active_threat_present:
+    type: boolean
+  creatures:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - creature_id
+      - threat_importance
+      - threat_status
+      - behavior_thesis
+      - perception_method
+      - locomotion_signature
+      - weight_inertia
+      - body_coordination
+      - idle_threat_motion
+      - target_tracking
+      - approach_pattern
+      - pause_pattern
+      - attack_preparation
+      - commitment_motion
+      - recovery_behavior
+      - environment_coupling
+      - sound_coupling
+      - stillness
+      - reference_pose_policy
+      - threat_coverage_beat_ids
+      - behavior_beat_map
+      properties:
+        creature_id:
+          type: string
+          minLength: 1
+        threat_importance:
+          enum:
+          - MINOR
+          - MAJOR
+          - HERO
+        threat_status:
+          enum:
+          - ACTIVE_THREAT
+          - PASSIVE_THREAT
+          - INACTIVE
+        behavior_thesis:
+          type: string
+        perception_method:
+          type: string
+        locomotion_signature:
+          type: string
+        weight_inertia:
+          type: string
+        body_coordination:
+          type: string
+        idle_threat_motion:
+          type: string
+        target_tracking:
+          type: string
+        approach_pattern:
+          type: string
+        pause_pattern:
+          type: string
+        attack_preparation:
+          type: string
+        commitment_motion:
+          type: string
+        recovery_behavior:
+          type: string
+        environment_coupling:
+          type: string
+        sound_coupling:
+          type: string
+        scale_read_required:
+          type: boolean
+        scale_anchor:
+          type:
+          - string
+          - 'null'
+        stillness:
+          type: object
+          additionalProperties: false
+          required:
+          - mode
+          properties:
+            mode:
+              enum:
+              - NOT_STATIC
+              - PREDATORY_STILLNESS
+              - NARRATIVE_INACTIVE
+              - STATIC_UNJUSTIFIED
+            reason:
+              type:
+              - string
+              - 'null'
+            pressure_effect:
+              type:
+              - string
+              - 'null'
+            exit_trigger:
+              type:
+              - string
+              - 'null'
+        reference_pose_policy:
+          type: object
+          additionalProperties: false
+          required:
+          - canon_master_ref
+          - pose_bias_risk
+          - action_anchor_strategy
+          properties:
+            canon_master_ref:
+              type:
+              - string
+              - 'null'
+            pose_bias_risk:
+              enum:
+              - LOW
+              - MEDIUM
+              - HIGH
+            action_anchor_strategy:
+              enum:
+              - NONE
+              - SHOT_EXECUTION_FRAME
+              - CREATURE_ACTION_ANCHOR
+              - LOCOMOTION_ANCHOR
+              - ATTACK_PREP_ANCHOR
+              - SCALE_ENVIRONMENT_ANCHOR
+            action_anchor_ref:
+              type:
+              - string
+              - 'null'
+        threat_coverage_beat_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        behavior_anchor_needs:
+          type: array
+          uniqueItems: true
+          items:
+            enum:
+            - LOCOMOTION_ANCHOR
+            - THREAT_POSE_ANCHOR
+            - ATTACK_PREP_ANCHOR
+            - SCALE_ENVIRONMENT_ANCHOR
+        behavior_beat_map:
+          type: array
+          uniqueItems: false
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - beat_id
+            - visibility
+            - perception_action
+            - body_action
+            - target_tracking_change
+            - environment_response
+            - pressure_function
+            - exit_trigger
+            properties:
+              beat_id:
+                type: string
+                minLength: 1
+              visibility:
+                enum:
+                - OFFSCREEN
+                - PARTIAL
+                - VISIBLE
+              perception_action:
+                type: string
+                minLength: 1
+              body_action:
+                type: string
+                minLength: 1
+              target_tracking_change:
+                type: string
+                minLength: 1
+              environment_response:
+                type: string
+                minLength: 1
+              pressure_function:
+                type: string
+                minLength: 1
+              exit_trigger:
+                type: string
+                minLength: 1

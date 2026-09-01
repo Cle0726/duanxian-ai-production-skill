@@ -1,0 +1,189 @@
+schema_version: 1
+skill_version: 4.5.11
+purpose: 静态分类全部Template。V4.5.7在Generation Execution Spine基础上增加Editorial Grammar、Generation Envelope与受控Multi-shot白描宫格硬门；规则、生成调用与剪辑证据继续分权。
+classes:
+  CORE_SOURCE_AUTHORITY:
+    policy: 保留完整创作规则；首次设计/冲突/版本变化时加载。
+    modules:
+    - action_feasibility_prop_limb_continuity_engine.md
+    - actor_performance_engine.md
+    - body_identity_presentation_authority.md
+    - character_appeal_silhouette_system.md
+    - character_asset_standard.md
+    - character_costume_dramaturgy.md
+    - character_identity_differentiation_engine.md
+    - cinematic_combat_vfx_engine.md
+    - cinematic_spatial_staging_engine.md
+    - cinematography_grammar.md
+    - color_script_derivation_engine.md
+    - combat_choreography_engine.md
+    - crowd_presence_ambient_life_engine.md
+    - director_architecture_engine.md
+    - director_intelligence_core.md
+    - director_taste_grammar_bible.md
+    - director_to_ai_execution_boundary.md
+    - directorial_department_critique.md
+    - editorial_grammar_engine.md
+    - environment_asset_standard.md
+    - everyday_realism_plausibility_gate.md
+    - face_identity_matrix.md
+    - hair_identity_architecture.md
+    - music_identity_mapping.md
+    - musical_eye_motif_system.md
+    - natural_motion_kinematic_performance_engine.md
+    - performance_causality_emotional_acting.md
+    - personal_adornment_identity_system.md
+    - project_style_dna.md
+    - prop_asset_standard.md
+    - scene_color_card_auto_derivation.md
+    - sequence_arc_engine.md
+    - source_wardrobe_adaptation_authority.md
+    - transformation_asset_standard.md
+    - transformation_beauty_core_five.md
+    - transformation_splendor_architecture.md
+    - visual_asset_usage_authority.md
+    - visual_style_authority_engine.md
+    - voice_direction_prosody_engine.md
+    - wardrobe_diversity_design_matrix.md
+    - wardrobe_style_design_engine.md
+    - world_state_continuity_engine.md
+    - narrative_fx_asset_standard.md
+    - performance_asset_requirement_engine.md
+    - creature_performance_engine.md
+    - screen_experience_genre_pressure_engine.md
+    context_tier: T2_CONDITIONAL_AUTHORITY
+    default_load: ROUTE_OR_CAPABILITY_ONLY
+  RUNTIME_COMPILE_SOURCE:
+    policy: 用于编译Runtime；正常Fast Path不全文重复读取。
+    modules:
+    - asset_consolidation_sufficiency_audit.md
+    - base_visual_authority_manifest.md
+    - camera_motion_contract.md
+    - character_asset_requirement_set.md
+    - color_authority_preservation_gate.md
+    - director_spatial_reconciliation_gate.md
+    - execution_reference_semantics.md
+    - functional_minor_human_asset_protocol.md
+    - generation_execution_spine.md
+    - generation_envelope_engine.md
+    - generation_qc_contract_separation_gate.md
+    - image_candidate_strategy.md
+    - inpaint_local_patch_authority_engine.md
+    - narrative_execution_normalizer.md
+    - personal_creator_cost_efficiency_engine.md
+    - previsualization_strategy_router.md
+    - production_support_reference_engine.md
+    - prompt_compiler.md
+    - prompt_semantic_deduplication_engine.md
+    - reference_binding_semantic_verification.md
+    - reference_field_coverage_map.md
+    - reference_resolver.md
+    - reference_role_fidelity_isolation.md
+    - render_quality_authority.md
+    - scene_pack_reuse_first.md
+    - segment_entry_modes.md
+    - segment_planner.md
+    - shot_assembly_asset_layer.md
+    - shot_coverage_asset_derivation.md
+    - shot_proof_capacity_motion_budget.md
+    - spatial_execution_translation.md
+    - video_execution_plan.md
+    - style_authority_projection_gate.md
+    - task_bound_reference_binding.md
+    - video_audio_generation_boundary.md
+    - video_conditioning_asset_architecture.md
+    - video_generation_duration_authority.md
+    - visual_beat_music_sync_handoff.md
+    - visual_evidence_handoff.md
+    - media_review_proxy_protocol.md
+    - visual_reference_routing.md
+    - asset_library_completeness_policy.md
+    - temporal_reference_hygiene.md
+    context_tier: T2_CONDITIONAL_AUTHORITY
+    default_load: SKIP_WHEN_RUNTIME_FRESH
+  STRUCTURED_STATE_COMPAT:
+    policy: V4.3以state/runtime schema为机器源，本Markdown保留语义/迁移兼容。
+    modules:
+    - character_closet_registry.md
+    - continuity_snapshot.md
+    - shot_boundary_continuity_contract.md
+    - spatial_continuity_state.md
+    - episode_workspace.md
+    - eye_signature_ledger.md
+    - music_identity_registry.md
+    - musical_eye_motif_registry.md
+    - qc_scope_freeze_ledger.md
+    - screenplay_lock_template.md
+    - story_lock_template.md
+    - typed_video_execution_state.md
+    - voice_identity_audio_status.md
+    - audio_asset_management.md
+    - voice_tts_handoff.md
+    context_tier: T1_ROUTE_RUNTIME
+    default_load: STRUCTURED_STATE_FIRST
+  DETERMINISTIC_OR_GATE_CANDIDATE:
+    policy: 能机械化的部分优先脚本；Markdown保留语义边界与非机械判断。
+    modules:
+    - approved_asset_archiver.md
+    - asset_anatomy_integrity_gate.md
+    - asset_aspect_ratio_authority.md
+    - asset_intake.md
+    - auto_naming.md
+    - candidate_triage.md
+    - change_impact.md
+    - continuity_priority.md
+    - foreground_figure_integrity_gate.md
+    - identity_readability_gate.md
+    - model_facing_prompt_surface_sanitizer.md
+    - post_compile_constraint_closure.md
+    - prompt_constraint_solver.md
+    - prompt_egress_gate.md
+    - retry_escalation_policy.md
+    - stale_prompt_artifact_gate.md
+    - video_conditioning_readiness_gate.md
+    - video_generation_readiness_gate.md
+    - video_temporal_salvage_qc.md
+    - web_multimodal_qc_upload_budget.md
+    - web_qc_platform_watermark_exception.md
+    context_tier: T3_REPAIR_EXCEPTION
+    default_load: MACHINE_VALIDATION_OR_FAILURE_ONLY
+  CONTROL_PLANE_COMPAT_OR_CONTROLLER:
+    policy: 不得维护第二份Flow/Route；V4.3核心控制转controller/*.yaml。
+    modules:
+    - batch_production.md
+    - decision_authority_conflict_resolution.md
+    - episode_asset_pack_first.md
+    - existing_project_migration.md
+    - failure_diagnosis.md
+    - load_on_demand_controller.md
+    - runtime_efficiency_system.md
+    - system_integrity_authority.md
+    - 一人制片自动执行与生产闸门.md
+    context_tier: T3_REPAIR_EXCEPTION
+    default_load: MACHINE_CONTROL_PLANE_NOT_CREATIVE_CONTEXT
+  OUTPUT_TEMPLATE_OR_DOC:
+    policy: 只定义输出结构/说明，不拥有被引用领域的Source Authority。
+    modules:
+    - asset_master_prompt_template.md
+    - director_breakdown_template.md
+    - new_character_generation_recipe.md
+    - post_production_template.md
+    - screenplay_adaptation_engine.md
+    - source_narrative_parse.md
+    - storyboard_prompt_template.md
+    - storyboard_contact_sheet_sequence.md
+    - storyboard_entity_binding_map.md
+    - style_anchor_prompt_template.md
+    - video_prompt_template.md
+    - wardrobe_environment_analysis_template.md
+    - web_asset_storyboard_qc_handoff.md
+    - web_qc_handoff.md
+    - 中文术语与通俗解释.md
+    context_tier: T2_CONDITIONAL_AUTHORITY
+    default_load: CURRENT_OUTPUT_ROUTE_ONLY
+context_loading_contract:
+  policy: controller/context_loading_policy.yaml
+  planner: tools/context_load_planner.py
+  plan_schema: state/context_load_plan.schema.yaml
+  default: ROUTE_SCOPED_LAZY_LOADING
+  module_dependency_graph: controller/context_module_registry.yaml

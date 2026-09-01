@@ -1,0 +1,42 @@
+runtime_type: VIDEO_CONDITIONING_RUNTIME
+schema_version: 2
+skill_version: 4.5.7
+status: VALID
+scope:
+  episode_id: EP01
+source_fingerprints:
+  assets: abc
+runtime_fingerprint: test
+video_units:
+- video_unit_id: VU017
+  shot_ids:
+  - SH017
+  conditioning_strategy: FIRST_FRAME
+  scene_color_authority_id: COLOR-SCENE-01
+  primary_assets:
+  - asset_id: VIDEO-SH017-FIRST
+    role: VIDEO_SHOT_EXECUTION_FRAME
+    approval_status: APPROVED_VIDEO_CONDITIONING
+    direct_video_eligible: true
+    time_scope: t0
+  auxiliary_assets: []
+  required_reference_bindings:
+  - asset_id: VIDEO-SH017-FIRST
+    role: PRIMARY_VISUAL_CONDITIONING
+    native_token: '@SH017视频首帧'
+    binding_status: BOUND
+  qc_status: PASS
+  approval_ref: APR-VU017
+  scene_color_reference_mode: LINEAGE_ONLY
+  scene_color_reference_reason: PRIMARY_VISUAL_INHERITS_COLOR
+  reference_budget:
+    policy: MINIMUM_SUFFICIENT_REFERENCE_SET
+    selected_direct_reference_ids:
+    - VIDEO-SH017-FIRST
+    omitted_authority_ids:
+    - COLOR-SCENE-01
+    slot_limit: 9
+    slots_used: 1
+readiness: PASS
+invalidation_triggers: []
+boundary_pairs: []

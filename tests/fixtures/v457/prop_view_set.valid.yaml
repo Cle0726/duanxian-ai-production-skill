@@ -1,0 +1,17 @@
+schema_version: 1
+skill_version: '4.5.7'
+prop_id: PROP_BOX
+closure_status: CLOSED
+nearest_visual_parent_routing: true
+surface_inventory:
+  - surface_id: FRONT_FACE
+    criticality: CRITICAL
+    covered_by_view_ids: [VIEW_A]
+  - surface_id: OPEN_INTERIOR
+    criticality: CRITICAL
+    covered_by_view_ids: [VIEW_B]
+views:
+  - view_id: VIEW_A
+    view_role: HERO_3Q_FRONT
+  - view_id: VIEW_B
+    view_role: OPEN_STATE

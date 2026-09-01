@@ -1,0 +1,95 @@
+profile_id: DUANXIAN_GENERATION_DEFAULT
+profile_version: 1
+skill_version: 4.5.10
+status: CURRENT_PROJECT_DEFAULT
+verified_for: 《断弦之歌》图片 / Storyboard / Final Video 生成提示词的资产调用表面规则
+reference_surface:
+  mode: HOST_RESOLVED_PROJECT_DEFAULT_NAMED
+  native_mention_syntax: '@{asset_display_name}'
+  ordered_image_fallback_syntax: '@图{index}'
+  ui_binding_without_prompt_mention_allowed: false
+  forbid_fabricated_tokens: true
+  token_sources_in_priority_order:
+  - reference_runtime.bindings[].native_token
+  - asset_registry.assets[].native_token
+  - asset_registry.assets[].asset_display_name
+mandatory_surface_binding_modes:
+- MUST_BIND
+- DIRECT_BIND
+- EDIT_TARGET
+- PATCH_DESIGN_REFERENCE
+- CONTINUITY_ENTRY
+- PRIMARY_VIEW
+- SPATIAL_AUTHORITY
+- COLOR_AUTHORITY
+- STYLE_AUTHORITY
+- AUDIO_AUTHORITY
+- VOICE_AUTHORITY
+- RHYTHM_AUTHORITY
+- AMBIENCE_AUTHORITY
+- MUSIC_AUTHORITY
+- SFX_AUTHORITY
+rules:
+- 先用host_profiles.yaml解析真实Reference Transport；项目默认视频Reference能力类为MULTIMODAL_ALL_ROUND_REFERENCE。若宿主支持命名资产，保持真实@资产Mention；Tool-native/顺序图号宿主保持同一Reference
+  Role语义但映射到其真实Transport。
+- 全能参考底层能力允许多模态职责组合，但项目执行只允许人物/场景/道具/Storyboard/Ending Frame等图片与已登记音频；**参考视频禁止进入Reference Binding**。是否Direct Bind由Reference
+  Resolver决定。
+- 资产库可以完整且很大，但单个Video Job仍执行MINIMUM_SUFFICIENT_REFERENCE_SET；全能参考不是“把所有资产全塞进去”。
+- 当前任务真正参与生成控制的Approved Asset，若其Binding Mode属于mandatory_surface_binding_modes，FINAL_COPY_SURFACE必须出现对应原生@资产Mention。
+- 不得因为资产已经在项目、Workspace、Reference Runtime或UI中存在，就省略Prompt内必须的@资产调用。
+- 若平台只支持顺序图号而不支持命名资产，则由Target Adapter把Native Mention映射为当前真实绑定的@图N；不得凭历史顺序猜图号。
+- 若当前资产没有可验证Native Token/Display Name，Generation Prompt状态必须WITHHELD_PENDING_NATIVE_BINDING，而不是静默删除Reference。
+- '@Mention后只写最短可执行保持句；禁止附内部Asset ID、Version、Path、Authority/MUST_BIND/Registry说明。'
+- WEB_QC的动态@图N仍是独立Evidence编号系统，不得与Generation Asset Mention混用。
+visual_asset_policy:
+  auxiliary_visual_direct_input_allowed: true
+  primary_visual_conditioning_required_for_video: true
+  whole_storyboard_can_be_auxiliary_direct_input: true
+  whole_storyboard_primary_visual_default: false
+  design_board_can_be_auxiliary_direct_input: true
+  design_board_primary_visual_default: false
+  color_board_can_be_auxiliary_direct_input: true
+  color_board_primary_visual_default: false
+  multi_shot_hard_cut_reliability: PROVIDER_PROFILE_REQUIRED
+  rule: 辅助图允许进入Video；Primary Visual资格由Asset Registry + Video Conditioning QC决定，不由Direct Bind本身决定。
+  scene_color_authority_required_for_scene_bound_image: true
+  scene_color_authority_required_for_video: true
+  non_oner_storyboard_grid_required: true
+  storyboard_grid_asset_type: STORYBOARD_CLEAN_SEQUENCE_BOARD
+  storyboard_grid_primary_visual_eligible: false
+  generation_envelope_schema: state/generation_envelope.schema.yaml
+  scene_color_direct_reference_default_for_video: false
+  scene_color_video_reference_mode_default: LINEAGE_ONLY
+  video_reference_selection_policy: FIELD_AUTHORITY_PROVIDER_ROUTED_MINIMUM_SUFFICIENT_SET
+  default_reference_capability_class: MULTIMODAL_ALL_ROUND_REFERENCE
+  multimodal_reference_media:
+  - TEXT
+  - IMAGE
+  - AUDIO
+  role_aware_reference_assignment: true
+  asset_library_size_does_not_imply_job_reference_count: true
+host_profile_registry: adapters/generation/host_profiles.yaml
+seedance_adapter: adapters/generation/seedance_multishot_profile.yaml
+jimeng_seedance_2_0_omni_adapter: adapters/generation/jimeng_seedance_2_0_omni_profile.yaml
+jimeng_seedance_2_5_30s_adapter: adapters/generation/jimeng_seedance_2_5_30s_profile.yaml
+default_video_reference_capability:
+  class: MULTIMODAL_ALL_ROUND_REFERENCE
+  meaning: 底层模型按全能参考能力理解多模态职责；本项目单次视频生成只允许文字、图片、音频Reference，参考视频因额度成本被硬禁用。
+  supported_reference_media:
+  - TEXT
+  - IMAGE
+  - AUDIO
+  role_aware_reference_assignment: true
+  reference_video_policy: FORBIDDEN_QUOTA_COST
+  audio_reference_policy: AUDIO_ASSET_MANIFEST_ONLY
+  not_equivalent_to:
+  - ALL_ASSETS_MUST_BE_BOUND
+  - PRIMARY_VISUAL_IS_OMNIPOTENT
+  - REFERENCE_RESOLVER_CAN_BE_SKIPPED
+  exact_material_limits: PROVIDER_PROFILE_REQUIRED
+temporal_reference_policy:
+  generic_reference_implies_t0_semantics: false
+  same_take_requires_verified_transport: true
+  same_take_auxiliary_static_visual_direct_reference: FORBIDDEN_BY_DEFAULT
+  direct_scene_color_reference_at_same_take_seam: FORBIDDEN
+  reference_video_policy: FORBIDDEN_QUOTA_COST

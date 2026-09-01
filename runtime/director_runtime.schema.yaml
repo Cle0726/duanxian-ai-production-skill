@@ -1,0 +1,350 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/director_runtime.schema.yaml
+title: DIRECTOR_RUNTIME
+type: object
+additionalProperties: true
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- scope
+- source_fingerprints
+- runtime_fingerprint
+properties:
+  runtime_type:
+    const: DIRECTOR_RUNTIME
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  scope:
+    type: object
+    additionalProperties: true
+  source_versions:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  director_judge:
+    type: object
+    additionalProperties: true
+  sequence_arc:
+    type: object
+    additionalProperties: true
+  editorial_plan_ref:
+    type:
+    - string
+    - 'null'
+  editorial_plan_summary:
+    type: object
+    additionalProperties: true
+  invariants:
+    type: array
+    items:
+      type: string
+  shot_contracts:
+    type: object
+    additionalProperties: true
+  spatial_contract:
+    type: object
+    additionalProperties: true
+  camera_contract:
+    type: object
+    additionalProperties: true
+  invalidation_triggers:
+    type: array
+    items:
+      type: string
+  shot_relation_graph_ref:
+    type:
+    - string
+    - 'null'
+  shot_relation_summary:
+    type: object
+    additionalProperties: true
+  perception_context:
+    type: object
+    additionalProperties: true
+    properties:
+      unresolved_state:
+        type: object
+        additionalProperties: true
+        properties:
+          what_character_wants:
+            type:
+            - string
+            - 'null'
+          what_prevents_resolution:
+            type:
+            - string
+            - 'null'
+          why_not_resolvable_now:
+            type:
+            - string
+            - 'null'
+          what_can_change_state:
+            type:
+            - string
+            - 'null'
+          connective_exception_reason:
+            type:
+            - string
+            - 'null'
+      relational_pressure:
+        type: object
+        additionalProperties: true
+        properties:
+          pressure_source:
+            type:
+            - string
+            - 'null'
+          pressure_target:
+            type:
+            - string
+            - 'null'
+          knowledge_asymmetry:
+            type:
+            - string
+            - 'null'
+          power_asymmetry:
+            type:
+            - string
+            - 'null'
+          spatial_constraint:
+            type:
+            - string
+            - 'null'
+          social_constraint:
+            type:
+            - string
+            - 'null'
+  shot_perception_contracts:
+    type: object
+    additionalProperties:
+      type: object
+      additionalProperties: true
+      properties:
+        camera_ethics:
+          enum:
+          - NEUTRAL_WITNESS
+          - INVOLVED_PARTICIPANT
+          - FORBIDDEN_WITNESS
+          - DISTANT_OBSERVER
+          - SURVEILLANCE_OBSERVER
+          - TRAPPED_OBSERVER
+          - CHARACTER_ALIGNED
+          - MISINFORMED_OBSERVER
+          - OTHER
+        attention_flow:
+          type: object
+          additionalProperties: true
+          properties:
+            entry:
+              type:
+              - string
+              - 'null'
+            resistance:
+              type:
+              - string
+              - 'null'
+            decisive_landing:
+              type:
+              - string
+              - 'null'
+            residual_information:
+              type:
+              - string
+              - 'null'
+            exit:
+              type:
+              - string
+              - 'null'
+        shot_scale_justification:
+          type: object
+          additionalProperties: true
+          properties:
+            shot_size_family:
+              type:
+              - string
+              - 'null'
+            required_information:
+              type:
+              - string
+              - 'null'
+            why_wider_fails:
+              type:
+              - string
+              - 'null'
+            why_closer_fails:
+              type:
+              - string
+              - 'null'
+            spatial_information_sacrificed:
+              type:
+              - string
+              - 'null'
+            narrative_gain:
+              type:
+              - string
+              - 'null'
+        camera_placement_justification:
+          type: object
+          additionalProperties: true
+          properties:
+            physical:
+              type:
+              - string
+              - 'null'
+            narrative:
+              type:
+              - string
+              - 'null'
+        composition_mechanism:
+          type: object
+          additionalProperties: true
+          properties:
+            primary:
+              type:
+              - string
+              - 'null'
+            secondary:
+              type:
+              - string
+              - 'null'
+        visual_force_stack:
+          type: object
+          additionalProperties: true
+          properties:
+            primary_force:
+              type:
+              - string
+              - 'null'
+            supporting_forces:
+              type: array
+              maxItems: 2
+              items:
+                type: string
+        visual_salience_budget:
+          type: object
+          additionalProperties: true
+          properties:
+            primary_salience:
+              type:
+              - string
+              - 'null'
+            secondary_salience:
+              type:
+              - string
+              - 'null'
+            ambient_information:
+              type:
+              - string
+              - 'null'
+            suppressed_information:
+              type:
+              - string
+              - 'null'
+            allowed_mundane_area:
+              type:
+              - string
+              - 'null'
+        intentional_pattern_reason:
+          type:
+          - string
+          - 'null'
+  shot_grammar_history:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      properties:
+        shot_id:
+          type: string
+        sequence_id:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - string
+          - 'null'
+        shot_size_family:
+          type:
+          - string
+          - 'null'
+        viewpoint_role:
+          type:
+          - string
+          - 'null'
+        camera_ethics:
+          type:
+          - string
+          - 'null'
+        composition_mechanism:
+          type:
+          - string
+          - 'null'
+        camera_character:
+          type:
+          - string
+          - 'null'
+        lens_family:
+          type:
+          - string
+          - 'null'
+        foreground_strategy:
+          type:
+          - string
+          - 'null'
+        attention_entry_type:
+          type:
+          - string
+          - 'null'
+        attention_landing_type:
+          type:
+          - string
+          - 'null'
+        cut_type:
+          type:
+          - string
+          - 'null'
+        optical_exception:
+          type:
+          - string
+          - 'null'
+        breathing_or_peak:
+          type:
+          - string
+          - 'null'
+        recorded_at:
+          type:
+          - string
+          - 'null'
+  creative_drift_telemetry:
+    type: object
+    additionalProperties: true
+    properties:
+      window_size:
+        type: integer
+        minimum: 1
+      warnings:
+        type: array
+        items:
+          type: object
+          additionalProperties: true
+      intentional_pattern_overrides:
+        type: array
+        items:
+          type: object
+          additionalProperties: true

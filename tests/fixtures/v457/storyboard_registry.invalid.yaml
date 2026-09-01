@@ -1,0 +1,11 @@
+assets:
+  - asset_id: SB_BAD
+    asset_type: STORYBOARD_CLEAN_PANEL
+    layout_type: CLEAN_PANEL
+    storyboard_render_mode: WHITE_LINE_STORYBOARD_ONLY
+    storyboard_human_render_policy: REAL_CHARACTER_DETAILS
+    storyboard_cleanliness:
+      recognizable_face_present: true
+      recognizable_hair_present: false
+      recognizable_costume_detail_present: false
+      identity_specific_feature_present: false

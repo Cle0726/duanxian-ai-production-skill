@@ -1,0 +1,55 @@
+schema_version: 5
+skill_version: 4.5.3
+assets:
+  - asset_id: RESTAURANT_CLOCK_VIEW_01
+    asset_display_name: 餐馆深处钟楼视角
+    native_token: '@餐馆深处钟楼视角'
+    asset_type: ENVIRONMENT_COVERAGE
+    authority_role: SHOT_VIEW_AUTHORITY
+    status: APPROVED
+    file_path: assets/restaurant_clock_view.png
+    fingerprint_type: FILE_SHA256
+    fingerprint: hash_restaurant_v1
+    source_refs: []
+    parent_refs: []
+    layout_type: SINGLE_FRAME
+    transient_content_policy: SHOT_SPECIFIC
+    allowed_roles: [SHOT_VIEW_AUTHORITY, PRIMARY_VISUAL]
+    forbidden_roles: []
+    video_usage:
+      direct_input_allowed: true
+      primary_visual_eligible: true
+      promotion_required: false
+      promotion_qc: NOT_REQUIRED
+    media_kind: IMAGE
+    visual_evidence_ref: VE_RESTAURANT_01
+    visual_evidence_status: CURRENT
+    visual_evidence_source_fingerprint: hash_restaurant_v1
+    visual_fact_codes: [EMPTY_RESTAURANT, CLOCK_TOWER_SIGHTLINE]
+    visual_issue_codes: []
+  - asset_id: COLOR_RESTAURANT_01
+    asset_display_name: 餐馆综合色板
+    native_token: '@餐馆综合色板'
+    asset_type: COLOR_STYLE_BOARD
+    authority_role: COLOR_AUTHORITY
+    status: APPROVED_SUPPORT
+    file_path: assets/color_restaurant.png
+    fingerprint_type: FILE_SHA256
+    fingerprint: hash_color_v1
+    source_refs: []
+    parent_refs: []
+    layout_type: COLOR_SWATCH
+    transient_content_policy: NOT_APPLICABLE
+    allowed_roles: [COLOR_AUTHORITY]
+    forbidden_roles: [PRIMARY_VISUAL]
+    video_usage:
+      direct_input_allowed: true
+      primary_visual_eligible: false
+      promotion_required: false
+      promotion_qc: NOT_REQUIRED
+    media_kind: IMAGE
+    visual_evidence_ref: VE_COLOR_01
+    visual_evidence_status: CURRENT
+    visual_evidence_source_fingerprint: hash_color_v1
+    visual_fact_codes: [WARM_INTERIOR_COOL_RAIN_LOOK]
+    visual_issue_codes: []

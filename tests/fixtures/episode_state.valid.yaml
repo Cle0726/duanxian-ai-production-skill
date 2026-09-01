@@ -1,0 +1,97 @@
+schema_version: 1
+skill_version: 4.5.2
+episode_id: STRUCTURAL_FIXTURE_EP
+mode: PRODUCTION
+workflow_state: VIDEO_CONDITIONING_READY
+current_scene_id: SC_FIX
+current_segment_id: SEG_FIX
+current_shot_id: SH_FIX
+pending_job: FINAL_VIDEO_PROMPT
+next_action: BUILD_VIDEO_RUNTIME
+active_route: STAGE_05_VIDEO
+migration:
+  status: COMPLETE
+  applied_skill_version: 4.5.2
+locks:
+  screenplay:
+    artifact_id: STRUCTURAL_FIXTURE_SCREENPLAY
+    version: 1
+    status: LOCKED
+    fingerprint_type: STRUCTURED_SHA256
+    fingerprint: abc
+    approval_ref: APR_FIX_SCREENPLAY
+    source_refs: []
+  director_core:
+    artifact_id: STRUCTURAL_FIXTURE_DIRECTOR
+    version: 1
+    status: LOCKED
+    fingerprint_type: STRUCTURED_SHA256
+    fingerprint: def
+    approval_ref: null
+    source_refs: []
+  asset_pack:
+    artifact_id: STRUCTURAL_FIXTURE_ASSETS
+    version: 1
+    status: FROZEN
+    fingerprint_type: STRUCTURED_SHA256
+    fingerprint: ghi
+    approval_ref: null
+    source_refs: []
+  previs_set:
+    artifact_id: STRUCTURAL_FIXTURE_PREVIS
+    version: 1
+    status: APPROVED
+    fingerprint_type: STRUCTURED_SHA256
+    fingerprint: jkl
+    approval_ref: APR_FIX_PREVIS
+    source_refs: []
+  approved_video:
+    artifact_id: STRUCTURAL_FIXTURE_VIDEO
+    version: null
+    status: NOT_AVAILABLE
+    fingerprint_type: UNKNOWN
+    fingerprint: null
+    approval_ref: null
+    source_refs: []
+  video_conditioning:
+    artifact_id: STRUCTURAL_FIXTURE_CONDITIONING
+    version: 1
+    status: APPROVED
+    fingerprint_type: STRUCTURED_SHA256
+    fingerprint: mno
+    approval_ref: APR_FIX_CONDITIONING
+    source_refs:
+    - PREVIS_FIX_SH
+runtime_refs:
+  DIRECTOR_RUNTIME:
+    runtime_type: DIRECTOR_RUNTIME
+    status: VALID
+    ref: FIXTURE_DIRECTOR_RUNTIME
+    fingerprint: r1
+  ASSET_RUNTIME:
+    runtime_type: ASSET_RUNTIME
+    status: VALID
+    ref: FIXTURE_ASSET_RUNTIME
+    fingerprint: r2
+  SCENE_RUNTIME:
+    runtime_type: SCENE_RUNTIME
+    status: VALID
+    ref: FIXTURE_SCENE_RUNTIME
+    fingerprint: r3
+  REFERENCE_RUNTIME:
+    runtime_type: REFERENCE_RUNTIME
+    status: VALID
+    ref: FIXTURE_REFERENCE_RUNTIME
+    fingerprint: r4
+  VIDEO_RUNTIME:
+    runtime_type: VIDEO_RUNTIME
+    status: REBUILD_REQUIRED
+    ref: null
+    fingerprint: null
+  VIDEO_CONDITIONING_RUNTIME:
+    runtime_type: VIDEO_CONDITIONING_RUNTIME
+    status: VALID
+    ref: FIXTURE_VIDEO_CONDITIONING_RUNTIME
+    fingerprint: rc
+open_failures: []
+waiting_reason: null

@@ -1,0 +1,88 @@
+schema_version: 3
+skill_version: 4.5.2
+episode_id: REGRESSION_NOT_CANON
+source_relation_graph_ref: fixture
+source_relation_graph_fingerprint: null
+obligations:
+- obligation_id: OB_CLUE
+  trigger_type: SHOT_RELATION
+  relation_id: REL_A_B
+  shot_ids:
+  - REST_SHOT_A
+  obligation_type: SCENE_CLUE_VIEW
+  fulfill_by: STAGE_03_FREEZE
+  reason: 必须证明餐馆深处指定窗口能建立钟楼线索。
+  authority_fields:
+  - sightline
+  - attention_target
+  required_visual_fact: 深处指定窗口中的钟楼识别点清晰可读
+  location_entity_id: CLOCK_TOWER_01
+  source_asset_family_ids:
+  - RESTAURANT_01
+  - CLOCK_TOWER_01
+  fulfillment_asset_ids:
+  - ASSET_RESTAURANT_CLOCK_SIGHTLINE
+  waiver_reason: null
+  status: FULFILLED
+  waiver_policy: NON_WAIVABLE
+  proof_status: PASS
+- obligation_id: OB_IDENTITY
+  trigger_type: LOCATION_RELATION
+  relation_id: REL_A_B
+  shot_ids:
+  - CLOCK_SHOT_B
+  obligation_type: LOCATION_IDENTITY_VIEW
+  fulfill_by: STAGE_03_FREEZE
+  reason: 证明远景钟楼与机械室属于同一Location Entity。
+  authority_fields:
+  - location_identity
+  required_visual_fact: 外部钟楼识别特征与内部机械空间存在同一性证据
+  location_entity_id: CLOCK_TOWER_01
+  source_asset_family_ids:
+  - CLOCK_TOWER_01
+  fulfillment_asset_ids:
+  - ASSET_CLOCK_IDENTITY_BRIDGE
+  waiver_reason: null
+  status: FULFILLED
+  waiver_policy: NON_WAIVABLE
+  proof_status: PASS
+- obligation_id: OB_EXIT
+  trigger_type: SHOT_RELATION
+  relation_id: REL_A_B
+  shot_ids:
+  - REST_SHOT_A
+  obligation_type: VIDEO_CUT_EXIT_FRAME
+  fulfill_by: STAGE_04_VIDEO_CONDITIONING_QC
+  reason: 锁定A端离开前的线索读点。
+  authority_fields:
+  - attention_target
+  required_visual_fact: A出口帧明确落在深处钟楼线索
+  location_entity_id: CLOCK_TOWER_01
+  source_asset_family_ids: []
+  fulfillment_asset_ids:
+  - ASSET_A_EXIT
+  waiver_reason: null
+  status: FULFILLED
+  waiver_policy: USER_APPROVAL_REQUIRED
+  proof_status: PASS
+- obligation_id: OB_ENTRY
+  trigger_type: SHOT_RELATION
+  relation_id: REL_A_B
+  shot_ids:
+  - CLOCK_SHOT_B
+  obligation_type: VIDEO_CUT_ENTRY_FRAME
+  fulfill_by: STAGE_04_VIDEO_CONDITIONING_QC
+  reason: 锁定B端为同一钟楼内部。
+  authority_fields:
+  - location_identity
+  required_visual_fact: B入口立即成立同一钟楼内部机械室
+  location_entity_id: CLOCK_TOWER_01
+  source_asset_family_ids: []
+  fulfillment_asset_ids:
+  - ASSET_B_ENTRY
+  waiver_reason: null
+  status: FULFILLED
+  waiver_policy: USER_APPROVAL_REQUIRED
+  proof_status: PASS
+status: COMPLETE
+obligations_fingerprint: null

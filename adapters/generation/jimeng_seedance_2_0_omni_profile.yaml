@@ -1,0 +1,63 @@
+profile_id: JIMENG_SEEDANCE_2_0_OMNI
+profile_version: 1
+skill_version: 4.5.10
+status: VERIFIED_PUBLIC_CAPABILITY_PLUS_PROJECT_ROUTING_POLICY
+official_sources:
+- https://seed.bytedance.com/zh/blog/seedance-2-0-%E6%AD%A3%E5%BC%8F%E5%8F%91%E5%B8%83
+- https://jimeng.jianying.com/ai-tool/home/?type=video
+capabilities:
+  model: Seedance 2.0
+  mode: 全能参考
+  image_reference_limit: 9
+  mixed_reference_material_limit_ui: 12
+  max_video_duration_sec: 15
+  high_quality_multishot: true
+  text_image_audio_video_reference: true
+  video_extension: true
+reference_policy:
+  mode: FIELD_AUTHORITY_PROVIDER_ROUTED_BINDING
+  principle: 每张参考图只拥有一个明确字段职责；没有UI权重时不堆叠重复视觉Owner。
+  mandatory_high_fidelity_direct_roles:
+  - EMPTY_ENVIRONMENT_MASTER
+  - VISIBLE_CHARACTER_MASTER
+  optional_direct_roles:
+  - CRITICAL_PROP_MASTER
+  - SCENE_COLOR_AUTHORITY
+  - BASE_VISUAL_STYLE_AUTHORITY
+  storyboard:
+    route: DIRECT_WHEN_ACTION_BLOCKING_OR_CUT_CONTROL_REQUIRED
+    owns:
+    - ACTION
+    - BLOCKING
+    - SHOT_ORDER
+    - CUT_TIMING
+    forbidden:
+    - FINAL_RENDER_STYLE
+    - CHARACTER_IDENTITY
+    - MATERIAL_TEXTURE
+    - FINAL_IMAGE_QUALITY
+    required_prompt_role_lock: 该图只参考动作、站位、镜头顺序与切镜；忽略白描线稿风格、无脸人偶、材质和最终画质。
+  shot_specific_primary:
+    default_route_when_redundant: OMIT_REDUNDANT_BAKED_COMPOSITE
+    direct_only_if:
+    - 独占构图字段且Storyboard不能表达
+    - 来自真实Approved上一段Ending Frame并承担连续性入口
+    - Provider实测证明不会压过高清人物与场景母图
+    rejection_code: REDUNDANT_COMPOSITE_REFERENCE_COMPETITION
+duration_policy:
+  preferred_envelope_sec: 10-15
+  avoid_independent_micro_calls_below_sec: 5
+  preferred_modes:
+  - TIMED_MULTISHOT
+  - SEQUENTIAL_MULTISHOT
+  split_only_when:
+  - total_duration_exceeds_15s
+  - action_or_identity_load_exceeds_execution_budget
+  - authentic_ending_frame_is_required_between_envelopes
+  - provider_test_shows_multishot_instability
+prompt_rules:
+- 每个@图片N紧邻声明唯一用途。
+- Storyboard明确排除白描风格、无脸人偶、灰白材质与最终画质继承。
+- 人物身份、服装、脸与体态只由对应高清人物母图拥有。
+- 场景建筑、材质与综合色优先由高清空场景母图和当前Scene Color拥有。
+- 按累计时间窗写CUT，禁止模型新增CUT、补人物或提前泄露实体。

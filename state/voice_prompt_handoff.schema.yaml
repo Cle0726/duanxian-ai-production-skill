@@ -1,0 +1,87 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/voice_prompt_handoff.schema.yaml
+title: Duanxian Voice Prompt Handoff V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- voice_prompt_handoff_id
+- voice_direction_plan_id
+- video_unit_id
+- dialogue_required
+- lines
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  voice_prompt_handoff_id:
+    type: string
+    minLength: 1
+  voice_direction_plan_id:
+    type: string
+    minLength: 1
+  video_unit_id:
+    type: string
+    minLength: 1
+  shot_ids:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+      minLength: 1
+  dialogue_required:
+    type: boolean
+  lines:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - line_id
+      - speaker_entity_id
+      - speaker_surface
+      - spoken_text
+      - compiled_direction
+      - required_surface_terms
+      properties:
+        line_id:
+          type: string
+          minLength: 1
+        shot_id:
+          type:
+          - string
+          - 'null'
+        speaker_entity_id:
+          type: string
+          minLength: 1
+        speaker_surface:
+          type: string
+          minLength: 1
+        spoken_text:
+          type: string
+          minLength: 1
+        compiled_direction:
+          type: string
+          minLength: 1
+        required_surface_terms:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+  status:
+    enum:
+    - READY
+    - NOT_REQUIRED
+    - STALE
+    - BLOCKED
+  handoff_fingerprint:
+    type:
+    - string
+    - 'null'

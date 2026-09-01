@@ -1,0 +1,14 @@
+runtime_type: VIDEO_RUNTIME
+schema_version: 1
+skill_version: 4.5.6
+status: VALID
+scope:
+  scene_id: SC_WAGON_REALISM
+  shot_ids:
+  - SH_REALISM_01
+  video_unit_id: VU_REALISM_01
+source_versions: {}
+source_fingerprints: {}
+runtime_fingerprint: rt-video-realism
+video_take_id: TAKE_01
+video_take_fingerprint: hash-video-take-realism

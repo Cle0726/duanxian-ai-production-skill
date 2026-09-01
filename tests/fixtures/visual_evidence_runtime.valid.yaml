@@ -1,0 +1,26 @@
+runtime_type: VISUAL_EVIDENCE_RUNTIME
+schema_version: 1
+skill_version: 4.5.3
+status: VALID
+scope: {shot_id: SH_TEST_01}
+source_fingerprints: {visual_evidence: ve1, asset_registry: reg1}
+runtime_fingerprint: verun1
+controller_mode: TEXT_ONLY_CONTINUATION
+assets:
+  - asset_id: RESTAURANT_CLOCK_VIEW_01
+    evidence_ref: VE_RESTAURANT_01
+    evidence_status: CURRENT
+    source_fingerprint: hash_restaurant_v1
+    fact_codes: [EMPTY_RESTAURANT, CLOCK_TOWER_SIGHTLINE]
+    issue_codes: []
+    safe_roles: [SHOT_VIEW_AUTHORITY, PRIMARY_VISUAL]
+    unsafe_roles: []
+    primary_visual_eligible: true
+    direct_video_eligible: true
+    confidence: HIGH
+    short_visual_digest: 空餐馆，深处窗口可读地建立钟楼线索。
+missing_evidence_assets: []
+stale_evidence_assets: []
+required_fact_gaps: []
+forbidden_fact_conflicts: []
+invalidation_triggers: [ASSET_FINGERPRINT_CHANGED, VISUAL_EVIDENCE_CHANGED]

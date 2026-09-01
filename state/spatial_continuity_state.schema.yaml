@@ -1,0 +1,91 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/spatial_continuity_state.schema.yaml
+title: Duanxian Spatial Continuity State
+type: object
+required:
+- schema_version
+- skill_version
+- state_id
+- entity_states
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  state_id:
+    type: string
+  source_ref:
+    type:
+    - string
+    - 'null'
+  entity_states:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      required:
+      - entity_id
+      - entity_type
+      - world_position
+      properties:
+        entity_id:
+          type: string
+        entity_type:
+          enum:
+          - CHARACTER
+          - MINOR_HUMAN
+          - PROP
+          - CROWD_CLUSTER
+        world_position:
+          type: object
+          required:
+          - zone_id
+          properties:
+            zone_id:
+              type: string
+            anchor_id:
+              type:
+              - string
+              - 'null'
+            relation:
+              type:
+              - string
+              - 'null'
+        frame_projection:
+          type: object
+          properties:
+            horizontal_region:
+              enum:
+              - LEFT
+              - CENTER
+              - RIGHT
+              - OFFSCREEN_LEFT
+              - OFFSCREEN_RIGHT
+            depth_region:
+              enum:
+              - FG
+              - MG
+              - BG
+              - OFFSCREEN
+        body_orientation:
+          type:
+          - string
+          - 'null'
+        facing_target:
+          type:
+          - string
+          - 'null'
+        contact_state:
+          type:
+          - string
+          - 'null'
+        motion_phase:
+          type:
+          - string
+          - 'null'
+        held_prop_ids:
+          type: array
+          items:
+            type: string

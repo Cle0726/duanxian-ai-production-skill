@@ -1,0 +1,102 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/generation_runtime.schema.yaml
+title: GENERATION_RUNTIME
+type: object
+additionalProperties: false
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- host_capability
+- queue
+- completed_job_ids
+properties:
+  runtime_type:
+    const: GENERATION_RUNTIME
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  host_capability:
+    type: object
+    additionalProperties: true
+    required:
+    - resolved_profile
+    - image_generation
+    - video_generation
+    - reference_transport
+    properties:
+      resolved_profile:
+        type: string
+      image_generation:
+        enum:
+        - AVAILABLE
+        - UNAVAILABLE
+        - UNKNOWN
+      video_generation:
+        enum:
+        - AVAILABLE
+        - UNAVAILABLE
+        - UNKNOWN
+      reference_transport:
+        enum:
+        - NAMED_ASSET_MENTION
+        - ORDERED_IMAGE_MENTION
+        - TOOL_NATIVE_REFERENCE
+        - FILE_PATH_REFERENCE
+        - MANUAL_HANDOFF
+        - UNKNOWN
+      reference_capability_class:
+        enum:
+        - MULTIMODAL_ALL_ROUND_REFERENCE
+        - NAMED_VISUAL_REFERENCE
+        - TOOL_NATIVE_REFERENCE
+        - MANUAL_HANDOFF
+        - UNKNOWN
+      supported_reference_media:
+        type: array
+        items:
+          enum:
+          - TEXT
+          - IMAGE
+          - VIDEO
+          - AUDIO
+        uniqueItems: true
+      role_aware_reference_assignment:
+        type: boolean
+  active_job_id:
+    type:
+    - string
+    - 'null'
+  queue:
+    type: array
+    items:
+      type: string
+  completed_job_ids:
+    type: array
+    items:
+      type: string
+  blocked_job_ids:
+    type: array
+    items:
+      type: string
+  scene_color_authority_map:
+    type: object
+    additionalProperties:
+      type: string
+  runtime_fingerprint:
+    type:
+    - string
+    - 'null'
+  base_color_asset_id:
+    type:
+    - string
+    - 'null'

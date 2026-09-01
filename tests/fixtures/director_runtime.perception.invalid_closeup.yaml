@@ -1,0 +1,50 @@
+runtime_type: DIRECTOR_RUNTIME
+schema_version: 1
+skill_version: 4.5.7
+status: VALID
+scope: {episode_id: EP01, sequence_id: SQ01}
+source_fingerprints: {screenplay: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
+runtime_fingerprint: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+perception_context:
+  unresolved_state:
+    what_character_wants: A想知道发生了什么
+    what_prevents_resolution: 门挡住她
+    why_not_resolvable_now: 现在不能打开
+    what_can_change_state: 获得新证据
+  relational_pressure:
+    pressure_source: 门后未知者
+    pressure_target: A
+    knowledge_asymmetry: 未知者知道更多
+    power_asymmetry: 未知者掌握主动
+    spatial_constraint: 门阻隔
+    social_constraint: NONE
+shot_perception_contracts:
+  SH01:
+    camera_ethics: CHARACTER_ALIGNED
+    attention_flow:
+      entry: A的脸
+      resistance: NONE_INTENTIONAL
+      decisive_landing: A的表情
+      residual_information: NONE_INTENTIONAL
+      exit: A的眼睛
+    shot_scale_justification:
+      shot_size_family: CU
+      required_information: A的情绪
+      why_wider_fails: 情绪更强
+      why_closer_fails: 太近
+      spatial_information_sacrificed: ''
+      narrative_gain: 更有情绪
+    camera_placement_justification:
+      physical: 摄影机在人物前方
+      narrative: 看人物反应
+    composition_mechanism:
+      primary: FACE
+      secondary: null
+    visual_force_stack:
+      primary_force: Performance
+      supporting_forces: [Color, Light, Fisheye]
+    visual_salience_budget:
+      primary_salience: A的脸
+      ambient_information: 背景
+      suppressed_information: 其他
+      allowed_mundane_area: 背景墙

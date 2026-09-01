@@ -1,0 +1,19 @@
+schema_version: 1
+skill_version: 4.5.3
+records:
+  - evidence_id: VE_RESTAURANT_OLD
+    asset_id: RESTAURANT_CLOCK_VIEW_01
+    source_fingerprint_type: FILE_SHA256
+    source_fingerprint: old_hash
+    evidence_status: CURRENT
+    inspector: {mode: MULTIMODAL_MODEL}
+    observed:
+      fact_codes: [CLOCK_TOWER_SIGHTLINE]
+      issue_codes: []
+      summary: 旧版本观察。
+    role_assessment:
+      safe_roles: [SHOT_VIEW_AUTHORITY]
+      unsafe_roles: []
+      primary_visual_eligible: true
+      direct_video_eligible: true
+    confidence: HIGH

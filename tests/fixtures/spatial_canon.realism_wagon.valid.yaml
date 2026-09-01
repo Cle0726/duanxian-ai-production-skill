@@ -1,0 +1,130 @@
+schema_version: 2
+skill_version: 4.5.5
+episode_id: REGRESSION_NOT_CANON_REALISM_WAGON
+locations:
+- location_entity_id: WAGON_INTERIOR_REALISM_TEST
+  display_name: 非Canon现实性测试车辆
+  reuse_tier: A
+  location_kind: VEHICLE
+  functional_profile: VEHICLE
+  specific_functional_type: VINTAGE_WAGON
+  realism_contract_ids: [RC_WAGON_01]
+  parent_location_id: null
+  zones: [DRIVER_ZONE, FRONT_PASSENGER_ZONE, REAR_BENCH, AISLE]
+  anchors:
+  - anchor_id: DRIVER_SEAT
+    anchor_type: SEAT
+    zone_id: DRIVER_ZONE
+    functional_position_id: DRIVER_POSITION
+    capacity: 1
+    connects_to: [AISLE]
+    visible_targets: [WINDSHIELD]
+  - anchor_id: FRONT_PASSENGER_SEAT
+    anchor_type: SEAT
+    zone_id: FRONT_PASSENGER_ZONE
+    functional_position_id: FRONT_PASSENGER_POSITION
+    capacity: 1
+    connects_to: [AISLE]
+    visible_targets: [WINDSHIELD]
+  - anchor_id: REAR_SEAT_LEFT
+    anchor_type: SEAT
+    zone_id: REAR_BENCH
+    functional_position_id: REAR_LEFT_POSITION
+    capacity: 1
+    connects_to: [AISLE]
+    visible_targets: [DRIVER_ZONE]
+  - anchor_id: REAR_SEAT_RIGHT
+    anchor_type: SEAT
+    zone_id: REAR_BENCH
+    functional_position_id: REAR_RIGHT_POSITION
+    capacity: 1
+    connects_to: [AISLE]
+    visible_targets: [DRIVER_ZONE]
+  - anchor_id: DRIVER_CONTROLS
+    anchor_type: CONTROL
+    zone_id: DRIVER_ZONE
+    functional_position_id: DRIVER_CONTROL_POSITION
+    capacity: null
+    connects_to: []
+    visible_targets: []
+  - anchor_id: WINDSHIELD
+    anchor_type: WINDOW
+    zone_id: DRIVER_ZONE
+    connects_to: []
+    visible_targets: []
+  - anchor_id: DOOR_MAIN
+    anchor_type: ENTRY
+    zone_id: AISLE
+    connects_to: [AISLE]
+    visible_targets: []
+  - anchor_id: CAM_REAR_CENTER
+    anchor_type: CAMERA_ZONE
+    zone_id: REAR_BENCH
+    connects_to: []
+    visible_targets: [WINDSHIELD]
+  status: LOCKED
+  look_domain: INTERIOR
+  spatial_diagram_ids: [D_WAGON_VEHICLE_LAYOUT]
+  visual_parent_asset_ids: [ASSET_WAGON_CANON_REALISM]
+  event_node_ids: [EV_WAGON_REALISM]
+relations: []
+event_nodes:
+- event_node_id: EV_WAGON_REALISM
+  scene_id: SC_WAGON_REALISM
+  location_entity_id: WAGON_INTERIOR_REALISM_TEST
+  description: 三人乘车，洁拉驾驶、凯登前乘客、西莉亚后排
+  required_zone_ids: [DRIVER_ZONE, FRONT_PASSENGER_ZONE, REAR_BENCH]
+  actor_ids: [JIELA, KAIDENG, XILIYA]
+  primary_zone_id: FRONT_PASSENGER_ZONE
+  required_spatial_relation_ids: []
+  required_view_roles: [FORWARD]
+view_requirements:
+- view_requirement_id: VR_WAGON_REALISM_FORWARD
+  scene_id: SC_WAGON_REALISM
+  location_entity_id: WAGON_INTERIOR_REALISM_TEST
+  event_node_ids: [EV_WAGON_REALISM]
+  shot_ids: [SH_REALISM_01]
+  relation_ids: []
+  character_route_ids: []
+  realism_contract_ids: [RC_WAGON_01]
+  view_role: FORWARD
+  priority: P0
+  camera_origin_zone_id: REAR_BENCH
+  camera_origin_anchor_id: CAM_REAR_CENTER
+  view_target_entity_id: WAGON_INTERIOR_REALISM_TEST
+  view_target_anchor_id: WINDSHIELD
+  view_direction_code: AXIS_TO_FRONT_WINDSHIELD
+  required_visible_anchor_ids: [WINDSHIELD, DRIVER_SEAT, FRONT_PASSENGER_SEAT]
+  forbidden_visible_anchor_ids: []
+  required_visual_fact_codes: [CABIN_FORWARD_AXIS_READABLE]
+  forbidden_visual_fact_codes: []
+  candidate_budget: 2
+  selected_fulfillment_asset_id: ASSET_WAGON_REALISM_FORWARD
+  status: FULFILLED
+  waiver_ref: null
+  notes: REGRESSION_NOT_CANON
+character_routes: []
+planning_diagrams:
+- diagram_id: D_WAGON_VEHICLE_LAYOUT
+  diagram_type: VEHICLE_LAYOUT
+  scope_location_ids: [WAGON_INTERIOR_REALISM_TEST]
+  asset_id: ASSET_WAGON_LAYOUT_REALISM
+  relation_ids: []
+  character_route_ids: []
+  event_node_ids: [EV_WAGON_REALISM]
+  annotation_policy: PLANNING_ANNOTATIONS_ALLOWED
+  status: APPROVED
+  north_angle_deg: 0
+  scale_note: REGRESSION_NOT_CANON
+  zone_boxes:
+  - {zone_id: DRIVER_ZONE, label: 驾驶区, x: 0.05, y: 0.05, w: 0.4, h: 0.25}
+  - {zone_id: FRONT_PASSENGER_ZONE, label: 前乘客区, x: 0.55, y: 0.05, w: 0.4, h: 0.25}
+  - {zone_id: REAR_BENCH, label: 后排, x: 0.1, y: 0.55, w: 0.8, h: 0.25}
+  - {zone_id: AISLE, label: 通道, x: 0.45, y: 0.3, w: 0.1, h: 0.25}
+  anchor_points:
+  - {anchor_id: DRIVER_SEAT, label: DRIVER, x: 0.25, y: 0.18}
+  - {anchor_id: FRONT_PASSENGER_SEAT, label: FRONT PASSENGER, x: 0.75, y: 0.18}
+  - {anchor_id: REAR_SEAT_LEFT, label: REAR LEFT, x: 0.3, y: 0.68}
+  - {anchor_id: DOOR_MAIN, label: DOOR, x: 0.5, y: 0.48}
+status: LOCKED
+spatial_canon_fingerprint: hash-spatial-realism

@@ -1,0 +1,376 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/episode_state.schema.yaml
+title: Duanxian Episode Hot State
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- episode_id
+- mode
+- workflow_state
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  episode_id:
+    type: string
+    minLength: 1
+  mode:
+    enum:
+    - PRODUCTION
+    - DEMO
+    - MIGRATION
+  workflow_state:
+    type: string
+    enum:
+    - MIGRATION_REQUIRED
+    - SOURCE_NARRATIVE_PENDING
+    - SOURCE_NARRATIVE_PARSED
+    - SCREENPLAY_ADAPTATION_DRAFT_READY
+    - SCREENPLAY_QC_PASSED_WAITING_APPROVAL
+    - EPISODE_SCREENPLAY_LOCKED
+    - DIRECTOR_INTELLIGENCE_IN_PROGRESS
+    - DIRECTOR_JUDGE_LOCKED
+    - SEQUENCE_ARC_LOCKED
+    - DIRECTOR_CORE_LOCKED
+    - DIRECTOR_BREAKDOWN_READY
+    - SPATIAL_CANON_IN_PROGRESS
+    - SPATIAL_CANON_QC_PASSED_WAITING_APPROVAL
+    - SPATIAL_CANON_LOCKED
+    - EPISODE_ASSET_BUILD
+    - DIRECTOR_GEOGRAPHY_PRECHECK_PASSED
+    - DIRECTOR_SPATIAL_RECONCILED
+    - EPISODE_ASSET_FROZEN
+    - EPISODE_ASSET_FREEZE_BROKEN
+    - STORYBOARD_IN_PROGRESS
+    - WAITING_PREVIOUS_ENDING_FRAME
+    - STORYBOARD_QC_PASSED_WAITING_APPROVAL
+    - APPROVED_PREVIS_SET
+    - VIDEO_GENERATION_READY
+    - VIDEO_TAKE_AVAILABLE
+    - VIDEO_QC_PASSED_WAITING_APPROVAL
+    - APPROVED_VIDEO
+    - ENDING_FRAME_APPROVED
+    - POST_IN_PROGRESS
+    - EPISODE_MASTER_APPROVED
+    - REVISE_REQUIRED
+    - VIDEO_CONDITIONING_IN_PROGRESS
+    - VIDEO_CONDITIONING_QC_PASSED_WAITING_APPROVAL
+    - VIDEO_CONDITIONING_READY
+  current_scene_id:
+    type:
+    - string
+    - 'null'
+  current_segment_id:
+    type:
+    - string
+    - 'null'
+  current_shot_id:
+    type:
+    - string
+    - 'null'
+  pending_job:
+    type:
+    - string
+    - 'null'
+  next_action:
+    type:
+    - string
+    - 'null'
+  active_route:
+    type:
+    - string
+    - 'null'
+  migration:
+    type: object
+    additionalProperties: true
+    properties:
+      status:
+        enum:
+        - NOT_REQUIRED
+        - REQUIRED
+        - IN_PROGRESS
+        - COMPLETE
+        - UNKNOWN
+      applied_skill_version:
+        type:
+        - string
+        - 'null'
+  locks:
+    type: object
+    additionalProperties: true
+    properties:
+      screenplay:
+        $ref: '#/$defs/artifact_state'
+      director_core:
+        $ref: '#/$defs/artifact_state'
+      asset_pack:
+        $ref: '#/$defs/artifact_state'
+      previs_set:
+        $ref: '#/$defs/artifact_state'
+      video_conditioning:
+        $ref: '#/$defs/artifact_state'
+      approved_video:
+        $ref: '#/$defs/artifact_state'
+      spatial_canon:
+        $ref: '#/$defs/artifact_state'
+      scene_look_pack:
+        $ref: '#/$defs/artifact_state'
+      voice_identity_pack:
+        $ref: '#/$defs/artifact_state'
+  runtime_refs:
+    type: object
+    additionalProperties:
+      anyOf:
+      - $ref: '#/$defs/runtime_ref'
+      - type: 'null'
+  previous_approved_ending_frame:
+    anyOf:
+    - $ref: '#/$defs/artifact_state'
+    - type: 'null'
+  open_failures:
+    type: array
+    items:
+      type: string
+  waiting_reason:
+    type:
+    - string
+    - 'null'
+  ledger_ref:
+    type:
+    - string
+    - 'null'
+  relations:
+    type: object
+    additionalProperties: true
+    properties:
+      shot_relation_graph_ref:
+        type:
+        - string
+        - 'null'
+      shot_relation_graph_fingerprint:
+        type:
+        - string
+        - 'null'
+      visual_asset_obligation_ref:
+        type:
+        - string
+        - 'null'
+      visual_asset_obligation_fingerprint:
+        type:
+        - string
+        - 'null'
+      status:
+        enum:
+        - NOT_STARTED
+        - PLANNED
+        - LOCKED
+        - BLOCKED
+        - UNKNOWN
+  asset_construction:
+    type: object
+    additionalProperties: true
+    properties:
+      cascade_checkpoint:
+        enum:
+        - NOT_STARTED
+        - SPATIAL_LOCKED
+        - BASE_VISUAL_LOCKED
+        - COVERAGE_LOCKED
+        - LOOK_LOCKED
+        - VOICE_LOCKED
+        - COMPLETE
+        - BLOCKED
+        - UNKNOWN
+      justified_asset_generation_status:
+        enum:
+        - NOT_STARTED
+        - PASS
+        - FAIL
+        - UNKNOWN
+      predictive_coverage_status:
+        enum:
+        - NOT_STARTED
+        - PASS
+        - FAIL
+        - NOT_REQUIRED
+        - UNKNOWN
+  controller_capability:
+    type: object
+    additionalProperties: false
+    properties:
+      mode:
+        enum:
+        - MULTIMODAL_ACTIVE
+        - TEXT_ONLY_CONTINUATION
+        - UNKNOWN
+      vision:
+        enum:
+        - AVAILABLE
+        - UNAVAILABLE
+        - UNKNOWN
+      visual_evidence_policy:
+        enum:
+        - LIVE_OR_CACHE
+        - CACHE_ONLY
+        - UNKNOWN
+  visual_review_queue:
+    type: array
+    items:
+      type: string
+  visual_evidence_ref:
+    type:
+    - string
+    - 'null'
+  visual_evidence_fingerprint:
+    type:
+    - string
+    - 'null'
+  realism_contract_ref:
+    type:
+    - string
+    - 'null'
+  realism_contract_fingerprint:
+    type:
+    - string
+    - 'null'
+  realism_open_failures:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  generation:
+    type: object
+    additionalProperties: true
+    properties:
+      runtime_ref:
+        type:
+        - string
+        - 'null'
+      active_job_id:
+        type:
+        - string
+        - 'null'
+      queue_status:
+        enum:
+        - NOT_STARTED
+        - READY
+        - RUNNING
+        - DRAINED
+        - BLOCKED
+        - UNKNOWN
+      scene_color_authority_coverage:
+        enum:
+        - PASS
+        - FAIL
+        - NOT_RUN
+        - UNKNOWN
+      asset_lineage_status:
+        enum:
+        - PASS
+        - FAIL
+        - NOT_RUN
+        - UNKNOWN
+  current_look_domain:
+    enum:
+    - INTERIOR
+    - EXTERIOR
+    - MIXED
+    - UNKNOWN
+    - null
+  video_units:
+    type: object
+    additionalProperties: false
+    properties:
+      ordered_ids:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+      completed_ids:
+        type: array
+        items:
+          type: string
+        uniqueItems: true
+      current_video_unit_id:
+        type:
+        - string
+        - 'null'
+      next_video_unit_id:
+        type:
+        - string
+        - 'null'
+      all_units_complete:
+        type: boolean
+      next_video_unit_available:
+        type: boolean
+      current_video_unit_advanced:
+        type: boolean
+      continuity_entry_written:
+        type: boolean
+      required_segments_approved:
+        type: boolean
+      no_remaining_video_units:
+        type: boolean
+$defs:
+  artifact_state:
+    type: object
+    additionalProperties: true
+    required:
+    - artifact_id
+    - status
+    properties:
+      artifact_id:
+        type: string
+      version:
+        type:
+        - integer
+        - string
+        - 'null'
+      status:
+        type: string
+      fingerprint_type:
+        enum:
+        - FILE_SHA256
+        - STRUCTURED_SHA256
+        - CONTENT_SHA256
+        - UNKNOWN
+      fingerprint:
+        type:
+        - string
+        - 'null'
+      approval_ref:
+        type:
+        - string
+        - 'null'
+      source_refs:
+        type: array
+        items:
+          type: string
+  runtime_ref:
+    type: object
+    additionalProperties: true
+    required:
+    - runtime_type
+    - status
+    properties:
+      runtime_type:
+        type: string
+      ref:
+        type:
+        - string
+        - 'null'
+      status:
+        enum:
+        - VALID
+        - STALE
+        - MISSING
+        - REBUILD_REQUIRED
+      fingerprint:
+        type:
+        - string
+        - 'null'

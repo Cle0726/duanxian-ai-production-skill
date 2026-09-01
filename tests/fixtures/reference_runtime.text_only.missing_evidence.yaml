@@ -1,0 +1,24 @@
+runtime_type: REFERENCE_RUNTIME
+schema_version: 3
+skill_version: 4.5.3
+status: VALID
+scope: {shot_id: SH_TEST_02}
+source_fingerprints: {asset_registry: reg1}
+runtime_fingerprint: rr2
+controller_mode: TEXT_ONLY_CONTINUATION
+reference_surface_mode: NAMED_ASSET_MENTION_REQUIRED
+primary_visual_status: PASS
+required_visual_facts: [CLOCK_TOWER_SIGHTLINE]
+forbidden_visual_facts: []
+visual_evidence_coverage: UNKNOWN
+bindings:
+  - asset_id: RESTAURANT_CLOCK_VIEW_01
+    asset_display_name: 餐馆深处钟楼视角
+    native_token: '@餐馆深处钟楼视角'
+    asset_type: ENVIRONMENT_COVERAGE
+    authority_role: SHOT_VIEW_AUTHORITY
+    visual_evidence_role: PRIMARY_VISUAL
+    primary_visual: true
+    direct_video_eligible: true
+    emit_on_prompt: true
+    token_status: VERIFIED

@@ -1,0 +1,8 @@
+V4.5.7 Temporal Reference Hygiene logic-closed release
+Release date: 2026-08-27
+Regression: 37/37 PASS
+Temporal adversarial: PASS
+YAML: 140
+Python: 132
+State/Runtime schemas: 46
+Source baseline: voice-direction logic-closed V4.5.7 + Temporal implementation

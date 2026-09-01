@@ -1,0 +1,20 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "duanxian/runtime/asset_runtime.schema.yaml"
+title: ASSET_RUNTIME
+type: object
+additionalProperties: true
+required: [runtime_type, schema_version, skill_version, status, scope, source_fingerprints, runtime_fingerprint, assets]
+properties:
+  runtime_type: {const: ASSET_RUNTIME}
+  schema_version: {type: integer, const: 1}
+  skill_version: {type: string, pattern: '^4\.5\.'}
+  status: {enum: [VALID, STALE, REBUILD_REQUIRED]}
+  scope: {type: object, additionalProperties: true}
+  source_versions: {type: object, additionalProperties: true}
+  source_fingerprints: {type: object, additionalProperties: true}
+  runtime_fingerprint: {type: string}
+  assets: {type: object, additionalProperties: true}
+  identity_locks: {type: object, additionalProperties: true}
+  wardrobe_locks: {type: object, additionalProperties: true}
+  transformation_locks: {type: object, additionalProperties: true}
+  invalidation_triggers: {type: array, items: {type: string}}

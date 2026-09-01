@@ -1,0 +1,172 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/qc_runtime.schema.yaml
+title: QC_RUNTIME
+type: object
+additionalProperties: true
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- scope
+- source_fingerprints
+- runtime_fingerprint
+properties:
+  runtime_type:
+    const: QC_RUNTIME
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  scope:
+    type: object
+    additionalProperties: true
+  source_versions:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  open_dimensions:
+    type: array
+    items:
+      type: string
+  readiness:
+    type: object
+    additionalProperties: true
+  candidate_policy:
+    type: object
+    additionalProperties: true
+  retry_state:
+    type: object
+    additionalProperties: true
+  salvage_state:
+    type: object
+    additionalProperties: true
+  platform_profile_ref:
+    type:
+    - string
+    - 'null'
+  invalidation_triggers:
+    type: array
+    items:
+      type: string
+  realism_readiness:
+    enum:
+    - PASS
+    - FAIL
+    - PENDING_VISUAL_EVIDENCE
+    - NOT_APPLICABLE
+    - UNKNOWN
+  realism_open_failures:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  video_realism_evidence:
+    type:
+    - object
+    - 'null'
+    additionalProperties: false
+    properties:
+      evidence_status:
+        enum:
+        - CURRENT
+        - STALE
+        - PENDING
+        - UNVERIFIED
+        - REJECTED
+      video_take_fingerprint:
+        type:
+        - string
+        - 'null'
+      inspector_mode:
+        enum:
+        - MULTIMODAL_MODEL
+        - HUMAN
+        - MIXED
+        - UNKNOWN
+      scene_id:
+        type:
+        - string
+        - 'null'
+      shot_ids:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+      category_verdicts:
+        type: object
+        additionalProperties: false
+        properties:
+          ENVIRONMENT_FUNCTIONAL_REALISM:
+            enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+            - NOT_APPLICABLE
+          ARCHITECTURAL_REALISM:
+            enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+            - NOT_APPLICABLE
+          VEHICLE_REALISM:
+            enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+            - NOT_APPLICABLE
+          HUMAN_ERGONOMICS:
+            enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+            - NOT_APPLICABLE
+          OBJECT_AFFORDANCE:
+            enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+            - NOT_APPLICABLE
+          SOCIAL_SPATIAL_PLAUSIBILITY:
+            enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+            - NOT_APPLICABLE
+          MUNDANE_PHYSICS:
+            enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+            - NOT_APPLICABLE
+          MUNDANE_CONTINUITY:
+            enum:
+            - PASS
+            - FAIL
+            - UNKNOWN
+            - NOT_APPLICABLE
+      overall_verdict:
+        enum:
+        - PASS
+        - FAIL
+        - UNKNOWN
+        - NOT_APPLICABLE
+      issue_codes:
+        type: array
+        items:
+          type: string
+      notes:
+        type:
+        - string
+        - 'null'

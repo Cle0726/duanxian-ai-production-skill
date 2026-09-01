@@ -1,0 +1,106 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/entity_binding_resolution.schema.yaml
+title: Duanxian Entity Binding Resolution V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- source_binding_map_id
+- primary_visual_asset_id
+- bindings
+- direct_reference_ids
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|8|9|10|11)$
+  reference_policy:
+    enum:
+    - LEGACY_ADAPTIVE
+    - FULL_AUTHORITY_DIRECT_BINDING
+    - FIELD_AUTHORITY_PROVIDER_ROUTED_BINDING
+  source_binding_map_id:
+    type: string
+    minLength: 1
+  primary_visual_asset_id:
+    type:
+    - string
+    - 'null'
+  bindings:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - slot_id
+      - entity_id
+      - entity_type
+      - prompt_entity_label
+      - resolution_mode
+      - reason
+      properties:
+        slot_id:
+          type: string
+        entity_id:
+          type: string
+        entity_type:
+          type: string
+        prompt_entity_label:
+          type: string
+        resolution_mode:
+          enum:
+          - PRIMARY_VISUAL_BAKED
+          - DIRECT_REFERENCE
+          - TEMPORAL_T0_BAKED
+          - TEXT_CONTROL
+          - OMITTED
+        resolved_asset_id:
+          type:
+          - string
+          - 'null'
+        native_token:
+          type:
+          - string
+          - 'null'
+        reason:
+          type: string
+          minLength: 1
+        coverage_evidence_ref:
+          type:
+          - string
+          - 'null'
+        prompt_identity_anchor:
+          type:
+          - string
+          - 'null'
+        blocking_anchor:
+          type:
+          - string
+          - 'null'
+        action_anchor:
+          type:
+          - string
+          - 'null'
+  direct_reference_ids:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+  temporal_entry_plan_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  temporal_t0_sufficiency_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  continuity_snapshot_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$

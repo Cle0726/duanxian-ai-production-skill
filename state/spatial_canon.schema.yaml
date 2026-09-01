@@ -1,0 +1,738 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/spatial_canon.schema.yaml
+title: SPATIAL_CANON V2 — Script-Grounded Virtual Set + Required View Set + Functional Reality Hooks
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- locations
+- relations
+- event_nodes
+- character_routes
+- planning_diagrams
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 2
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(2|3|4|5|6|7|8|11)$
+  episode_id:
+    type: string
+  locations:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - location_entity_id
+      - reuse_tier
+      - location_kind
+      - status
+      properties:
+        location_entity_id:
+          type: string
+        display_name:
+          type:
+          - string
+          - 'null'
+        reuse_tier:
+          enum:
+          - S
+          - A
+          - B
+          - C
+        location_kind:
+          enum:
+          - OUTDOOR
+          - BUILDING
+          - INTERIOR
+          - VEHICLE
+          - MIXED
+        parent_location_id:
+          type:
+          - string
+          - 'null'
+        zones:
+          type: array
+          items:
+            type: string
+        anchors:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+            required:
+            - anchor_id
+            - anchor_type
+            properties:
+              anchor_id:
+                type: string
+              anchor_type:
+                enum:
+                - DOOR
+                - WINDOW
+                - ENTRY
+                - EXIT
+                - STAIR
+                - LANDMARK
+                - CAMERA_ZONE
+                - SEAT
+                - CONTROL
+                - AISLE
+                - SUPPORT_SURFACE
+                - SERVICE_POINT
+                - FURNITURE
+                - OTHER
+              zone_id:
+                type:
+                - string
+                - 'null'
+              connects_to:
+                type: array
+                items:
+                  type: string
+              visible_targets:
+                type: array
+                items:
+                  type: string
+              orientation:
+                type:
+                - string
+                - 'null'
+              elevation_level:
+                type:
+                - string
+                - number
+                - 'null'
+              event_node_ids:
+                type: array
+                items:
+                  type: string
+              functional_position_id:
+                type:
+                - string
+                - 'null'
+              capacity:
+                type:
+                - integer
+                - 'null'
+                minimum: 0
+              usable_by_character_ids:
+                type: array
+                items:
+                  type: string
+                uniqueItems: true
+        status:
+          enum:
+          - DRAFT
+          - LOCKED
+          - REVISE_REQUIRED
+        look_domain:
+          enum:
+          - INTERIOR
+          - EXTERIOR
+          - MIXED
+          - NONE
+          - UNKNOWN
+        spatial_diagram_ids:
+          type: array
+          items:
+            type: string
+        visual_parent_asset_ids:
+          type: array
+          items:
+            type: string
+        event_node_ids:
+          type: array
+          items:
+            type: string
+        diagram_position:
+          type:
+          - object
+          - 'null'
+          additionalProperties: false
+          properties:
+            x:
+              type: number
+              minimum: 0
+              maximum: 1
+            y:
+              type: number
+              minimum: 0
+              maximum: 1
+        functional_profile:
+          enum:
+          - GENERAL
+          - RESIDENTIAL
+          - RESTAURANT
+          - WORKPLACE
+          - VEHICLE
+          - STREET
+          - OUTDOOR
+          - OTHER
+          - UNKNOWN
+        specific_functional_type:
+          type:
+          - string
+          - 'null'
+        realism_contract_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        access_paths:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - path_id
+            - passable
+            properties:
+              path_id:
+                type: string
+                minLength: 1
+              from_zone_id:
+                type:
+                - string
+                - 'null'
+              to_zone_id:
+                type:
+                - string
+                - 'null'
+              via_anchor_ids:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              bidirectional:
+                type: boolean
+              passable:
+                type: boolean
+              clearance_note:
+                type:
+                - string
+                - 'null'
+  relations:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - spatial_relation_id
+      - relation_kind
+      - from_entity_id
+      - to_entity_id
+      - status
+      properties:
+        spatial_relation_id:
+          type: string
+        relation_kind:
+          enum:
+          - VISIBLE_FROM
+          - ADJACENT
+          - CONNECTED_BY
+          - CONTAINS
+          - INSIDE_SAME_ENTITY
+          - ABOVE
+          - BELOW
+          - ACCESS_FROM
+          - SAME_LOCATION_DIFFERENT_LAYER
+          - EXTERIOR_INTERIOR_SAME_ENTITY
+          - OTHER
+        from_entity_id:
+          type: string
+        to_entity_id:
+          type: string
+        from_anchor_id:
+          type:
+          - string
+          - 'null'
+        to_anchor_id:
+          type:
+          - string
+          - 'null'
+        direction:
+          type:
+          - string
+          - 'null'
+        distance_class:
+          enum:
+          - CONTACT
+          - NEAR
+          - MID
+          - FAR
+          - UNKNOWN
+        elevation_relation:
+          enum:
+          - SAME
+          - ABOVE
+          - BELOW
+          - MIXED
+          - UNKNOWN
+        occlusion:
+          enum:
+          - NONE
+          - PARTIAL
+          - HEAVY
+          - UNKNOWN
+        status:
+          enum:
+          - DRAFT
+          - LOCKED
+          - REVISE_REQUIRED
+  event_nodes:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - event_node_id
+      - scene_id
+      - location_entity_id
+      - description
+      properties:
+        event_node_id:
+          type: string
+        scene_id:
+          type: string
+        location_entity_id:
+          type: string
+        description:
+          type: string
+          minLength: 1
+        required_zone_ids:
+          type: array
+          items:
+            type: string
+        attention_target_entity_id:
+          type:
+          - string
+          - 'null'
+        required_spatial_relation_ids:
+          type: array
+          items:
+            type: string
+        actor_ids:
+          type: array
+          items:
+            type: string
+        primary_zone_id:
+          type:
+          - string
+          - 'null'
+        entry_anchor_id:
+          type:
+          - string
+          - 'null'
+        exit_anchor_id:
+          type:
+          - string
+          - 'null'
+        character_route_id:
+          type:
+          - string
+          - 'null'
+        required_view_roles:
+          type: array
+          items:
+            enum:
+            - ESTABLISH
+            - FORWARD
+            - REVERSE
+            - ENTRY
+            - EXIT
+            - LOOK_BACK
+            - LANDMARK
+            - CLUE
+            - DETAIL
+            - OTHER
+  status:
+    enum:
+    - DRAFT
+    - LOCKED
+    - REVISE_REQUIRED
+  spatial_canon_fingerprint:
+    type:
+    - string
+    - 'null'
+  character_routes:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - route_id
+      - actor_ids
+      - nodes
+      - status
+      properties:
+        route_id:
+          type: string
+        actor_ids:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        event_node_ids:
+          type: array
+          items:
+            type: string
+        nodes:
+          type: array
+          minItems: 2
+          items:
+            type: object
+            additionalProperties: true
+            required:
+            - order
+            - location_entity_id
+            properties:
+              order:
+                type: integer
+                minimum: 0
+              location_entity_id:
+                type: string
+              zone_id:
+                type:
+                - string
+                - 'null'
+              anchor_id:
+                type:
+                - string
+                - 'null'
+              event_node_id:
+                type:
+                - string
+                - 'null'
+              movement_mode:
+                enum:
+                - WALK
+                - RUN
+                - VEHICLE
+                - CLIMB
+                - FALL
+                - OTHER
+                - UNKNOWN
+              distance_m:
+                type:
+                - number
+                - 'null'
+                minimum: 0
+              slope:
+                enum:
+                - UP
+                - DOWN
+                - LEVEL
+                - MIXED
+                - UNKNOWN
+              spatial_relation_ids:
+                type: array
+                items:
+                  type: string
+        status:
+          enum:
+          - DRAFT
+          - QC_PASS_WAITING_APPROVAL
+          - LOCKED
+          - REVISE
+          - UNKNOWN
+  planning_diagrams:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - diagram_id
+      - diagram_type
+      - scope_location_ids
+      - status
+      properties:
+        diagram_id:
+          type: string
+        diagram_type:
+          enum:
+          - OUTDOOR_TOPOLOGY
+          - BUILDING_FLOOR_PLAN
+          - ROOM_LAYOUT
+          - ZONE_MAP
+          - ROUTE_MAP
+          - VEHICLE_LAYOUT
+        scope_location_ids:
+          type: array
+          items:
+            type: string
+          minItems: 1
+        asset_id:
+          type:
+          - string
+          - 'null'
+        relation_ids:
+          type: array
+          items:
+            type: string
+        character_route_ids:
+          type: array
+          items:
+            type: string
+        event_node_ids:
+          type: array
+          items:
+            type: string
+        annotation_policy:
+          const: PLANNING_ANNOTATIONS_ALLOWED
+        status:
+          enum:
+          - DRAFT
+          - QC_PASS_WAITING_APPROVAL
+          - APPROVED
+          - REVISE
+          - UNKNOWN
+        north_angle_deg:
+          type:
+          - number
+          - 'null'
+          minimum: 0
+          maximum: 360
+        scale_note:
+          type:
+          - string
+          - 'null'
+        nodes:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - node_ref
+            - x
+            - y
+            properties:
+              node_ref:
+                type: string
+              label:
+                type:
+                - string
+                - 'null'
+              x:
+                type: number
+                minimum: 0
+                maximum: 1
+              y:
+                type: number
+                minimum: 0
+                maximum: 1
+              node_kind:
+                enum:
+                - LOCATION
+                - EVENT
+                - ANCHOR
+                - WAYPOINT
+                - OTHER
+        edges:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - from_ref
+            - to_ref
+            properties:
+              from_ref:
+                type: string
+              to_ref:
+                type: string
+              relation_id:
+                type:
+                - string
+                - 'null'
+              label:
+                type:
+                - string
+                - 'null'
+              directed:
+                type: boolean
+        zone_boxes:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - zone_id
+            - x
+            - y
+            - w
+            - h
+            properties:
+              zone_id:
+                type: string
+              label:
+                type:
+                - string
+                - 'null'
+              x:
+                type: number
+                minimum: 0
+                maximum: 1
+              y:
+                type: number
+                minimum: 0
+                maximum: 1
+              w:
+                type: number
+                exclusiveMinimum: 0
+                maximum: 1
+              h:
+                type: number
+                exclusiveMinimum: 0
+                maximum: 1
+        anchor_points:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - anchor_id
+            - x
+            - y
+            properties:
+              anchor_id:
+                type: string
+              label:
+                type:
+                - string
+                - 'null'
+              x:
+                type: number
+                minimum: 0
+                maximum: 1
+              y:
+                type: number
+                minimum: 0
+                maximum: 1
+  view_requirements:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - view_requirement_id
+      - scene_id
+      - location_entity_id
+      - view_role
+      - priority
+      - status
+      properties:
+        view_requirement_id:
+          type: string
+          minLength: 1
+        scene_id:
+          type: string
+          minLength: 1
+        location_entity_id:
+          type: string
+          minLength: 1
+        event_node_ids:
+          type: array
+          items:
+            type: string
+        shot_ids:
+          type: array
+          items:
+            type: string
+        relation_ids:
+          type: array
+          items:
+            type: string
+        character_route_ids:
+          type: array
+          items:
+            type: string
+        view_role:
+          enum:
+          - ESTABLISH
+          - FORWARD
+          - REVERSE
+          - ENTRY
+          - EXIT
+          - LOOK_BACK
+          - LANDMARK
+          - CLUE
+          - DETAIL
+          - OTHER
+        priority:
+          enum:
+          - P0
+          - P1
+          - P2
+          - P3
+        camera_origin_zone_id:
+          type:
+          - string
+          - 'null'
+        camera_origin_anchor_id:
+          type:
+          - string
+          - 'null'
+        view_target_entity_id:
+          type:
+          - string
+          - 'null'
+        view_target_anchor_id:
+          type:
+          - string
+          - 'null'
+        view_direction_code:
+          type:
+          - string
+          - 'null'
+        required_visible_anchor_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        forbidden_visible_anchor_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        required_visual_fact_codes:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        forbidden_visual_fact_codes:
+          type: array
+          items:
+            type: string
+          uniqueItems: true
+        candidate_budget:
+          type: integer
+          minimum: 1
+          maximum: 8
+        selected_fulfillment_asset_id:
+          type:
+          - string
+          - 'null'
+        status:
+          enum:
+          - REQUIRED
+          - FULFILLED
+          - REVISE_REQUIRED
+          - WAIVED
+        waiver_ref:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+        realism_contract_ids:
+          type: array
+          items:
+            type: string
+          uniqueItems: true

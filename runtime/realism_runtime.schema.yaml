@@ -1,0 +1,88 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/realism_runtime.schema.yaml
+title: REALISM_RUNTIME V1
+type: object
+additionalProperties: false
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- scope
+- source_fingerprints
+- runtime_fingerprint
+properties:
+  runtime_type:
+    const: REALISM_RUNTIME
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(5|6|7|8|11)$
+  status:
+    enum:
+    - CURRENT
+    - STALE
+    - INVALID
+  scope:
+    type: object
+    additionalProperties: true
+  source_versions:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  active_contract_ids:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+  baseline_mode:
+    enum:
+    - REALISM_REQUIRED
+    - REALISM_EXCEPTION_SCOPED
+    - MIXED
+  active_profiles:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+  p0_p1_requirements:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - contract_id
+      - category
+      properties:
+        contract_id:
+          type: string
+        category:
+          type: string
+        expected_fact_codes:
+          type: array
+          items:
+            type: string
+        forbidden_issue_codes:
+          type: array
+          items:
+            type: string
+  scoped_exceptions:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  unresolved_realism_failures:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  invalidation_triggers:
+    type: array
+    items:
+      type: string

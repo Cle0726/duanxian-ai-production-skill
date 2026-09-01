@@ -1,0 +1,64 @@
+profile_id: JIMENG_SEEDANCE_2_5_30S
+profile_version: 1
+skill_version: 4.5.10
+status: VERIFIED_OFFICIAL_CAPABILITY_PLUS_PROJECT_ROUTING_POLICY
+official_sources:
+- https://seed.bytedance.com/zh/seedance2_5
+- https://seed.bytedance.com/en/blog/one-take-creation-flexible-referencing-introducing-seedance-2-5
+capabilities:
+  model: Seedance 2.5
+  mode: 全能参考
+  max_video_duration_sec: 30
+  video_extension_rounds: 2
+  image_reference_limit: 30
+  video_reference_limit: 10
+  audio_reference_limit: 10
+  long_form_multishot: true
+  timestamp_control: true
+  audio_video_joint_generation: true
+reference_policy:
+  mode: FIELD_AUTHORITY_PROVIDER_ROUTED_BINDING
+  principle: 高容量不等于多塞参考；每张图只拥有一个不可替代字段。
+  minimum_sufficient_roles:
+  - EMPTY_ENVIRONMENT_MASTER
+  - VISIBLE_CHARACTER_MASTER
+  - STORYBOARD_SEQUENCE_TEMPORAL_CONTROL
+  optional_unique_roles:
+  - CRITICAL_PROP_DETAIL
+  - SCENE_COLOR_AUTHORITY
+  - BASE_VISUAL_STYLE_AUTHORITY
+  storyboard:
+    route: DIRECT_SEQUENCE_BOARD
+    owns: [ACTION, BLOCKING, SHOT_ORDER, CUT_TIMING]
+    forbidden: [FINAL_RENDER_STYLE, CHARACTER_IDENTITY, MATERIAL_TEXTURE, FINAL_IMAGE_QUALITY]
+  shot_specific_primary:
+    default_route_when_redundant: OMIT_REDUNDANT_BAKED_COMPOSITE
+    rejection_code: REDUNDANT_COMPOSITE_REFERENCE_COMPETITION
+duration_policy:
+  preferred_envelope_sec: 24-30
+  target_30s_only_when:
+  - causal_sequence_fills_duration_without_new_story_facts
+  - cumulative_timed_cuts_close_exactly_at_30s
+  - no_authentic_mid_envelope_ending_frame_required
+  meaningful_hold_sources:
+  - breath_and_touch_confirmation
+  - acoustic_decay
+  - withheld_expected_event
+  - reaction_threshold
+  - threat_landing
+  forbidden_padding:
+  - repeated_action
+  - random_camera_move
+  - invented_dialogue
+  - extra_character
+  - unmotivated_cut
+prompt_rules:
+- 每个@图片N紧邻声明唯一用途。
+- 使用一个Approved整段白描Sequence Board，禁止同时上传多个重复Storyboard和合成人物Primary。
+- 逐CUT写累计时间窗，精确闭合30秒。
+- 声音、动作、视线和CUT因果必须跨镜连续。
+- 明确禁止新增CUT、补人物、补对白、改变精确次数或提前泄露实体。
+qc_policy:
+  validate_per_cut: true
+  sub_cut_salvage_allowed: true
+  whole_take_auto_approval_forbidden: true

@@ -1,0 +1,222 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/reference_runtime.schema.yaml
+title: REFERENCE_RUNTIME
+type: object
+additionalProperties: true
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- scope
+- source_fingerprints
+- runtime_fingerprint
+properties:
+  runtime_type:
+    const: REFERENCE_RUNTIME
+  schema_version:
+    type: integer
+    const: 3
+  skill_version:
+    type: string
+    pattern: ^4\.5\.
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  scope:
+    type: object
+    additionalProperties: true
+  source_versions:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  task_target:
+    type:
+    - string
+    - 'null'
+  reference_surface_mode:
+    enum:
+    - NAMED_ASSET_MENTION_REQUIRED
+    - ORDERED_IMAGE_TOKEN_REQUIRED
+    - UI_BINDING_SUFFICIENT
+    - UNKNOWN
+    - HOST_RESOLVED_PROJECT_DEFAULT_NAMED
+    - TOOL_NATIVE_REFERENCE
+    - FILE_PATH_REFERENCE
+    - MANUAL_HANDOFF
+  primary_visual_status:
+    enum:
+    - PASS
+    - GAP
+    - NOT_APPLICABLE
+    - UNKNOWN
+  key_visible_assets:
+    type: array
+    items:
+      type: string
+  field_coverage:
+    type: object
+    additionalProperties: true
+  bindings:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      properties:
+        asset_id:
+          type:
+          - string
+          - 'null'
+        asset_display_name:
+          type:
+          - string
+          - 'null'
+        native_token:
+          type:
+          - string
+          - 'null'
+        asset_type:
+          type:
+          - string
+          - 'null'
+        authority_role:
+          type:
+          - string
+          - 'null'
+        binding_mode:
+          type:
+          - string
+          - 'null'
+        primary_visual:
+          type: boolean
+        direct_video_eligible:
+          type: boolean
+        video_unit_id:
+          type:
+          - string
+          - 'null'
+        time_scope:
+          type:
+          - string
+          - 'null'
+        emit_on_prompt:
+          type: boolean
+        token_status:
+          enum:
+          - VERIFIED
+          - REGISTERED
+          - MISSING
+          - NOT_REQUIRED
+          - UNKNOWN
+        short_execution_clause:
+          type:
+          - string
+          - 'null'
+        visual_evidence_ref:
+          type:
+          - string
+          - 'null'
+        visual_evidence_status:
+          enum:
+          - CURRENT
+          - STALE
+          - MISSING
+          - NOT_REQUIRED
+          - UNKNOWN
+        visual_fact_codes:
+          type: array
+          items:
+            type: string
+        visual_issue_codes:
+          type: array
+          items:
+            type: string
+        visual_evidence_role:
+          type:
+          - string
+          - 'null'
+        priority:
+          enum:
+          - P0
+          - P1
+          - P2
+          - P3
+          - UNSPECIFIED
+        why_now:
+          type:
+          - string
+          - 'null'
+        required_now:
+          type: boolean
+  unresolved_fields:
+    type: array
+    items:
+      type: string
+  missing_required_mentions:
+    type: array
+    items:
+      type: string
+  slot_status:
+    enum:
+    - PASS
+    - OVERFLOW
+    - UNKNOWN
+  invalidation_triggers:
+    type: array
+    items:
+      type: string
+  controller_mode:
+    enum:
+    - MULTIMODAL_ACTIVE
+    - TEXT_ONLY_CONTINUATION
+    - UNKNOWN
+  required_visual_facts:
+    type: array
+    items:
+      type: string
+  forbidden_visual_facts:
+    type: array
+    items:
+      type: string
+  visual_evidence_coverage:
+    enum:
+    - PASS
+    - GAP
+    - CONFLICT
+    - UNKNOWN
+  reference_capability_class:
+    enum:
+    - MULTIMODAL_ALL_ROUND_REFERENCE
+    - NAMED_VISUAL_REFERENCE
+    - TOOL_NATIVE_REFERENCE
+    - MANUAL_HANDOFF
+    - UNKNOWN
+  supported_reference_media:
+    type: array
+    items:
+      enum:
+      - TEXT
+      - IMAGE
+      - VIDEO
+      - AUDIO
+    uniqueItems: true
+
+  reference_video_policy:
+    enum:
+    - FORBIDDEN_QUOTA_COST
+    - UNKNOWN
+  audio_asset_manifest_ref:
+    type:
+    - string
+    - 'null'
+  audio_reference_policy:
+    enum:
+    - AUDIO_ASSET_MANIFEST_ONLY
+    - NONE
+    - UNKNOWN

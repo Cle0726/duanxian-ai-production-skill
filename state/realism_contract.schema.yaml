@@ -1,0 +1,441 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/realism_contract.schema.yaml
+title: REALISM_CONTRACT V2 — Everyday Reality Baseline + Reality Basis + Scoped Exceptions
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- episode_id
+- contracts
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(5|6|7|8|11)$
+  episode_id:
+    type: string
+    minLength: 1
+  contracts:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - contract_id
+      - scene_id
+      - location_entity_id
+      - baseline_mode
+      - profile
+      - status
+      properties:
+        contract_id:
+          type: string
+          minLength: 1
+        scene_id:
+          type: string
+          minLength: 1
+        location_entity_id:
+          type: string
+          minLength: 1
+        event_node_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        shot_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        asset_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        source_refs:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        baseline_mode:
+          enum:
+          - REALISM_REQUIRED
+          - REALISM_EXCEPTION_SCOPED
+        profile:
+          enum:
+          - GENERAL
+          - INTERIOR
+          - EXTERIOR
+          - BUILDING
+          - VEHICLE
+          - RESTAURANT
+          - RESIDENTIAL
+          - WORKPLACE
+          - STREET
+          - OTHER
+        source_fact_class:
+          enum:
+          - EXPLICIT_SOURCE_FACT
+          - DERIVED_REALISTIC_RESOLUTION
+          - OPEN_STORY_SIGNIFICANT
+          - MIXED
+        expected_cast:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - character_id
+            - expected_count
+            properties:
+              character_id:
+                type: string
+                minLength: 1
+              expected_count:
+                type: integer
+                minimum: 1
+                maximum: 20
+              functional_role:
+                type:
+                - string
+                - 'null'
+              required_zone_id:
+                type:
+                - string
+                - 'null'
+              required_position_id:
+                type:
+                - string
+                - 'null'
+              required_posture:
+                enum:
+                - STAND
+                - SIT
+                - KNEEL
+                - LIE
+                - CROUCH
+                - MOVE
+                - NOT_FIXED
+                - UNKNOWN
+              required_support_surface_id:
+                type:
+                - string
+                - 'null'
+              required_eyeline_targets:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              no_duplicate:
+                type: boolean
+                default: true
+        unexpected_humans_allowed:
+          type: boolean
+          default: false
+        environment_requirements:
+          type: object
+          additionalProperties: false
+          properties:
+            environment_kind:
+              enum:
+              - OUTDOOR
+              - BUILDING
+              - INTERIOR
+              - VEHICLE
+              - MIXED
+              - OTHER
+              - UNKNOWN
+            specific_type:
+              type:
+              - string
+              - 'null'
+            required_zone_ids:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+            required_anchor_ids:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+            required_access_path_ids:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+            scale_plausibility_required:
+              type: boolean
+              default: true
+            functional_layout_required:
+              type: boolean
+              default: true
+            ingress_egress_required:
+              type: boolean
+              default: false
+            circulation_required:
+              type: boolean
+              default: false
+            vehicle:
+              type:
+              - object
+              - 'null'
+              additionalProperties: false
+              properties:
+                vehicle_type:
+                  type:
+                  - string
+                  - 'null'
+                driver_zone_id:
+                  type:
+                  - string
+                  - 'null'
+                passenger_zone_ids:
+                  type: array
+                  uniqueItems: true
+                  items:
+                    type: string
+                front_direction_code:
+                  type:
+                  - string
+                  - 'null'
+                driver_forward_visibility_required:
+                  type: boolean
+                  default: true
+                passenger_capacity:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 0
+                  maximum: 200
+                entry_anchor_ids:
+                  type: array
+                  uniqueItems: true
+                  items:
+                    type: string
+            capacity_constraints:
+              type: array
+              items:
+                type: object
+                additionalProperties: false
+                required:
+                - zone_id
+                - max_humans
+                properties:
+                  zone_id:
+                    type: string
+                  min_humans:
+                    type: integer
+                    minimum: 0
+                    default: 0
+                  max_humans:
+                    type: integer
+                    minimum: 0
+                    maximum: 200
+        object_affordances:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - object_id
+            - function
+            properties:
+              object_id:
+                type: string
+              function:
+                type: string
+                minLength: 1
+              required_user_character_ids:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              required_reachable:
+                type: boolean
+                default: true
+              required_supported:
+                type: boolean
+                default: true
+              required_operable:
+                type: boolean
+                default: true
+        social_spatial_constraints:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - character_a
+            - character_b
+            - relation
+            properties:
+              character_a:
+                type: string
+              character_b:
+                type: string
+              relation:
+                enum:
+                - CONTACT
+                - NEAR
+                - CONVERSATIONAL
+                - MEDIUM
+                - FAR
+                - SEPARATED
+                - NOT_FIXED
+              eyeline_access_required:
+                type: boolean
+                default: false
+              behavior_reason_ref:
+                type:
+                - string
+                - 'null'
+        continuity_requirements:
+          type: object
+          additionalProperties: false
+          properties:
+            world_state_ref:
+              type:
+              - string
+              - 'null'
+            no_unexplained_character_relocation:
+              type: boolean
+              default: true
+            no_unexplained_prop_state_change:
+              type: boolean
+              default: true
+            no_unexplained_environment_reset:
+              type: boolean
+              default: true
+            no_unexplained_wetness_damage_reset:
+              type: boolean
+              default: true
+            no_unexplained_task_drop:
+              type: boolean
+              default: true
+        required_categories:
+          type: array
+          uniqueItems: true
+          items:
+            enum:
+            - ENVIRONMENT_FUNCTIONAL_REALISM
+            - ARCHITECTURAL_REALISM
+            - VEHICLE_REALISM
+            - HUMAN_ERGONOMICS
+            - OBJECT_AFFORDANCE
+            - SOCIAL_SPATIAL_PLAUSIBILITY
+            - MUNDANE_PHYSICS
+            - MUNDANE_CONTINUITY
+        exception_scopes:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - exception_id
+            - exception_type
+            - allowed_categories
+            - reason
+            properties:
+              exception_id:
+                type: string
+                minLength: 1
+              exception_type:
+                enum:
+                - TRANSFORMATION
+                - COMBAT
+                - SUPERNATURAL
+                - DREAM
+                - HALLUCINATION
+                - SURREAL
+                - SYMBOLIC
+              scene_ids:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              event_node_ids:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              shot_ids:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              asset_ids:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+              allowed_categories:
+                type: array
+                minItems: 1
+                uniqueItems: true
+                items:
+                  enum:
+                  - ENVIRONMENT_FUNCTIONAL_REALISM
+                  - ARCHITECTURAL_REALISM
+                  - VEHICLE_REALISM
+                  - HUMAN_ERGONOMICS
+                  - OBJECT_AFFORDANCE
+                  - SOCIAL_SPATIAL_PLAUSIBILITY
+                  - MUNDANE_PHYSICS
+                  - MUNDANE_CONTINUITY
+              reason:
+                type: string
+                minLength: 1
+              canon_mechanic_ref:
+                type:
+                - string
+                - 'null'
+              approval_ref:
+                type:
+                - string
+                - 'null'
+        status:
+          enum:
+          - DRAFT
+          - QC_PASS_WAITING_APPROVAL
+          - LOCKED
+          - REVISE_REQUIRED
+        reality_basis:
+          type: object
+          additionalProperties: false
+          required:
+          - basis_type
+          - reference_requirement
+          - verification_status
+          properties:
+            basis_type:
+              enum:
+              - SOURCE_EXPLICIT
+              - COMMON_KNOWLEDGE
+              - VERIFIED_REFERENCE
+              - HISTORICAL_REFERENCE
+              - TECHNICAL_REFERENCE
+              - MIXED
+              - OPEN
+            reference_requirement:
+              enum:
+              - COMMON_KNOWLEDGE_OK
+              - REFERENCE_REQUIRED
+            verification_status:
+              enum:
+              - NOT_REQUIRED
+              - VERIFIED
+              - PENDING
+              - FAILED
+            reference_refs:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+            rationale:
+              type:
+              - string
+              - 'null'

@@ -1,0 +1,167 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/audio_asset_manifest.schema.yaml
+title: Duanxian Audio Asset Manifest V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- audio_asset_manifest_id
+- status
+- audio_assets
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  audio_asset_manifest_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type:
+    - string
+    - 'null'
+  status:
+    enum:
+    - DRAFT
+    - READY
+    - APPROVED
+    - STALE
+  manifest_fingerprint:
+    type:
+    - string
+    - 'null'
+  audio_assets:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - asset_id
+      - audio_type
+      - authority_role
+      - scope
+      - status
+      - reference_policy
+      - binding_status
+      properties:
+        asset_id:
+          type: string
+          minLength: 1
+        asset_display_name:
+          type:
+          - string
+          - 'null'
+        native_token:
+          type:
+          - string
+          - 'null'
+        audio_type:
+          enum:
+          - VOICE_IDENTITY
+          - DIALOGUE_TAKE
+          - TEMP_SYNC_DIALOGUE
+          - SFX
+          - FOLEY
+          - AMBIENCE
+          - MUSIC
+          - DIEGETIC_MUSIC
+          - RHYTHM_REFERENCE
+          - PERFORMANCE_AUDIO_REFERENCE
+          - OTHER
+        authority_role:
+          enum:
+          - VOICE_IDENTITY
+          - DIALOGUE_CONTENT
+          - TIMING
+          - RHYTHM
+          - AMBIENCE
+          - SFX
+          - MUSIC
+          - PERFORMANCE
+          - OTHER
+        scope:
+          enum:
+          - GLOBAL
+          - CHARACTER
+          - EPISODE
+          - SEQUENCE
+          - SCENE
+          - SHOT
+        subject_entity_id:
+          type:
+          - string
+          - 'null'
+        episode_id:
+          type:
+          - string
+          - 'null'
+        sequence_id:
+          type:
+          - string
+          - 'null'
+        scene_id:
+          type:
+          - string
+          - 'null'
+        shot_id:
+          type:
+          - string
+          - 'null'
+        language:
+          type:
+          - string
+          - 'null'
+        transcript_ref:
+          type:
+          - string
+          - 'null'
+        reuse_key:
+          type:
+          - string
+          - 'null'
+        version:
+          type:
+          - string
+          - integer
+          - 'null'
+        duration_sec:
+          type:
+          - number
+          - 'null'
+          minimum: 0
+        fingerprint:
+          type:
+          - string
+          - 'null'
+        status:
+          enum:
+          - DRAFT
+          - APPROVED
+          - DEPRECATED
+        reference_policy:
+          enum:
+          - VIDEO_REFERENCE_ALLOWED
+          - STAGE06_ONLY
+          - METADATA_ONLY
+          - NEVER_DIRECT
+        binding_status:
+          enum:
+          - READY
+          - PENDING_NATIVE_BINDING
+          - NOT_REQUIRED
+        direct_reference_eligible:
+          type: boolean
+          default: false
+        intended_use:
+          type: array
+          uniqueItems: true
+          items:
+            enum:
+            - VIDEO_REFERENCE
+            - STAGE06_EDIT
+            - VOICE_CANON
+            - TEMP_SYNC
+            - ARCHIVE

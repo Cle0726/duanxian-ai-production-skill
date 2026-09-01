@@ -1,0 +1,179 @@
+schema_version: 1
+skill_version: 4.5.10
+purpose: 将项目语义Reference Binding映射为宿主真实可用的生成输入。先识别Host Capability，再选择Profile；禁止假设不存在的@Token或文件路径。
+default_target_profile: MULTIMODAL_ALL_ROUND_REFERENCE
+profiles:
+  NAMED_ASSET_PLATFORM:
+    reference_transport: NAMED_ASSET_MENTION
+    native_mention_syntax: '@{asset_display_name}'
+    prompt_mention_required: true
+    image_generation: HOST_TOOL_OR_PLATFORM
+    video_generation: HOST_TOOL_OR_PLATFORM
+    require_scene_color_mention_for_scene_bound_image: true
+    require_scene_color_mention_for_video: true
+    reference_capability_class: NAMED_VISUAL_REFERENCE
+    supported_reference_media:
+    - TEXT
+    - IMAGE
+    role_aware_reference_assignment: true
+    temporal_transport:
+      generic_reference_implies_t0_semantics: false
+      t0_semantics_verified: false
+      endpoint_semantics_verified: false
+  ORDERED_IMAGE_PLATFORM:
+    reference_transport: ORDERED_IMAGE_MENTION
+    native_mention_syntax: '@图{index}'
+    prompt_mention_required: true
+    require_real_binding_map: true
+    require_scene_color_mention_for_scene_bound_image: true
+    require_scene_color_mention_for_video: true
+    temporal_transport:
+      generic_reference_implies_t0_semantics: false
+      t0_semantics_verified: false
+      endpoint_semantics_verified: false
+  CHATGPT_NATIVE_IMAGE:
+    reference_transport: TOOL_NATIVE_REFERENCE
+    prompt_mention_required: false
+    image_generation: BUILTIN_IMAGE_TOOL
+    video_generation: UNKNOWN
+    require_scene_color_native_binding_for_scene_bound_image: true
+    forbid_fabricated_mentions: true
+    temporal_transport:
+      generic_reference_implies_t0_semantics: false
+      t0_semantics_verified: false
+      endpoint_semantics_verified: false
+  FILE_REFERENCE_HOST:
+    reference_transport: FILE_PATH_REFERENCE
+    prompt_mention_required: false
+    require_existing_file: true
+    forbid_fabricated_paths: true
+    temporal_transport:
+      generic_reference_implies_t0_semantics: false
+      t0_semantics_verified: false
+      endpoint_semantics_verified: false
+  MANUAL_EXTERNAL:
+    reference_transport: MANUAL_HANDOFF
+    prompt_mention_required: platform_dependent
+    auto_execution: false
+    temporal_transport:
+      generic_reference_implies_t0_semantics: false
+      t0_semantics_verified: false
+      endpoint_semantics_verified: false
+  SEEDANCE_NAMED_ASSET_PLATFORM:
+    reference_transport: NAMED_ASSET_MENTION
+    native_mention_syntax: '@{asset_display_name}'
+    prompt_mention_required: true
+    image_generation: HOST_TOOL_OR_PLATFORM
+    video_generation: HOST_TOOL_OR_PLATFORM
+    require_scene_color_mention_for_scene_bound_image: true
+    require_scene_color_mention_for_video: true
+    generation_adapter: adapters/generation/seedance_multishot_profile.yaml
+    controlled_multishot: true
+    supported_format_modes:
+    - ONER
+    - SEQUENTIAL_MULTISHOT
+    - TIMED_MULTISHOT
+    - FREESTYLE_BROLL
+    storyboard_grid_required_for_non_oner: true
+    reference_capability_class: MULTIMODAL_ALL_ROUND_REFERENCE
+    supported_reference_media:
+    - TEXT
+    - IMAGE
+    - AUDIO
+    combined_multimodal_reference_job: true
+    role_aware_reference_assignment: true
+    minimum_sufficient_reference_selection_required: true
+    temporal_transport:
+      generic_reference_implies_t0_semantics: false
+      t0_semantics_verified: false
+      endpoint_semantics_verified: false
+  JIMENG_SEEDANCE_2_0_OMNI:
+    reference_transport: ORDERED_IMAGE_MENTION
+    native_mention_syntax: '@图片{index}'
+    prompt_mention_required: true
+    require_real_binding_map: true
+    image_reference_limit: 9
+    mixed_reference_material_limit_ui: 12
+    max_video_duration_sec: 15
+    controlled_multishot: true
+    supported_format_modes:
+    - ONER
+    - SEQUENTIAL_MULTISHOT
+    - TIMED_MULTISHOT
+    reference_policy: FIELD_AUTHORITY_PROVIDER_ROUTED_BINDING
+    empty_environment_master_direct: true
+    visible_human_masters_direct: true
+    storyboard_role: ACTION_BLOCKING_CUT_ONLY
+    storyboard_forbidden_fields:
+    - FINAL_RENDER_STYLE
+    - CHARACTER_IDENTITY
+    - TEXTURE
+    - FINAL_IMAGE_QUALITY
+    redundant_baked_primary_default: OMIT_REDUNDANT_BAKED_COMPOSITE
+    generation_adapter: adapters/generation/jimeng_seedance_2_0_omni_profile.yaml
+  JIMENG_SEEDANCE_2_5_30S:
+    reference_transport: ORDERED_IMAGE_MENTION
+    native_mention_syntax: '@图片{index}'
+    prompt_mention_required: true
+    require_real_binding_map: true
+    image_reference_limit: 30
+    video_reference_limit: 10
+    audio_reference_limit: 10
+    max_video_duration_sec: 30
+    controlled_multishot: true
+    timestamp_control: true
+    supported_format_modes:
+    - ONER
+    - SEQUENTIAL_MULTISHOT
+    - TIMED_MULTISHOT
+    reference_policy: FIELD_AUTHORITY_PROVIDER_ROUTED_BINDING
+    minimum_sufficient_reference_set: true
+    storyboard_role: ACTION_BLOCKING_CUT_ONLY
+    redundant_baked_primary_default: OMIT_REDUNDANT_BAKED_COMPOSITE
+    generation_adapter: adapters/generation/jimeng_seedance_2_5_30s_profile.yaml
+  MULTIMODAL_ALL_ROUND_REFERENCE:
+    reference_capability_class: MULTIMODAL_ALL_ROUND_REFERENCE
+    reference_transport: NAMED_ASSET_MENTION
+    native_mention_syntax: '@{asset_display_name}'
+    prompt_mention_required: true
+    image_generation: HOST_TOOL_OR_PLATFORM
+    video_generation: HOST_TOOL_OR_PLATFORM
+    supported_reference_media:
+    - TEXT
+    - IMAGE
+    - AUDIO
+    combined_multimodal_reference_job: true
+    role_aware_reference_assignment: true
+    supports_character_reference: true
+    supports_environment_reference: true
+    supports_prop_reference: true
+    supports_storyboard_reference: true
+    supports_motion_or_camera_video_reference: false
+    supports_audio_reference: true
+    reference_video_policy: FORBIDDEN_QUOTA_COST
+    audio_asset_manifest_required_for_audio_reference: true
+    minimum_sufficient_reference_selection_required: true
+    provider_profile_required_for_exact_material_limits: true
+    require_scene_color_mention_for_scene_bound_image: true
+    require_scene_color_mention_for_video: false
+    scene_color_video_reference_default: LINEAGE_ONLY
+    semantic_rule: 底层模型可具备全能参考能力，但《断弦之歌》项目执行策略明确禁用参考视频以节省视频额度；单个Video Job只允许文字/图片/音频Reference。音频必须来自AUDIO_ASSET_MANIFEST；不表示Primary
+      Visual万能，也不表示所有资产都必须进入Direct Reference。
+    temporal_transport:
+      generic_reference_implies_t0_semantics: false
+      t0_semantics_verified: false
+      endpoint_semantics_verified: false
+resolution_rules:
+- 优先读取当前宿主真实工具/能力，不按历史经验猜测。
+- 项目默认目标若支持命名@资产，使用NAMED_ASSET_PLATFORM并保持综合色卡的真实@绑定。
+- 若宿主只有Tool-native图片引用，语义上仍必须绑定同一Color Authority，但不得伪造@Token。
+- Generation Job必须记录resolved_profile；Capability=UNAVAILABLE时才允许Manual Handoff。
+- 目标为Seedance且需要受控Multi-shot时，优先解析SEEDANCE_NAMED_ASSET_PLATFORM；非ONER必须先通过Generation Envelope白描宫格Gate。
+- 目标明确为即梦Seedance 2.0全能参考时，使用JIMENG_SEEDANCE_2_0_OMNI；优先10–15秒受控多镜Envelope，并移除与白描+Prompt+高清母图重复的合成Primary。
+- 目标明确为即梦Seedance 2.5且UI提供30秒额度时，使用JIMENG_SEEDANCE_2_5_30S；优先把能够自然闭合的完整因果段落编译成单个24–30秒受控多镜Envelope，禁止为填满额度增加废动作或冗余参考。
+- 《断弦之歌》底层能力类仍为MULTIMODAL_ALL_ROUND_REFERENCE，但项目有效Reference媒体只允许文字、图片、音频；参考视频一律FORBIDDEN_QUOTA_COST。实际宿主若能力更低，由Host Adapter降级Transport/输入方式，但不得丢失Reference
+  Role语义。
+- 全能参考只定义底层模型能力；项目执行层额外禁止参考视频。图片/音频数量与格式必须读取当前Provider Profile，不得把某个平台历史上限写成Skill全局上限。
+- 即使默认全能参考，仍必须运行Reference Resolver并输出MINIMUM_SUFFICIENT_REFERENCE_SET；禁止把完整Asset Library机械全部绑定到单个Video Job。
+- Generic/Named/Ordered Reference能力本身不证明t=0或endpoint语义；SEAMLESS_EXTEND/GUIDED_CONTINUATION必须有Provider-specific capability
+  evidence，未验证时不得冒充首帧/尾帧Transport。

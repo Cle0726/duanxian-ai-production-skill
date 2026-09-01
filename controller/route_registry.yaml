@@ -1,0 +1,2147 @@
+schema_version: 1
+skill_version: 4.5.11
+owner: ROUTE
+purpose: 唯一Task→Runtime→Fallback Source映射。Route只决定加载集合，不重复领域规则。
+always_on:
+- controller/workflow_state_machine.yaml
+- controller/authority_registry.yaml
+- templates/system_integrity_authority.md
+- controller/gate_producer_registry.yaml
+- SKILL.md
+visual_review_preflight:
+  authority: templates/media_review_proxy_protocol.md
+  deterministic_tool: tools/media_review_proxy_builder.py
+  metadata_inventory_before_pixel_review: REQUIRED
+  max_review_long_edge: 1600
+  contact_sheet_final_acceptance_allowed: false
+runtime_types:
+- STORY_RUNTIME
+- DIRECTOR_RUNTIME
+- ASSET_RUNTIME
+- SCENE_RUNTIME
+- SPATIAL_CANON_RUNTIME
+- REALISM_RUNTIME
+- REFERENCE_RUNTIME
+- VISUAL_EVIDENCE_RUNTIME
+- VIDEO_CONDITIONING_RUNTIME
+- VIDEO_RUNTIME
+- QC_RUNTIME
+- GENERATION_RUNTIME
+routes:
+  EXISTING_PROJECT_MIGRATION:
+    runtime:
+    - VISUAL_EVIDENCE_RUNTIME
+    source:
+    - templates/existing_project_migration.md
+    - templates/episode_workspace.md
+    - templates/change_impact.md
+    - templates/visual_evidence_handoff.md
+    validators:
+    - validators/v44_architecture_lint.py
+    produces_fields:
+    - VISUAL_REVIEW_QUEUE
+    - VISUAL_EVIDENCE_GAP_INDEX
+  STAGE_01A_SOURCE_PARSE:
+    runtime:
+    - STORY_RUNTIME
+    source_if_missing_or_stale:
+    - templates/source_narrative_parse.md
+    - templates/story_lock_template.md
+  STAGE_01B_SCREENPLAY_ADAPTATION:
+    runtime:
+    - STORY_RUNTIME
+    source_if_missing_or_stale:
+    - templates/screenplay_adaptation_engine.md
+    - templates/story_lock_template.md
+    conditional_source:
+      genre_pressure:
+      - templates/screen_experience_genre_pressure_engine.md
+  STAGE_01C_SCREENPLAY_LOCK:
+    runtime:
+    - STORY_RUNTIME
+    source_if_missing_or_stale:
+    - templates/screenplay_lock_template.md
+    - templates/story_lock_template.md
+    - checklists/qc_checklists.md
+  STAGE_02A_DIRECTOR_INTELLIGENCE:
+    runtime:
+    - STORY_RUNTIME
+    source_if_missing_or_stale:
+    - templates/director_intelligence_core.md
+    - templates/world_state_continuity_engine.md
+    conditional_source:
+      D1_D2:
+      - templates/directorial_department_critique.md
+      approved_director_grammar:
+      - templates/director_taste_grammar_bible.md
+      performance_critical:
+      - templates/actor_performance_engine.md
+      - templates/performance_causality_emotional_acting.md
+    forbidden_context:
+    - COST_OPTIMIZATION
+    - EXISTING_ASSET_CONVENIENCE
+    - REFERENCE_SLOT_LIMIT
+    - PLATFORM_DURATION_MAPPING
+  STAGE_02B_DIRECTOR_ARCHITECTURE:
+    runtime:
+    - STORY_RUNTIME
+    - DIRECTOR_RUNTIME
+    source_if_missing_or_stale:
+    - templates/sequence_arc_engine.md
+    - templates/editorial_grammar_engine.md
+    - templates/director_architecture_engine.md
+    - templates/cinematography_grammar.md
+    - templates/cinematic_spatial_staging_engine.md
+    conditional_source:
+      complex_camera:
+      - templates/camera_motion_contract.md
+      combat:
+      - templates/combat_choreography_engine.md
+      - templates/cinematic_combat_vfx_engine.md
+      crowd:
+      - templates/crowd_presence_ambient_life_engine.md
+      transformation:
+      - templates/transformation_splendor_architecture.md
+      sound_driven:
+      - templates/video_audio_generation_boundary.md
+      creature_threat:
+      - templates/creature_performance_engine.md
+      genre_pressure:
+      - templates/screen_experience_genre_pressure_engine.md
+    produces_structured_artifacts:
+    - EDITORIAL_PLAN
+    - EXPERIENCE_PRESSURE_PLAN
+    - CREATURE_PERFORMANCE_PLAN
+    validators:
+    - validators/director_perception_lint.py
+    - validators/editorial_plan_lint.py
+    - validators/experience_pressure_plan_lint.py
+    - validators/creature_performance_plan_lint.py
+    - validators/experience_completeness_lint.py
+    validator_invocations:
+    - validator: validators/director_perception_lint.py
+      inputs:
+      - DIRECTOR_RUNTIME
+      - EDITORIAL_PLAN
+    - validator: validators/editorial_plan_lint.py
+      inputs:
+      - EDITORIAL_PLAN
+    - validator: validators/experience_pressure_plan_lint.py
+      inputs:
+      - EXPERIENCE_PRESSURE_PLAN
+      produces_gate: EXPERIENCE_PRESSURE_PASS
+    - validator: validators/creature_performance_plan_lint.py
+      inputs:
+      - CREATURE_PERFORMANCE_PLAN
+      - EXPERIENCE_PRESSURE_PLAN
+      produces_gate: CREATURE_PERFORMANCE_PASS
+    - validator: validators/experience_completeness_lint.py
+      inputs:
+      - EXPERIENCE_PRESSURE_PLAN
+      - EDITORIAL_PLAN
+      - CREATURE_PERFORMANCE_PLAN
+      produces_gate: EXPERIENCE_COMPLETENESS_PASS
+    produces_fields:
+    - DIRECTOR_PERCEPTION_PASS
+    - EXPERIENCE_PRESSURE_PASS
+    - CREATURE_PERFORMANCE_PASS
+    - EXPERIENCE_COMPLETENESS_PASS
+  STAGE_02C_PRODUCTION_TRANSLATION:
+    runtime:
+    - STORY_RUNTIME
+    - DIRECTOR_RUNTIME
+    source_if_missing_or_stale:
+    - templates/director_to_ai_execution_boundary.md
+    - templates/spatial_execution_translation.md
+    - templates/video_generation_duration_authority.md
+    - templates/segment_planner.md
+    - templates/previsualization_strategy_router.md
+    - templates/segment_entry_modes.md
+    - templates/episode_asset_pack_first.md
+    - templates/asset_consolidation_sufficiency_audit.md
+    - templates/shot_coverage_asset_derivation.md
+    - templates/production_support_reference_engine.md
+    - templates/shot_assembly_asset_layer.md
+    - templates/color_script_derivation_engine.md
+    - templates/personal_creator_cost_efficiency_engine.md
+    - templates/director_architecture_engine.md
+    - templates/editorial_grammar_engine.md
+    - templates/base_visual_authority_manifest.md
+    - templates/asset_library_completeness_policy.md
+    - templates/performance_asset_requirement_engine.md
+    - templates/narrative_fx_asset_standard.md
+    - templates/voice_direction_prosody_engine.md
+    conditional_source:
+      scoped_cast:
+      - templates/functional_minor_human_asset_protocol.md
+      character_requirements:
+      - templates/character_asset_requirement_set.md
+      - templates/personal_adornment_identity_system.md
+      genre_pressure:
+      - templates/screen_experience_genre_pressure_engine.md
+      creature_threat:
+      - templates/creature_performance_engine.md
+    structured_inputs:
+    - EDITORIAL_PLAN
+    - ASSET_REGISTRY
+    - EXPERIENCE_PRESSURE_PLAN
+    - CREATURE_PERFORMANCE_PLAN
+    produces_structured_artifacts:
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - PERFORMANCE_ASSET_REQUIREMENT_SET
+    - NARRATIVE_FX_ASSET_MANIFEST
+    - VOICE_DIRECTION_PLAN
+    validators:
+    - validators/editorial_plan_lint.py
+    - validators/shot_relation_asset_obligation_lint.py
+    - validators/performance_asset_requirement_lint.py
+    - validators/narrative_fx_asset_lint.py
+    - validators/voice_direction_plan_lint.py
+    validator_invocations:
+    - validator: validators/editorial_plan_lint.py
+      inputs:
+      - EDITORIAL_PLAN
+      - SHOT_RELATION_GRAPH
+    - validator: validators/shot_relation_asset_obligation_lint.py
+      phase: planning
+      inputs:
+      - SHOT_RELATION_GRAPH
+      - VISUAL_ASSET_OBLIGATION
+    - validator: validators/performance_asset_requirement_lint.py
+      phase: planning
+      inputs:
+      - PERFORMANCE_ASSET_REQUIREMENT_SET
+      - ASSET_REGISTRY
+    - validator: validators/narrative_fx_asset_lint.py
+      phase: planning
+      inputs:
+      - NARRATIVE_FX_ASSET_MANIFEST
+      - ASSET_REGISTRY
+    - validator: validators/voice_direction_plan_lint.py
+      phase: planning
+      inputs:
+      - VOICE_DIRECTION_PLAN
+    produces_fields:
+    - PERFORMANCE_ASSET_REQUIREMENTS_DERIVED
+    - NARRATIVE_FX_REQUIREMENTS_DERIVED
+    - VOICE_DIRECTION_PLAN_DERIVED
+  STAGE_03_SPATIAL_CANON_BUILD:
+    runtime:
+    - STORY_RUNTIME
+    - DIRECTOR_RUNTIME
+    - SCENE_RUNTIME
+    source_if_missing_or_stale:
+    - templates/environment_asset_standard.md
+    - templates/cinematic_spatial_staging_engine.md
+    - templates/world_state_continuity_engine.md
+    - templates/shot_coverage_asset_derivation.md
+    - templates/episode_asset_pack_first.md
+    - templates/director_architecture_engine.md
+    - templates/everyday_realism_plausibility_gate.md
+    structured_inputs:
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    produces_structured_artifacts:
+    - SPATIAL_CANON
+    - REALISM_CONTRACT
+    validators: []
+    output_schema: state/spatial_canon.schema.yaml
+    produces_runtime: SPATIAL_CANON_RUNTIME
+    produces_asset_classes:
+    - OUTDOOR_TOPOLOGY_DIAGRAM
+    - BUILDING_FLOOR_PLAN_DIAGRAM
+    - ROOM_LAYOUT_DIAGRAM
+    - ROUTE_MAP_DIAGRAM
+    produces_fields:
+    - EVENT_NODE_SPATIAL_BINDINGS
+    - CHARACTER_EVENT_ROUTES
+    - PLANNING_DIAGRAM_REQUIREMENTS
+    - REQUIRED_VIEW_SET
+    - VIEW_ROLE_COVERAGE_MATRIX
+    - REALISM_CONTRACT_DRAFT
+    - FUNCTIONAL_REALITY_REQUIREMENTS
+    - VEHICLE_LAYOUT_REQUIREMENTS
+    - REALISM_CONTRACT_AVAILABLE
+    deterministic_tools:
+    - tools/spatial_diagram_renderer.py
+    produces_runtimes:
+    - SPATIAL_CANON_RUNTIME
+    - REALISM_RUNTIME
+    additional_output_schemas:
+    - state/realism_contract.schema.yaml
+  STAGE_03_SPATIAL_CANON_QC:
+    runtime:
+    - STORY_RUNTIME
+    - DIRECTOR_RUNTIME
+    - SCENE_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - QC_RUNTIME
+    - REALISM_RUNTIME
+    source_if_missing_or_stale:
+    - templates/environment_asset_standard.md
+    - templates/cinematic_spatial_staging_engine.md
+    - templates/director_spatial_reconciliation_gate.md
+    - checklists/qc_checklists.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/base_visual_authority_manifest.md
+    structured_inputs:
+    - SPATIAL_CANON
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - ASSET_REGISTRY
+    - REALISM_CONTRACT
+    validators:
+    - validators/spatial_canon_lint.py
+    - validators/shot_relation_asset_obligation_lint.py
+    - validators/virtual_set_asset_lint.py
+    - validators/required_view_realization_lint.py
+    - validators/everyday_realism_lint.py
+    validator_invocations:
+    - validator: validators/spatial_canon_lint.py
+      inputs:
+      - SPATIAL_CANON
+      - SHOT_RELATION_GRAPH
+    - validator: validators/shot_relation_asset_obligation_lint.py
+      phase: spatial
+      inputs:
+      - SHOT_RELATION_GRAPH
+      - VISUAL_ASSET_OBLIGATION
+      - SPATIAL_CANON
+    - validator: validators/virtual_set_asset_lint.py
+      phase: spatial
+      inputs:
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+    - validator: validators/required_view_realization_lint.py
+      phase: planning
+      inputs:
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+    - validator: validators/everyday_realism_lint.py
+      phase: planning
+      inputs:
+      - REALISM_CONTRACT
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+    updates_structured_artifacts:
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - REALISM_CONTRACT
+    - BASE_VISUAL_AUTHORITY_MANIFEST
+    finalizes: FINAL_EPISODE_ASSET_MANIFEST_READY
+    produces_fields:
+    - REQUIRED_VIEW_SPEC_VALIDATED
+    - VIEW_ROLE_COVERAGE_MATRIX
+    - REALISM_CONTRACT_QC_PASS
+    - VEHICLE_FUNCTIONAL_PROFILE_VALIDATED_IF_APPLICABLE
+    - REALISM_CONTRACT_LOCKED
+    - EVERYDAY_REALISM_PRECHECK_READY
+    produces_structured_artifacts:
+    - BASE_VISUAL_AUTHORITY_MANIFEST
+  EPISODE_ASSET_BUILD:
+    runtime:
+    - STORY_RUNTIME
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - REALISM_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/episode_asset_pack_first.md
+    - templates/image_candidate_strategy.md
+    - templates/character_asset_requirement_set.md
+    - templates/shot_coverage_asset_derivation.md
+    - templates/production_support_reference_engine.md
+    - templates/shot_assembly_asset_layer.md
+    - templates/director_architecture_engine.md
+    - templates/color_script_derivation_engine.md
+    - templates/voice_identity_audio_status.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    - templates/base_visual_authority_manifest.md
+    - templates/audio_asset_management.md
+    - templates/asset_library_completeness_policy.md
+    - templates/performance_asset_requirement_engine.md
+    - templates/narrative_fx_asset_standard.md
+    conditional_source:
+      new_character:
+      - templates/new_character_generation_recipe.md
+      scoped_cast:
+      - templates/functional_minor_human_asset_protocol.md
+      batch:
+      - templates/batch_production.md
+    structured_inputs:
+    - EDITORIAL_PLAN
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - SPATIAL_CANON
+    - ASSET_REGISTRY
+    - REALISM_CONTRACT
+    - BASE_VISUAL_AUTHORITY_MANIFEST
+    - VOICE_DIRECTION_PLAN
+    - AUDIO_ASSET_MANIFEST
+    - PERFORMANCE_ASSET_REQUIREMENT_SET
+    - NARRATIVE_FX_ASSET_MANIFEST
+    validators:
+    - validators/virtual_set_asset_lint.py
+    - validators/required_view_realization_lint.py
+    - validators/everyday_realism_lint.py
+    - validators/base_visual_authority_lint.py
+    - validators/audio_asset_manifest_lint.py
+    - validators/performance_asset_requirement_lint.py
+    - validators/narrative_fx_asset_lint.py
+    produces_fields:
+    - JUSTIFIED_ASSET_RECORDS
+    - ENVIRONMENT_COVERAGE_ASSETS
+    - LOOK_DOMAIN_ASSETS
+    - VOICE_IDENTITY_ASSETS
+    - REQUIRED_VIEW_GENERATION_QUEUE
+    - REQUIRED_VIEW_ASSET_COVERAGE
+    - REALISM_BOUND_ASSET_SPECS
+    - EVERYDAY_REALISM_PRECHECK_PASS
+    - GENERATION_QUEUE_DISPATCHED
+    - GENERATION_JOB_STATE_CURRENT
+    - SCENE_COLOR_AUTHORITY_READY
+    - ASSET_LINEAGE_COMPLETE
+    - GENERATION_QUEUE_DRAINED
+    - SCENE_COLOR_AUTHORITY_COVERAGE_COMPLETE
+    - PERFORMANCE_SUPPORT_BUILD_STATUS_CURRENT
+    - NARRATIVE_FX_BUILD_STATUS_CURRENT
+    validator_invocations:
+    - validator: validators/virtual_set_asset_lint.py
+      phase: build
+      inputs:
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VISUAL_ASSET_OBLIGATION
+    - validator: validators/required_view_realization_lint.py
+      phase: build
+      inputs:
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+    - validator: validators/everyday_realism_lint.py
+      phase: build
+      inputs:
+      - REALISM_CONTRACT
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+    - validator: validators/base_visual_authority_lint.py
+      phase: build
+      inputs:
+      - BASE_VISUAL_AUTHORITY_MANIFEST
+      - SPATIAL_CANON
+      - VISUAL_ASSET_OBLIGATION
+      - ASSET_REGISTRY
+    - validator: validators/audio_asset_manifest_lint.py
+      phase: build
+      inputs:
+      - AUDIO_ASSET_MANIFEST
+      - ASSET_REGISTRY
+    - validator: validators/performance_asset_requirement_lint.py
+      phase: build
+      inputs:
+      - PERFORMANCE_ASSET_REQUIREMENT_SET
+      - ASSET_REGISTRY
+    - validator: validators/narrative_fx_asset_lint.py
+      phase: build
+      inputs:
+      - NARRATIVE_FX_ASSET_MANIFEST
+      - ASSET_REGISTRY
+    deterministic_tools:
+    - tools/view_coverage_planner.py
+    - tools/asset_route_dispatcher.py
+    - tools/scene_color_router.py
+    - tools/generation_job_manager.py
+    - tools/controller_engine.py
+    - tools/generation_runtime_manager.py
+    - tools/audio_asset_index_builder.py
+    callable_subroutes:
+    - SCENE_COLOR_CARD_DERIVATION
+    - CHARACTER_MASTER
+    - FUNCTIONAL_MINOR_HUMAN_MASTER
+    - TRANSFORMATION_FIRST_DESIGN
+    - TRANSFORMATION_REPEAT
+    - ENVIRONMENT_MASTER_COVERAGE
+    - PROP_MASTER_COVERAGE
+    - PRODUCTION_SUPPORT_REFERENCE
+    - SHOT_ASSEMBLY_ASSET
+    - PERFORMANCE_SUPPORT_ASSET
+    - NARRATIVE_FX_ASSET
+    updates_structured_artifacts:
+    - BASE_VISUAL_AUTHORITY_MANIFEST
+    - AUDIO_ASSET_MANIFEST
+    - PERFORMANCE_ASSET_REQUIREMENT_SET
+    - NARRATIVE_FX_ASSET_MANIFEST
+  EPISODE_ASSET_FREEZE:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - QC_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - REALISM_RUNTIME
+    source_if_missing_or_stale:
+    - templates/director_spatial_reconciliation_gate.md
+    - templates/asset_consolidation_sufficiency_audit.md
+    - templates/character_asset_requirement_set.md
+    - templates/generation_qc_contract_separation_gate.md
+    - checklists/qc_checklists.md
+    - templates/director_architecture_engine.md
+    - templates/editorial_grammar_engine.md
+    - templates/shot_coverage_asset_derivation.md
+    - templates/episode_asset_pack_first.md
+    - templates/color_script_derivation_engine.md
+    - templates/voice_identity_audio_status.md
+    - templates/visual_evidence_handoff.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/base_visual_authority_manifest.md
+    - templates/asset_library_completeness_policy.md
+    - templates/performance_asset_requirement_engine.md
+    - templates/narrative_fx_asset_standard.md
+    conditional_source:
+      readable_foreground_human:
+      - templates/asset_anatomy_integrity_gate.md
+      - templates/foreground_figure_integrity_gate.md
+    structured_inputs:
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - SPATIAL_CANON
+    - VISUAL_EVIDENCE
+    - ASSET_REGISTRY
+    - REALISM_CONTRACT
+    - BASE_VISUAL_AUTHORITY_MANIFEST
+    - VOICE_DIRECTION_PLAN
+    - AUDIO_ASSET_MANIFEST
+    - PERFORMANCE_ASSET_REQUIREMENT_SET
+    - NARRATIVE_FX_ASSET_MANIFEST
+    validators:
+    - validators/shot_relation_asset_obligation_lint.py
+    - validators/virtual_set_asset_lint.py
+    - validators/required_view_realization_lint.py
+    - validators/everyday_realism_lint.py
+    - validators/generation_chain_lint.py
+    - validators/scene_color_binding_lint.py
+    - validators/base_visual_authority_lint.py
+    - validators/audio_asset_manifest_lint.py
+    - validators/performance_asset_requirement_lint.py
+    - validators/narrative_fx_asset_lint.py
+    - validators/asset_library_completeness_lint.py
+    - validators/voice_direction_plan_lint.py
+    validator_invocations:
+    - validator: validators/shot_relation_asset_obligation_lint.py
+      phase: freeze
+      inputs:
+      - SHOT_RELATION_GRAPH
+      - VISUAL_ASSET_OBLIGATION
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+    - validator: validators/virtual_set_asset_lint.py
+      phase: freeze
+      inputs:
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VISUAL_ASSET_OBLIGATION
+    - validator: validators/required_view_realization_lint.py
+      phase: freeze
+      inputs:
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+    - validator: validators/everyday_realism_lint.py
+      phase: freeze
+      inputs:
+      - REALISM_CONTRACT
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+    - validator: validators/base_visual_authority_lint.py
+      phase: freeze
+      inputs:
+      - BASE_VISUAL_AUTHORITY_MANIFEST
+      - SPATIAL_CANON
+      - VISUAL_ASSET_OBLIGATION
+      - ASSET_REGISTRY
+    - validator: validators/audio_asset_manifest_lint.py
+      phase: freeze
+      inputs:
+      - AUDIO_ASSET_MANIFEST
+      - ASSET_REGISTRY
+    - validator: validators/performance_asset_requirement_lint.py
+      phase: freeze
+      inputs:
+      - PERFORMANCE_ASSET_REQUIREMENT_SET
+      - ASSET_REGISTRY
+    - validator: validators/narrative_fx_asset_lint.py
+      phase: freeze
+      inputs:
+      - NARRATIVE_FX_ASSET_MANIFEST
+      - ASSET_REGISTRY
+    - validator: validators/asset_library_completeness_lint.py
+      phase: freeze
+      inputs:
+      - BASE_VISUAL_AUTHORITY_MANIFEST
+      - PERFORMANCE_ASSET_REQUIREMENT_SET
+      - NARRATIVE_FX_ASSET_MANIFEST
+      - VISUAL_ASSET_OBLIGATION
+      - ASSET_REGISTRY
+    - validator: validators/voice_direction_plan_lint.py
+      phase: pre_video
+      inputs:
+      - VOICE_DIRECTION_PLAN
+      - AUDIO_ASSET_MANIFEST
+      - ASSET_REGISTRY
+      produces_gate: REQUIRED_VOICE_IDENTITY_ASSETS_RESOLVED
+    updates_structured_artifacts:
+    - VISUAL_EVIDENCE
+    evidence_persistence_policy: WRITE_WHEN_VISUALLY_REVIEWED
+    produces_fields:
+    - REQUIRED_VIEW_ASSET_COVERAGE_COMPLETE
+    - REQUIRED_VIEW_VISUAL_REALIZATION_PASS
+    - EVERYDAY_REALISM_PLAUSIBILITY_PASS
+    - REALISM_RECONCILIATION_CLEAR
+    - EMPTY_ENVIRONMENT_MASTER_COVERAGE_COMPLETE
+    - READABLE_MINOR_HUMAN_MASTER_COVERAGE_COMPLETE
+    - BASE_VISUAL_AUTHORITY_PASS
+    - PERFORMANCE_ASSET_COVERAGE_COMPLETE
+    - NARRATIVE_FX_ASSET_COVERAGE_COMPLETE
+    - ASSET_LIBRARY_COMPLETENESS_PASS
+    - REQUIRED_VOICE_IDENTITY_ASSETS_RESOLVED
+  CHARACTER_MASTER:
+    runtime:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - GENERATION_RUNTIME
+    compile_runtime_from_source:
+    - templates/character_asset_standard.md
+    - templates/character_identity_differentiation_engine.md
+    - templates/face_identity_matrix.md
+    - templates/hair_identity_architecture.md
+    - templates/source_wardrobe_adaptation_authority.md
+    - templates/character_costume_dramaturgy.md
+    - templates/body_identity_presentation_authority.md
+    - templates/wardrobe_style_design_engine.md
+    - templates/wardrobe_diversity_design_matrix.md
+    - templates/personal_adornment_identity_system.md
+    - templates/character_appeal_silhouette_system.md
+    - templates/project_style_dna.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    - templates/base_visual_authority_manifest.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/task_bound_reference_binding.md
+    - templates/execution_reference_semantics.md
+    - templates/style_authority_projection_gate.md
+    - templates/prompt_semantic_deduplication_engine.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - templates/image_candidate_strategy.md
+    - adapters/generation/host_profiles.yaml
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  FUNCTIONAL_MINOR_HUMAN_MASTER:
+    runtime:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/functional_minor_human_asset_protocol.md
+    - templates/base_visual_authority_manifest.md
+    - templates/project_style_dna.md
+    - templates/color_authority_preservation_gate.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/task_bound_reference_binding.md
+    - templates/style_authority_projection_gate.md
+    - templates/prompt_semantic_deduplication_engine.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - templates/image_candidate_strategy.md
+    - adapters/generation/host_profiles.yaml
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  TRANSFORMATION_FIRST_DESIGN:
+    runtime:
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - GENERATION_RUNTIME
+    compile_runtime_from_source:
+    - templates/transformation_asset_standard.md
+    - templates/transformation_splendor_architecture.md
+    - templates/transformation_beauty_core_five.md
+    - templates/musical_eye_motif_system.md
+    - templates/music_identity_mapping.md
+    - templates/hair_identity_architecture.md
+    - templates/body_identity_presentation_authority.md
+    - templates/personal_adornment_identity_system.md
+    - templates/project_style_dna.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  TRANSFORMATION_REPEAT:
+    runtime:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/transformation_asset_standard.md
+    - templates/transformation_splendor_architecture.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    execute_with:
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  ENVIRONMENT_MASTER_COVERAGE:
+    runtime:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REALISM_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/environment_asset_standard.md
+    - templates/shot_coverage_asset_derivation.md
+    - templates/project_style_dna.md
+    - templates/color_script_derivation_engine.md
+    - templates/visual_evidence_handoff.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    - templates/base_visual_authority_manifest.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  PROP_MASTER_COVERAGE:
+    runtime:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/prop_asset_standard.md
+    - templates/shot_coverage_asset_derivation.md
+    - templates/project_style_dna.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  PRODUCTION_SUPPORT_REFERENCE:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REALISM_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/production_support_reference_engine.md
+    - templates/task_bound_reference_binding.md
+    - templates/reference_resolver.md
+    - templates/execution_reference_semantics.md
+    - templates/visual_evidence_handoff.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    conditional_source:
+      complex_contact:
+      - templates/action_feasibility_prop_limb_continuity_engine.md
+      - templates/natural_motion_kinematic_performance_engine.md
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    validators:
+    - validators/generation_job_binding_lint.py
+    asset_promotion_tool: tools/asset_promoter.py
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+  SHOT_ASSEMBLY_ASSET:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REALISM_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/shot_assembly_asset_layer.md
+    - templates/reference_resolver.md
+    - templates/color_authority_preservation_gate.md
+    - templates/visual_evidence_handoff.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  STAGE_04_STORYBOARD:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - QC_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - REALISM_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/previsualization_strategy_router.md
+    - templates/reference_field_coverage_map.md
+    - templates/reference_resolver.md
+    - templates/task_bound_reference_binding.md
+    - templates/execution_reference_semantics.md
+    - templates/spatial_execution_translation.md
+    - templates/director_architecture_engine.md
+    - templates/editorial_grammar_engine.md
+    - templates/shot_coverage_asset_derivation.md
+    - templates/visual_evidence_handoff.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    - templates/generation_envelope_engine.md
+    execute_with:
+    - templates/storyboard_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - checklists/qc_checklists.md
+    conditional_source:
+      performance:
+      - templates/actor_performance_engine.md
+      - templates/performance_causality_emotional_acting.md
+      action:
+      - templates/action_feasibility_prop_limb_continuity_engine.md
+      - templates/natural_motion_kinematic_performance_engine.md
+      crowd:
+      - templates/crowd_presence_ambient_life_engine.md
+      combat:
+      - templates/combat_choreography_engine.md
+      - templates/cinematic_combat_vfx_engine.md
+      genre_pressure:
+      - templates/screen_experience_genre_pressure_engine.md
+      creature_threat:
+      - templates/creature_performance_engine.md
+    structured_inputs:
+    - EDITORIAL_PLAN
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - SPATIAL_CANON
+    - REALISM_CONTRACT
+    - ASSET_REGISTRY
+    - VISUAL_EVIDENCE
+    - SHOT_STATE
+    - GENERATION_JOB
+    - APPROVAL_RECORD
+    - STORYBOARD_CONTACT_SHEET_PROOF
+    - EXPERIENCE_PRESSURE_PLAN
+    - CREATURE_PERFORMANCE_PLAN
+    validators:
+    - validators/editorial_plan_lint.py
+    - validators/shot_relation_asset_obligation_lint.py
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/clean_storyboard_contract_lint.py
+    - validators/storyboard_anonymity_lint.py
+    - validators/storyboard_entity_binding_lint.py
+    - validators/storyboard_coverage_lint.py
+    - validators/everyday_realism_lint.py
+    - validators/generation_job_binding_lint.py
+    - validators/storyboard_sequence_grid_lint.py
+    - validators/storyboard_contact_sheet_lint.py
+    - validators/experience_storyboard_coverage_lint.py
+    validator_invocations:
+    - validator: validators/editorial_plan_lint.py
+      inputs:
+      - EDITORIAL_PLAN
+      - SHOT_RELATION_GRAPH
+    - validator: validators/shot_relation_asset_obligation_lint.py
+      phase: storyboard
+      inputs:
+      - SHOT_RELATION_GRAPH
+      - VISUAL_ASSET_OBLIGATION
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+    - validator: validators/clean_storyboard_contract_lint.py
+      inputs:
+      - ASSET_REGISTRY
+    - validator: validators/storyboard_anonymity_lint.py
+      inputs:
+      - ASSET_REGISTRY
+    - validator: validators/storyboard_entity_binding_lint.py
+      inputs:
+      - STORYBOARD_ENTITY_BINDING_MAP
+    - validator: validators/storyboard_coverage_lint.py
+      phase: qc
+      inputs:
+      - SHOT_STATE[]
+      - ASSET_REGISTRY
+      - GENERATION_JOB[]
+      - STORYBOARD_CONTACT_SHEET_PROOF
+    - validator: validators/storyboard_coverage_lint.py
+      phase: approved
+      when: USER_APPROVED_STORYBOARD
+      inputs:
+      - SHOT_STATE[]
+      - ASSET_REGISTRY
+      - GENERATION_JOB[]
+      - APPROVAL_RECORD
+      - STORYBOARD_CONTACT_SHEET_PROOF
+    - validator: validators/everyday_realism_lint.py
+      phase: storyboard
+      inputs:
+      - REALISM_CONTRACT
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+    - validator: validators/storyboard_sequence_grid_lint.py
+      phase: qc
+      inputs:
+      - EDITORIAL_PLAN
+      - ASSET_REGISTRY
+      - STORYBOARD_SEQUENCE_PROOF
+    - validator: validators/storyboard_sequence_grid_lint.py
+      phase: approved
+      when: USER_APPROVED_STORYBOARD
+      inputs:
+      - EDITORIAL_PLAN
+      - ASSET_REGISTRY
+      - STORYBOARD_SEQUENCE_PROOF
+    - validator: validators/storyboard_contact_sheet_lint.py
+      phase: qc
+      inputs:
+      - STORYBOARD_CONTACT_SHEET_PROOF
+      - ASSET_REGISTRY
+      - GENERATION_JOB[]
+    - validator: validators/storyboard_contact_sheet_lint.py
+      phase: approved
+      when: USER_APPROVED_STORYBOARD
+      inputs:
+      - STORYBOARD_CONTACT_SHEET_PROOF
+      - ASSET_REGISTRY
+      - GENERATION_JOB[]
+      - APPROVAL_RECORD
+    - validator: validators/experience_storyboard_coverage_lint.py
+      phase: qc
+      inputs:
+      - EXPERIENCE_PRESSURE_PLAN
+      - SHOT_STATE[]
+      produces_gate: EXPERIENCE_STORYBOARD_COVERAGE_PASS
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    updates_structured_artifacts:
+    - VISUAL_EVIDENCE
+    evidence_persistence_policy: WRITE_WHEN_VISUALLY_REVIEWED
+    produces_fields:
+    - STORYBOARD_EVERYDAY_REALISM_PASS
+    - REFERENCE_FIELD_COVERAGE_READY
+    - MANDATORY_STORYBOARD_QC_COVERAGE_PASS
+    - STORYBOARD_QC_PASS
+    - SHOT_RELATION_STORYBOARD_ALIGNMENT_PASS
+    - STORYBOARD_GENERATION_JOBS_QC_READY
+    - STORYBOARD_GENERATION_JOBS_PROMOTED
+    - MANDATORY_STORYBOARD_APPROVED_COVERAGE_PASS
+    - STORYBOARD_SEQUENCE_GRID_QC_PASS
+    - STORYBOARD_SEQUENCE_GRID_APPROVED_PASS
+    - STORYBOARD_ENTITY_BINDING_PASS
+    - EXPERIENCE_STORYBOARD_COVERAGE_PASS
+    callable_subroutes:
+    - GENERATION_JOB_DISPATCH
+    - GENERATION_JOB_EXECUTOR
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+    deterministic_tools:
+    - tools/generation_runtime_manager.py
+    - tools/storyboard_grid_assembler.py
+    - tools/storyboard_contact_sheet_splitter.py
+    - tools/shot_grammar_history.py
+    produces_asset_classes:
+    - STORYBOARD_CONTACT_SHEET
+    - STORYBOARD_CLEAN_PANEL
+    - STORYBOARD_CLEAN_SEQUENCE_BOARD
+    - ACTION_CONTACT_KEY_POSE_CHAIN
+    - SPATIAL_BLOCKING_MAP
+    - CAMERA_PATH_PREVIS
+    produces_structured_artifacts:
+    - STORYBOARD_SEQUENCE_PROOF
+    - STORYBOARD_ENTITY_BINDING_MAP
+    - STORYBOARD_CONTACT_SHEET_PROOF
+    additional_output_schemas:
+    - state/storyboard_sequence_proof.schema.yaml
+    - state/storyboard_entity_binding_map.schema.yaml
+  STAGE_04_HD_SHOT_SUPPORT:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    source_if_missing_or_stale:
+    - templates/production_support_reference_engine.md
+    - templates/reference_field_coverage_map.md
+    - templates/reference_resolver.md
+    - templates/color_authority_preservation_gate.md
+    execute_with:
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    compatibility_only: true
+    superseded_by: STAGE_04_VIDEO_CONDITIONING_BUILD
+  STAGE_05_VIDEO:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - VIDEO_CONDITIONING_RUNTIME
+    - VIDEO_RUNTIME
+    - QC_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - REALISM_RUNTIME
+    - GENERATION_RUNTIME
+    compile_runtime_from_source:
+    - templates/typed_video_execution_state.md
+    - templates/spatial_execution_translation.md
+    - templates/video_execution_plan.md
+    - templates/editorial_grammar_engine.md
+    - templates/prompt_constraint_solver.md
+    - templates/reference_binding_semantic_verification.md
+    - templates/shot_proof_capacity_motion_budget.md
+    - templates/narrative_execution_normalizer.md
+    - templates/generation_qc_contract_separation_gate.md
+    - templates/video_generation_readiness_gate.md
+    - templates/video_conditioning_readiness_gate.md
+    - templates/identity_readability_gate.md
+    - templates/visual_asset_usage_authority.md
+    - templates/visual_evidence_handoff.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    - templates/generation_envelope_engine.md
+    - templates/audio_asset_management.md
+    - templates/temporal_reference_hygiene.md
+    execute_with:
+    - templates/prompt_compiler.md
+    - templates/prompt_semantic_deduplication_engine.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - templates/post_compile_constraint_closure.md
+    - templates/video_prompt_template.md
+    - adapters/generation/host_profiles.yaml
+    conditional_source:
+      performance:
+      - templates/actor_performance_engine.md
+      - templates/performance_causality_emotional_acting.md
+      action:
+      - templates/action_feasibility_prop_limb_continuity_engine.md
+      - templates/natural_motion_kinematic_performance_engine.md
+      crowd:
+      - templates/crowd_presence_ambient_life_engine.md
+      combat:
+      - templates/combat_choreography_engine.md
+      - templates/cinematic_combat_vfx_engine.md
+      voice:
+      - templates/voice_direction_prosody_engine.md
+      camera_complex:
+      - templates/camera_motion_contract.md
+      stale_prompt:
+      - templates/stale_prompt_artifact_gate.md
+      seedance_target:
+      - adapters/generation/seedance_multishot_profile.yaml
+      creature_threat:
+      - templates/screen_experience_genre_pressure_engine.md
+      - templates/creature_performance_engine.md
+      genre_pressure:
+      - templates/screen_experience_genre_pressure_engine.md
+    conditional_structured_inputs:
+      CONTINUITY_ENTRY:
+      - SPATIAL_CONTINUITY_STATE
+      - SHOT_BOUNDARY_CONTINUITY_CONTRACT
+      MULTISHOT_CONTINUITY:
+      - SPATIAL_CONTINUITY_STATE
+      - SHOT_BOUNDARY_CONTINUITY_CONTRACT
+      TEMPORAL_SAME_TAKE:
+      - CONTINUITY_SNAPSHOT
+      - TEMPORAL_ENTRY_PLAN
+      - TEMPORAL_T0_SUFFICIENCY_ASSESSMENT
+      COMBAT_SEGMENT:
+      - COMBAT_SEGMENT_CONTRACT
+    validators:
+    - validators/director_perception_lint.py
+    - validators/editorial_plan_lint.py
+    - validators/generation_envelope_lint.py
+    - validators/shot_boundary_continuity_lint.py
+    - validators/visual_evidence_lint.py
+    - validators/video_conditioning_lint.py
+    - validators/identity_readability_lint.py
+    - validators/scene_color_binding_lint.py
+    - validators/prompt_constraint_lint.py
+    - validators/video_execution_load_lint.py
+    - validators/video_execution_plan_lint.py
+    - validators/video_quota_confirmation_lint.py
+    - validators/visual_reference_routing_lint.py
+    - validators/style_projection_lint.py
+    - validators/prompt_surface_lint.py
+    - validators/video_prompt_detail_lint.py
+    - validators/multishot_prompt_lint.py
+    - validators/storyboard_to_video_prompt_handoff_lint.py
+    - validators/video_entity_binding_handoff_lint.py
+    - validators/asset_mention_lint.py
+    - validators/post_compile_constraint_lint.py
+    - validators/shot_relation_asset_obligation_lint.py
+    - validators/everyday_realism_lint.py
+    - validators/generation_job_binding_lint.py
+    - validators/video_execution_plan_fingerprint_lint.py
+    - validators/video_generation_job_prompt_lint.py
+    - validators/audio_asset_manifest_lint.py
+    - validators/audio_reference_binding_lint.py
+    - validators/voice_direction_plan_lint.py
+    - validators/voice_prompt_handoff_lint.py
+    - validators/continuity_snapshot_lint.py
+    - validators/temporal_entry_plan_lint.py
+    - validators/temporal_t0_sufficiency_lint.py
+    - validators/combat_segment_contract_lint.py
+    - validators/experience_video_prompt_handoff_lint.py
+    structured_inputs:
+    - EDITORIAL_PLAN
+    - GENERATION_ENVELOPE
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - SPATIAL_CANON
+    - REALISM_CONTRACT
+    - ASSET_REGISTRY
+    - VISUAL_EVIDENCE
+    - STORYBOARD_SEQUENCE_PROOF
+    - STORYBOARD_ENTITY_BINDING_MAP
+    - IDENTITY_READABILITY_ASSESSMENT
+    - AUDIO_ASSET_MANIFEST
+    - VOICE_DIRECTION_PLAN
+    - CONTINUITY_SNAPSHOT
+    - TEMPORAL_ENTRY_PLAN
+    - TEMPORAL_T0_SUFFICIENCY_ASSESSMENT
+    - EXPERIENCE_PRESSURE_PLAN
+    - CREATURE_PERFORMANCE_PLAN
+    validator_invocations:
+    - validator: validators/director_perception_lint.py
+      inputs:
+      - DIRECTOR_RUNTIME
+      - EDITORIAL_PLAN
+    - validator: validators/editorial_plan_lint.py
+      inputs:
+      - EDITORIAL_PLAN
+      - SHOT_RELATION_GRAPH
+    - validator: validators/generation_envelope_lint.py
+      phase: pre_video_compile
+      inputs:
+      - GENERATION_ENVELOPE
+      - EDITORIAL_PLAN
+      - ASSET_REGISTRY
+    - validator: validators/shot_boundary_continuity_lint.py
+      phase: generation_envelope
+      inputs:
+      - GENERATION_ENVELOPE
+    - validator: validators/identity_readability_lint.py
+      inputs:
+      - IDENTITY_READABILITY_ASSESSMENT
+      - STORYBOARD_ENTITY_BINDING_MAP
+      - VIDEO_CONDITIONING_RUNTIME
+      - ASSET_REGISTRY
+      produces_gate: IDENTITY_READABILITY_PASS
+    - validator: validators/video_conditioning_lint.py
+      inputs:
+      - VIDEO_CONDITIONING_RUNTIME
+      - ASSET_REGISTRY
+    - validator: validators/scene_color_binding_lint.py
+      phase: adaptive_video_reference_budget
+      inputs:
+      - ASSET_REGISTRY
+      - VIDEO_CONDITIONING_RUNTIME
+    - validator: validators/shot_relation_asset_obligation_lint.py
+      phase: conditioning
+      inputs:
+      - SHOT_RELATION_GRAPH
+      - VISUAL_ASSET_OBLIGATION
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VIDEO_CONDITIONING_RUNTIME
+    - validator: validators/everyday_realism_lint.py
+      phase: pre_video
+      inputs:
+      - REALISM_CONTRACT
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+    - validator: validators/video_execution_plan_fingerprint_lint.py
+      inputs:
+      - VIDEO_EXECUTION_PLAN
+      - CURRENT_SOURCE_FINGERPRINTS
+    - validator: validators/storyboard_to_video_prompt_handoff_lint.py
+      inputs:
+      - VIDEO_EXECUTION_PLAN
+      - FINAL_VIDEO_PROMPT
+    - validator: validators/video_entity_binding_handoff_lint.py
+      inputs:
+      - STORYBOARD_ENTITY_BINDING_MAP
+      - VIDEO_EXECUTION_PLAN
+      - FINAL_VIDEO_PROMPT
+      - ASSET_REGISTRY
+      - IDENTITY_READABILITY_ASSESSMENT
+    - validator: validators/video_generation_job_prompt_lint.py
+      inputs:
+      - GENERATION_JOB
+      - VIDEO_PROMPT_ARTIFACT
+      - VIDEO_EXECUTION_PLAN
+    - validator: validators/generation_envelope_lint.py
+      phase: video_job_ready
+      inputs:
+      - GENERATION_ENVELOPE
+      - EDITORIAL_PLAN
+      - ASSET_REGISTRY
+      - VIDEO_EXECUTION_PLAN
+      - GENERATION_JOB
+    - validator: validators/multishot_prompt_lint.py
+      phase: final_prompt
+      inputs:
+      - FINAL_VIDEO_PROMPT
+      - GENERATION_ENVELOPE
+    - validator: validators/video_quota_confirmation_lint.py
+      phase: pre_video_generation
+      inputs:
+      - VIDEO_EXECUTION_PLAN
+      produces_gate: LONG_VIDEO_QUOTA_CONFIRMATION_PASS
+    - validator: validators/audio_asset_manifest_lint.py
+      inputs:
+      - AUDIO_ASSET_MANIFEST
+      - ASSET_REGISTRY
+    - validator: validators/audio_reference_binding_lint.py
+      phase: pre_video_generation
+      inputs:
+      - GENERATION_JOB
+      - ASSET_REGISTRY
+      - AUDIO_ASSET_MANIFEST
+      produces_gates:
+      - VIDEO_REFERENCE_MEDIA_POLICY_PASS
+      - AUDIO_REFERENCE_BINDING_PASS
+    - validator: validators/voice_direction_plan_lint.py
+      phase: pre_video
+      inputs:
+      - VOICE_DIRECTION_PLAN
+      - AUDIO_ASSET_MANIFEST
+      - ASSET_REGISTRY
+      produces_gate: VOICE_DIRECTION_PLAN_PASS
+    - validator: validators/voice_prompt_handoff_lint.py
+      phase: final_prompt
+      inputs:
+      - VOICE_DIRECTION_PLAN
+      - VOICE_PROMPT_HANDOFF
+      - FINAL_VIDEO_PROMPT
+      - VIDEO_EXECUTION_PLAN
+      produces_gate: VOICE_DIRECTION_PROMPT_HANDOFF_PASS
+    - validator: validators/continuity_snapshot_lint.py
+      phase: temporal_entry
+      inputs:
+      - CONTINUITY_SNAPSHOT
+      produces_gate: CONTINUITY_SNAPSHOT_PASS
+    - validator: validators/temporal_entry_plan_lint.py
+      phase: temporal_entry
+      inputs:
+      - TEMPORAL_ENTRY_PLAN
+      produces_gate: TEMPORAL_ENTRY_PLAN_PASS
+    - validator: validators/temporal_t0_sufficiency_lint.py
+      phase: temporal_entry
+      inputs:
+      - TEMPORAL_T0_SUFFICIENCY_ASSESSMENT
+      produces_gate: TEMPORAL_T0_SUFFICIENCY_PASS
+    - validator: validators/experience_video_prompt_handoff_lint.py
+      phase: final_prompt
+      inputs:
+      - FINAL_VIDEO_PROMPT
+      - VIDEO_EXECUTION_PLAN
+      - EXPERIENCE_PRESSURE_PLAN
+      - CREATURE_PERFORMANCE_PLAN
+      produces_gate: EXPERIENCE_VIDEO_PROMPT_HANDOFF_PASS
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    produces_fields:
+    - VIDEO_ENTITY_BINDING_HANDOFF_PASS
+    - IDENTITY_READABILITY_PASS
+    - EVERYDAY_REALISM_PRE_VIDEO_PASS
+    - VIDEO_COLOR_AUTHORITY_BOUND
+    - VIDEO_EXECUTION_PLAN_PASS
+    - VIDEO_GENERATION_JOB_CAPTURED
+    - REAL_VIDEO_TAKE_AVAILABLE
+    - VIDEO_CONDITIONING_READY_PASS
+    - VIDEO_READINESS_PASS
+    - RELATION_DRIVEN_VIDEO_CONDITIONING_PASS
+    - VIDEO_EXECUTION_PLAN_FINGERPRINT_CURRENT
+    - FINAL_VIDEO_PROMPT_VALID
+    - STORYBOARD_TO_VIDEO_PROMPT_HANDOFF_PASS
+    - VIDEO_GENERATION_JOB_PROMPT_BOUND
+    - GENERATION_ENVELOPE_VALID
+    - MULTISHOT_STORYBOARD_GRID_GATE_PASS
+    - VOICE_DIRECTION_PLAN_PASS
+    - VOICE_DIRECTION_PROMPT_HANDOFF_PASS
+    - TEMPORAL_ENTRY_PLAN_PASS
+    - TEMPORAL_T0_SUFFICIENCY_PASS
+    - EXPERIENCE_VIDEO_PROMPT_HANDOFF_PASS
+    generation_job_contract: state/generation_job.schema.yaml
+    callable_subroutes:
+    - GENERATION_JOB_DISPATCH
+    - GENERATION_JOB_EXECUTOR
+    result_capture_tool: tools/generation_job_manager.py
+    deterministic_tools:
+    - tools/entity_binding_reference_resolver.py
+    - tools/platform_scaled_readability_preview.py
+    - tools/nearest_spatial_visual_parent_router.py
+    - tools/generation_runtime_manager.py
+    - tools/video_execution_plan_freezer.py
+    - tools/video_prompt_artifact.py
+    - tools/video_runtime_manager.py
+    - tools/voice_direction_prompt_compiler.py
+    - tools/temporal_entry_planner.py
+    - tools/temporal_t0_sufficiency_builder.py
+    additional_structured_artifacts:
+    - ENTITY_BINDING_RESOLUTION
+    - VIDEO_EXECUTION_PLAN
+    - VIDEO_PROMPT_ARTIFACT
+    - VOICE_PROMPT_HANDOFF
+    additional_output_schemas:
+    - state/entity_binding_resolution.schema.yaml
+    - state/video_execution_plan.schema.yaml
+    - state/video_prompt_artifact.schema.yaml
+    - state/generation_envelope.schema.yaml
+    - state/voice_prompt_handoff.schema.yaml
+    prompt_artifact_tool: tools/video_prompt_artifact.py
+    execution_plan_freezer_tool: tools/video_execution_plan_freezer.py
+  STAGE_05_VIDEO_QC:
+    runtime:
+    - QC_RUNTIME
+    - REFERENCE_RUNTIME
+    - VIDEO_RUNTIME
+    - REALISM_RUNTIME
+    source_if_missing_or_stale:
+    - templates/web_qc_handoff.md
+    - templates/web_multimodal_qc_upload_budget.md
+    - templates/generation_qc_contract_separation_gate.md
+    - adapters/web_qc/platform_profile.yaml
+    - templates/everyday_realism_plausibility_gate.md
+    conditional_source:
+      revise_or_partial_failure:
+      - templates/video_temporal_salvage_qc.md
+      - templates/qc_scope_freeze_ledger.md
+      - templates/failure_diagnosis.md
+    validators:
+    - validators/temporal_salvage_lint.py
+    - validators/video_realism_qc_lint.py
+    - validators/video_experience_execution_qc_lint.py
+    structured_inputs:
+    - REALISM_CONTRACT
+    - EXPERIENCE_PRESSURE_PLAN
+    - CREATURE_PERFORMANCE_PLAN
+    validator_invocations:
+    - validator: validators/video_realism_qc_lint.py
+      inputs:
+      - REALISM_CONTRACT
+      - VIDEO_RUNTIME
+      - QC_RUNTIME
+    - validator: validators/video_experience_execution_qc_lint.py
+      inputs:
+      - EXPERIENCE_PRESSURE_PLAN
+      - CREATURE_PERFORMANCE_PLAN
+      - VIDEO_RUNTIME
+      - QC_RUNTIME
+      produces_gates:
+      - VIDEO_EXPERIENCE_EXECUTION_QC_PASS
+      - VIDEO_CREATURE_PERFORMANCE_QC_PASS
+    produces_fields:
+    - VIDEO_EVERYDAY_REALISM_QC_PASS
+    - VIDEO_QC_PASS
+    - VIDEO_EXPERIENCE_EXECUTION_QC_PASS
+    - VIDEO_CREATURE_PERFORMANCE_QC_PASS
+  STAGE_05_ENDING_FRAME:
+    runtime:
+    - QC_RUNTIME
+    - SCENE_RUNTIME
+    - VIDEO_RUNTIME
+    source_if_missing_or_stale:
+    - templates/continuity_snapshot.md
+    - templates/continuity_priority.md
+    - templates/world_state_continuity_engine.md
+    requires_real_evidence: true
+    structured_inputs:
+    - VIDEO_RUNTIME
+    - CONTINUITY_SNAPSHOT
+    output_schema: state/continuity_snapshot.schema.yaml
+    deterministic_tools:
+    - tools/ending_frame_capture.py
+    - tools/video_runtime_manager.py
+    produces_fields:
+    - REAL_ENDING_FRAME_EXTRACTED
+    - CONTINUITY_SNAPSHOT_PASS
+  STAGE_06_POST:
+    runtime:
+    - STORY_RUNTIME
+    - DIRECTOR_RUNTIME
+    - QC_RUNTIME
+    - REFERENCE_RUNTIME
+    source_if_missing_or_stale:
+    - templates/editorial_grammar_engine.md
+    - templates/post_production_template.md
+    - templates/visual_beat_music_sync_handoff.md
+    - templates/voice_direction_prosody_engine.md
+    - templates/music_identity_mapping.md
+    - templates/generation_envelope_engine.md
+    - templates/audio_asset_management.md
+    structured_inputs:
+    - EDITORIAL_PLAN
+    - SHOT_RELATION_GRAPH
+    - GENERATION_ENVELOPE
+    - AUDIO_ASSET_MANIFEST
+    - ASSET_REGISTRY
+    - VOICE_DIRECTION_PLAN
+    validators:
+    - validators/editorial_plan_lint.py
+    - validators/audio_asset_manifest_lint.py
+    - validators/voice_direction_plan_lint.py
+    - validators/voice_tts_handoff_lint.py
+    validator_invocations:
+    - validator: validators/editorial_plan_lint.py
+      inputs:
+      - EDITORIAL_PLAN
+      - SHOT_RELATION_GRAPH
+    - validator: validators/audio_asset_manifest_lint.py
+      inputs:
+      - AUDIO_ASSET_MANIFEST
+      - ASSET_REGISTRY
+    - validator: validators/voice_direction_plan_lint.py
+      phase: stage06
+      inputs:
+      - VOICE_DIRECTION_PLAN
+      - AUDIO_ASSET_MANIFEST
+      - ASSET_REGISTRY
+    - validator: validators/voice_tts_handoff_lint.py
+      phase: picture_lock
+      inputs:
+      - VOICE_DIRECTION_PLAN
+      - VOICE_TTS_HANDOFF
+      produces_gate: VOICE_TTS_HANDOFF_PASS
+    deterministic_tools:
+    - tools/voice_tts_handoff_builder.py
+    additional_structured_artifacts:
+    - VOICE_TTS_HANDOFF
+    additional_output_schemas:
+    - state/voice_tts_handoff.schema.yaml
+    produces_fields:
+    - VOICE_TTS_HANDOFF_PASS
+  REVISION_IMAGE:
+    runtime:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - QC_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/task_bound_reference_binding.md
+    - templates/reference_resolver.md
+    - templates/inpaint_local_patch_authority_engine.md
+    - templates/qc_scope_freeze_ledger.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    execute_with:
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  REVISION_VIDEO:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - VIDEO_RUNTIME
+    - QC_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/failure_diagnosis.md
+    - templates/retry_escalation_policy.md
+    - templates/qc_scope_freeze_ledger.md
+    - templates/stale_prompt_artifact_gate.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    next_route: STAGE_05_VIDEO
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    execute_with:
+    - adapters/generation/host_profiles.yaml
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+  STAGE_04_VIDEO_CONDITIONING_BUILD:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - VIDEO_CONDITIONING_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - REALISM_RUNTIME
+    - GENERATION_RUNTIME
+    compile_runtime_from_source:
+    - templates/video_conditioning_asset_architecture.md
+    - templates/visual_asset_usage_authority.md
+    - templates/production_support_reference_engine.md
+    - templates/reference_field_coverage_map.md
+    - templates/reference_resolver.md
+    - templates/color_authority_preservation_gate.md
+    - templates/world_state_continuity_engine.md
+    - templates/director_architecture_engine.md
+    - templates/shot_coverage_asset_derivation.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    - templates/generation_envelope_engine.md
+    - templates/editorial_grammar_engine.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    conditional_source:
+      complex_contact:
+      - templates/action_feasibility_prop_limb_continuity_engine.md
+      - templates/natural_motion_kinematic_performance_engine.md
+      combat:
+      - templates/combat_choreography_engine.md
+      - templates/cinematic_combat_vfx_engine.md
+      transformation:
+      - templates/transformation_asset_standard.md
+      - templates/transformation_splendor_architecture.md
+      seedance_target:
+      - adapters/generation/seedance_multishot_profile.yaml
+      creature_threat:
+      - templates/screen_experience_genre_pressure_engine.md
+      - templates/creature_performance_engine.md
+      genre_pressure:
+      - templates/screen_experience_genre_pressure_engine.md
+    structured_inputs:
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - SPATIAL_CANON
+    - EDITORIAL_PLAN
+    - ASSET_REGISTRY
+    - SHOT_STATE
+    - APPROVAL_RECORD
+    - STORYBOARD_SEQUENCE_PROOF
+    - STORYBOARD_ENTITY_BINDING_MAP
+    - EXPERIENCE_PRESSURE_PLAN
+    - CREATURE_PERFORMANCE_PLAN
+    conditional_structured_inputs:
+      CONTINUITY_ENTRY:
+      - SPATIAL_CONTINUITY_STATE
+      - SHOT_BOUNDARY_CONTINUITY_CONTRACT
+      MULTISHOT_CONTINUITY:
+      - SPATIAL_CONTINUITY_STATE
+      - SHOT_BOUNDARY_CONTINUITY_CONTRACT
+    validators:
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    - validators/generation_envelope_lint.py
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    callable_subroutes:
+    - GENERATION_JOB_DISPATCH
+    - GENERATION_JOB_EXECUTOR
+    produces_fields:
+    - SHOT_EXECUTION_GENERATION_JOBS_COMPLETE
+    - VIDEO_CONDITIONING_COLOR_BINDING_READY
+    - VIDEO_CONDITIONING_PLAN_RESOLVED
+    - BOUNDARY_PAIR_PLAN_RESOLVED
+    - VIDEO_CONDITIONING_ASSETS_AVAILABLE
+    - GENERATION_ENVELOPE_RESOLVED
+    - MULTISHOT_STORYBOARD_GRID_GATE_PASS
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+    deterministic_tools:
+    - tools/generation_runtime_manager.py
+    - tools/storyboard_grid_assembler.py
+    - tools/entity_binding_reference_resolver.py
+    - tools/nearest_spatial_visual_parent_router.py
+    validator_invocations:
+    - validator: validators/generation_envelope_lint.py
+      phase: envelope_and_grid_gate
+      inputs:
+      - GENERATION_ENVELOPE
+      - EDITORIAL_PLAN
+      - ASSET_REGISTRY
+    produces_structured_artifacts:
+    - GENERATION_ENVELOPE
+    additional_output_schemas:
+    - state/generation_envelope.schema.yaml
+  STAGE_04_VIDEO_CONDITIONING_QC:
+    runtime:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - VIDEO_CONDITIONING_RUNTIME
+    - QC_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - REALISM_RUNTIME
+    source_if_missing_or_stale:
+    - templates/media_review_proxy_protocol.md
+    - templates/video_conditioning_readiness_gate.md
+    - templates/visual_asset_usage_authority.md
+    - templates/generation_qc_contract_separation_gate.md
+    - templates/asset_anatomy_integrity_gate.md
+    - templates/foreground_figure_integrity_gate.md
+    - checklists/qc_checklists.md
+    - templates/visual_evidence_handoff.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/identity_readability_gate.md
+    validators:
+    - validators/video_conditioning_lint.py
+    - validators/identity_readability_lint.py
+    - validators/shot_relation_asset_obligation_lint.py
+    - validators/everyday_realism_lint.py
+    - validators/scene_color_binding_lint.py
+    - validators/generation_chain_lint.py
+    structured_inputs:
+    - SHOT_RELATION_GRAPH
+    - VISUAL_ASSET_OBLIGATION
+    - SPATIAL_CANON
+    - REALISM_CONTRACT
+    - ASSET_REGISTRY
+    - VISUAL_EVIDENCE
+    - STORYBOARD_ENTITY_BINDING_MAP
+    - IDENTITY_READABILITY_ASSESSMENT
+    validator_invocations:
+    - validator: validators/identity_readability_lint.py
+      inputs:
+      - IDENTITY_READABILITY_ASSESSMENT
+      - STORYBOARD_ENTITY_BINDING_MAP
+      - VIDEO_CONDITIONING_RUNTIME
+      - ASSET_REGISTRY
+      produces_gate: IDENTITY_READABILITY_PASS
+    - validator: validators/video_conditioning_lint.py
+      inputs:
+      - VIDEO_CONDITIONING_RUNTIME
+      - ASSET_REGISTRY
+    - validator: validators/shot_relation_asset_obligation_lint.py
+      phase: conditioning
+      inputs:
+      - SHOT_RELATION_GRAPH
+      - VISUAL_ASSET_OBLIGATION
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VIDEO_CONDITIONING_RUNTIME
+    - validator: validators/everyday_realism_lint.py
+      phase: conditioning
+      inputs:
+      - REALISM_CONTRACT
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+    text_only_validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: reference
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+      - REFERENCE_RUNTIME
+      when: CONTROLLER_MODE=TEXT_ONLY_CONTINUATION
+    updates_structured_artifacts:
+    - VISUAL_EVIDENCE
+    evidence_persistence_policy: WRITE_WHEN_VISUALLY_REVIEWED
+    produces_fields:
+    - VIDEO_CONDITIONING_EVERYDAY_REALISM_PASS
+    - VIDEO_CONDITIONING_COLOR_BINDING_PASS
+    - VIDEO_CONDITIONING_QC_PASS
+    - IDENTITY_READABILITY_PASS
+    - SHOT_RELATION_CONDITIONING_ALIGNMENT_PASS
+    produces_structured_artifacts:
+    - IDENTITY_READABILITY_ASSESSMENT
+    deterministic_tools:
+    - tools/platform_scaled_readability_preview.py
+  VISUAL_EVIDENCE_CAPTURE:
+    runtime:
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - QC_RUNTIME
+    - REALISM_RUNTIME
+    source_if_missing_or_stale:
+    - templates/media_review_proxy_protocol.md
+    - templates/visual_evidence_handoff.md
+    - templates/visual_asset_usage_authority.md
+    - templates/generation_qc_contract_separation_gate.md
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/identity_readability_gate.md
+    structured_inputs:
+    - ASSET_REGISTRY
+    - REALISM_CONTRACT
+    produces_structured_artifacts:
+    - VISUAL_EVIDENCE
+    capability_requirements:
+      vision: REQUIRED
+    validators:
+    - validators/visual_evidence_lint.py
+    deterministic_preflight:
+      tool: tools/media_review_proxy_builder.py
+      required_before_pixel_review: true
+      max_review_long_edge: 1600
+      contact_sheet_role: TRIAGE_ONLY
+    validator_invocations:
+    - validator: validators/visual_evidence_lint.py
+      phase: capture
+      inputs:
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+    produces_fields:
+    - OBSERVED_VISUAL_FACTS
+    - OBSERVED_REALISM_FACTS
+    - REALISM_CATEGORY_VERDICTS
+    - CURRENT_VISUAL_EVIDENCE
+  EVERYDAY_REALISM_RECONCILIATION:
+    runtime:
+    - STORY_RUNTIME
+    - DIRECTOR_RUNTIME
+    - SCENE_RUNTIME
+    - SPATIAL_CANON_RUNTIME
+    - REALISM_RUNTIME
+    - ASSET_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - QC_RUNTIME
+    source_if_missing_or_stale:
+    - templates/everyday_realism_plausibility_gate.md
+    - templates/world_state_continuity_engine.md
+    - templates/environment_asset_standard.md
+    - templates/action_feasibility_prop_limb_continuity_engine.md
+    - templates/director_spatial_reconciliation_gate.md
+    - templates/failure_diagnosis.md
+    structured_inputs:
+    - REALISM_CONTRACT
+    - SPATIAL_CANON
+    - ASSET_REGISTRY
+    - VISUAL_EVIDENCE
+    validators:
+    - validators/everyday_realism_lint.py
+    validator_invocations:
+    - validator: validators/everyday_realism_lint.py
+      phase: freeze
+      inputs:
+      - REALISM_CONTRACT
+      - SPATIAL_CANON
+      - ASSET_REGISTRY
+      - VISUAL_EVIDENCE
+    produces_fields:
+    - REALISM_ROOT_CAUSE
+    - MINIMUM_ROLLBACK_OWNER
+    - PATCH_SCOPE
+    - REALISM_RECHECK_REQUIRED
+    policy: P0/P1现实性失败先定位Source/Spatial/WorldState/Asset/Evidence Owner；禁止继续下游或用漂亮图迁就错误Canon。
+  GENERATION_JOB_DISPATCH:
+    runtime:
+    - GENERATION_RUNTIME
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    source_if_missing_or_stale:
+    - templates/generation_execution_spine.md
+    - templates/scene_color_card_auto_derivation.md
+    structured_inputs:
+    - GENERATION_JOB
+    - ASSET_REGISTRY
+    deterministic_tools:
+    - tools/asset_route_dispatcher.py
+    - tools/scene_color_router.py
+    - tools/controller_engine.py
+    - tools/generation_runtime_manager.py
+    produces_fields:
+    - GENERATION_JOB_ROUTE_RESOLVED
+    - GENERATION_JOB_BINDINGS_RESOLVED
+    validators:
+    - validators/generation_job_binding_lint.py
+  GENERATION_JOB_EXECUTOR:
+    runtime:
+    - GENERATION_RUNTIME
+    - ASSET_RUNTIME
+    - REFERENCE_RUNTIME
+    source_if_missing_or_stale:
+    - templates/generation_execution_spine.md
+    - templates/visual_reference_routing.md
+    - templates/color_authority_preservation_gate.md
+    execute_with:
+    - adapters/generation/host_profiles.yaml
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    structured_inputs:
+    - GENERATION_JOB
+    - ASSET_REGISTRY
+    deterministic_tools:
+    - tools/generation_job_manager.py
+    - tools/generation_runtime_manager.py
+    produces_fields:
+    - REAL_GENERATION_RESULT_AVAILABLE
+    - GENERATION_CANDIDATE_CAPTURED
+    validators:
+    - validators/generation_job_binding_lint.py
+  SCENE_COLOR_CARD_DERIVATION:
+    runtime:
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/color_script_derivation_engine.md
+    - templates/scene_color_card_auto_derivation.md
+    - templates/color_authority_preservation_gate.md
+    - templates/visual_reference_routing.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - adapters/generation/host_profiles.yaml
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    validators:
+    - validators/scene_color_binding_lint.py
+    - validators/prompt_surface_lint.py
+    - validators/asset_mention_lint.py
+    - validators/generation_job_binding_lint.py
+    deterministic_tools:
+    - tools/scene_color_router.py
+    - tools/generation_job_manager.py
+    - tools/generation_runtime_manager.py
+    produces_fields:
+    - SCENE_COLOR_CARD_CANDIDATE_AVAILABLE
+    - SCENE_COLOR_AUTHORITY_READY
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  ADVANCE_VIDEO_UNIT:
+    runtime:
+    - VIDEO_RUNTIME
+    - SCENE_RUNTIME
+    - DIRECTOR_RUNTIME
+    source_if_missing_or_stale:
+    - templates/continuity_snapshot.md
+    - templates/segment_entry_modes.md
+    - templates/world_state_continuity_engine.md
+    structured_inputs:
+    - CONTINUITY_SNAPSHOT
+    deterministic_tools:
+    - tools/video_unit_advance.py
+    produces_fields:
+    - NEXT_VIDEO_UNIT_AVAILABLE
+    - CURRENT_VIDEO_UNIT_ADVANCED
+    - CONTINUITY_ENTRY_WRITTEN
+    - REQUIRED_SEGMENTS_APPROVED
+    - NO_REMAINING_VIDEO_UNITS
+  PERFORMANCE_SUPPORT_ASSET:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - REALISM_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/performance_asset_requirement_engine.md
+    - templates/production_support_reference_engine.md
+    - templates/task_bound_reference_binding.md
+    - templates/reference_resolver.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    structured_inputs:
+    - PERFORMANCE_ASSET_REQUIREMENT_SET
+    - ASSET_REGISTRY
+    validators:
+    - validators/performance_asset_requirement_lint.py
+    - validators/generation_job_binding_lint.py
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+  NARRATIVE_FX_ASSET:
+    runtime:
+    - DIRECTOR_RUNTIME
+    - ASSET_RUNTIME
+    - SCENE_RUNTIME
+    - REFERENCE_RUNTIME
+    - VISUAL_EVIDENCE_RUNTIME
+    - GENERATION_RUNTIME
+    source_if_missing_or_stale:
+    - templates/narrative_fx_asset_standard.md
+    - templates/cinematic_combat_vfx_engine.md
+    - templates/task_bound_reference_binding.md
+    - templates/reference_resolver.md
+    - templates/visual_evidence_handoff.md
+    - templates/generation_execution_spine.md
+    execute_with:
+    - templates/asset_master_prompt_template.md
+    - templates/style_authority_projection_gate.md
+    - adapters/generation/platform_profile.yaml
+    - templates/model_facing_prompt_surface_sanitizer.md
+    - templates/prompt_egress_gate.md
+    - adapters/generation/host_profiles.yaml
+    structured_inputs:
+    - NARRATIVE_FX_ASSET_MANIFEST
+    - ASSET_REGISTRY
+    validators:
+    - validators/narrative_fx_asset_lint.py
+    - validators/generation_job_binding_lint.py
+    generation_job_contract: state/generation_job.schema.yaml
+    result_capture_tool: tools/generation_job_manager.py
+    asset_promotion_tool: tools/asset_promoter.py
+structured_artifacts:
+  EDITORIAL_PLAN: state/editorial_plan.schema.yaml
+  SHOT_RELATION_GRAPH: state/shot_relation_graph.schema.yaml
+  VISUAL_ASSET_OBLIGATION: state/visual_asset_obligation.schema.yaml
+  SPATIAL_CANON: state/spatial_canon.schema.yaml
+  VISUAL_EVIDENCE: state/visual_evidence.schema.yaml
+  IDENTITY_READABILITY_ASSESSMENT: state/identity_readability_assessment.schema.yaml
+  REALISM_CONTRACT: state/realism_contract.schema.yaml
+  GENERATION_ENVELOPE: state/generation_envelope.schema.yaml
+  STORYBOARD_CONTACT_SHEET_PROOF: state/storyboard_contact_sheet_proof.schema.yaml
+  STORYBOARD_SEQUENCE_PROOF: state/storyboard_sequence_proof.schema.yaml
+  STORYBOARD_ENTITY_BINDING_MAP: state/storyboard_entity_binding_map.schema.yaml
+  ENTITY_BINDING_RESOLUTION: state/entity_binding_resolution.schema.yaml
+  MINOR_HUMAN_CANON_VIEW_SET: state/minor_human_canon_view_set.schema.yaml
+  PROP_CANON_VIEW_SET: state/prop_canon_view_set.schema.yaml
+  ENV_VISUAL_ANCHOR_SET: state/environment_visual_anchor_set.schema.yaml
+  SPATIAL_CONTINUITY_STATE: state/spatial_continuity_state.schema.yaml
+  SHOT_BOUNDARY_CONTINUITY_CONTRACT: state/shot_boundary_continuity_contract.schema.yaml
+  BASE_VISUAL_AUTHORITY_MANIFEST: state/base_visual_authority_manifest.schema.yaml
+  AUDIO_ASSET_MANIFEST: state/audio_asset_manifest.schema.yaml
+  PERFORMANCE_ASSET_REQUIREMENT_SET: state/performance_asset_requirement_set.schema.yaml
+  NARRATIVE_FX_ASSET_MANIFEST: state/narrative_fx_asset_manifest.schema.yaml
+  VOICE_DIRECTION_PLAN: state/voice_direction_plan.schema.yaml
+  VOICE_PROMPT_HANDOFF: state/voice_prompt_handoff.schema.yaml
+  VOICE_TTS_HANDOFF: state/voice_tts_handoff.schema.yaml
+  CONTINUITY_SNAPSHOT: state/continuity_snapshot.schema.yaml
+  TEMPORAL_ENTRY_PLAN: state/temporal_entry_plan.schema.yaml
+  TEMPORAL_T0_SUFFICIENCY_ASSESSMENT: state/temporal_t0_sufficiency_assessment.schema.yaml
+  COMBAT_SEGMENT_CONTRACT: state/combat_segment_contract.schema.yaml
+  EXPERIENCE_PRESSURE_PLAN: state/experience_pressure_plan.schema.yaml
+  CREATURE_PERFORMANCE_PLAN: state/creature_performance_plan.schema.yaml
+  CONTEXT_LOAD_PLAN: state/context_load_plan.schema.yaml
+controller_executor: tools/controller_engine.py
+runtime_compiler: tools/runtime_compiler.py
+generation_job_schema: state/generation_job.schema.yaml
+generation_runtime_schema: runtime/generation_runtime.schema.yaml
+runtime_manager: tools/generation_runtime_manager.py
+asset_promoter: tools/asset_promoter.py
+context_loading:
+  policy: controller/context_loading_policy.yaml
+  planner: tools/context_load_planner.py
+  plan_schema: state/context_load_plan.schema.yaml
+  plan_validator: validators/context_load_plan_lint.py
+  normal_mode: THIN_KERNEL_ROUTE_SCOPED_LAZY_LOADING
+  produces_gate: CONTEXT_LOAD_PLAN_PASS
+  module_dependency_graph: controller/context_module_registry.yaml

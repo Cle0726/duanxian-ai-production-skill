@@ -1,0 +1,12 @@
+schema_version: 1
+skill_version: 4.5.3
+episode_id: EP_TEST
+mode: PRODUCTION
+workflow_state: VIDEO_CONDITIONING_READY
+controller_capability:
+  mode: TEXT_ONLY_CONTINUATION
+  vision: UNAVAILABLE
+  visual_evidence_policy: CACHE_ONLY
+visual_review_queue: [UNVERIFIED_ASSET_07]
+visual_evidence_ref: VISUAL_EVIDENCE_CURRENT
+visual_evidence_fingerprint: ve1

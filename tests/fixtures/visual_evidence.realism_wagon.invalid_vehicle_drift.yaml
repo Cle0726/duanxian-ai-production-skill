@@ -1,0 +1,146 @@
+schema_version: 1
+skill_version: 4.5.5
+records:
+- evidence_id: VE_WAGON_REALISM_FORWARD
+  asset_id: ASSET_WAGON_REALISM_FORWARD
+  asset_version: 1
+  source_fingerprint_type: FILE_SHA256
+  source_fingerprint: hash-realism-forward
+  evidence_status: CURRENT
+  inspector:
+    mode: MULTIMODAL_MODEL
+    actor_id: REGRESSION
+    inspected_at: '2026-08-19T20:00:00+08:00'
+  observed:
+    fact_codes:
+    - CABIN_FORWARD_AXIS_READABLE
+    issue_codes:
+    - VEHICLE_FUNCTIONAL_LAYOUT_DRIFT
+    summary: REGRESSION_NOT_CANON three occupants in correct functional positions
+    depicted_entities:
+    - WAGON_INTERIOR_REALISM_TEST
+    - JIELA
+    - KAIDENG
+    - XILIYA
+    transient_entities: []
+    layout_type: SINGLE_FRAME
+    spatial:
+      camera_origin: REAR_BENCH
+      view_direction: AXIS_TO_FRONT_WINDSHIELD
+      visible_anchor_ids:
+      - WINDSHIELD
+      - DRIVER_SEAT
+      - FRONT_PASSENGER_SEAT
+      - REAR_SEAT_LEFT
+      - DRIVER_CONTROLS
+      visible_location_entity_ids:
+      - WAGON_INTERIOR_REALISM_TEST
+      view_role: FORWARD
+      view_roles:
+      - FORWARD
+      camera_origin_zone_id: REAR_BENCH
+      camera_origin_anchor_id: CAM_REAR_CENTER
+      view_target_entity_id: WAGON_INTERIOR_REALISM_TEST
+      view_target_anchor_id: WINDSHIELD
+      view_direction_code: AXIS_TO_FRONT_WINDSHIELD
+    appearance:
+      look_domain: INTERIOR
+      lighting_summary: regression
+      palette_summary: regression
+    cleanliness:
+      visible_text: false
+      arrows_or_motion_lines: false
+      multi_panel: false
+      watermark_or_logo: false
+    realism:
+      human_count: 3
+      unexpected_human_count: 0
+      characters:
+      - character_id: JIELA
+        count: 1
+        zone_id: DRIVER_ZONE
+        functional_position_id: DRIVER_SEAT
+        posture: SIT
+        support_surface_id: DRIVER_SEAT
+        body_orientation: FORWARD
+        gaze_target_ids:
+        - WINDSHIELD
+        contact_object_ids:
+        - DRIVER_CONTROLS
+        identity_confidence: HIGH
+      - character_id: KAIDENG
+        count: 1
+        zone_id: FRONT_PASSENGER_ZONE
+        functional_position_id: FRONT_PASSENGER_SEAT
+        posture: SIT
+        support_surface_id: FRONT_PASSENGER_SEAT
+        body_orientation: FORWARD
+        gaze_target_ids:
+        - JIELA
+        contact_object_ids: []
+        identity_confidence: HIGH
+      - character_id: XILIYA
+        count: 1
+        zone_id: REAR_BENCH
+        functional_position_id: REAR_SEAT_LEFT
+        posture: SIT
+        support_surface_id: REAR_SEAT_LEFT
+        body_orientation: FORWARD
+        gaze_target_ids: []
+        contact_object_ids: []
+        identity_confidence: HIGH
+      character_relations:
+      - character_a: JIELA
+        character_b: KAIDENG
+        relation: CONVERSATIONAL
+        eyeline_access: 'YES'
+      environment:
+        environment_kind: VEHICLE
+        specific_type: TRAM_STYLE_CABIN
+        visible_zone_ids:
+        - DRIVER_ZONE
+        - FRONT_PASSENGER_ZONE
+        - REAR_BENCH
+        - AISLE
+        visible_functional_position_ids:
+        - DRIVER_SEAT
+        - FRONT_PASSENGER_SEAT
+        - REAR_SEAT_LEFT
+        access_path_ids: []
+        scale_plausibility: PASS
+        functional_layout_plausibility: FAIL
+        ingress_egress_plausibility: PASS
+        circulation_plausibility: PASS
+        vehicle_type: TRAM_STYLE_CABIN
+        driver_zone_id: DRIVER_ZONE
+        passenger_zone_ids:
+        - FRONT_PASSENGER_ZONE
+        - REAR_BENCH
+        driver_forward_visibility: PASS
+      object_affordances:
+      - object_id: DRIVER_CONTROLS
+        reachable: 'YES'
+        supported: 'YES'
+        operable: 'YES'
+        verdict: PASS
+      category_verdicts:
+        ENVIRONMENT_FUNCTIONAL_REALISM: PASS
+        ARCHITECTURAL_REALISM: NOT_APPLICABLE
+        VEHICLE_REALISM: FAIL
+        HUMAN_ERGONOMICS: PASS
+        OBJECT_AFFORDANCE: PASS
+        SOCIAL_SPATIAL_PLAUSIBILITY: PASS
+        MUNDANE_PHYSICS: PASS
+        MUNDANE_CONTINUITY: PASS
+      overall_verdict: FAIL
+      reconciliation_notes: null
+  realism_contract_refs:
+  - RC_WAGON_01
+  role_assessment:
+    safe_roles:
+    - PRIMARY_VIEW
+    unsafe_roles: []
+    primary_visual_eligible: true
+    direct_video_eligible: true
+  confidence: HIGH
+  notes: REGRESSION_NOT_CANON

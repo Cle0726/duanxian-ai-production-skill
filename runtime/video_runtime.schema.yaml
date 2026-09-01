@@ -1,0 +1,117 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/video_runtime.schema.yaml
+title: VIDEO_RUNTIME
+type: object
+additionalProperties: true
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- scope
+- source_fingerprints
+- runtime_fingerprint
+properties:
+  runtime_type:
+    const: VIDEO_RUNTIME
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  scope:
+    type: object
+    additionalProperties: true
+  source_versions:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  execution_state:
+    type: object
+    additionalProperties: true
+  spatial_state:
+    type: object
+    additionalProperties: true
+  camera_state:
+    type: object
+    additionalProperties: true
+  focus_state:
+    type: object
+    additionalProperties: true
+  action_state:
+    type: object
+    additionalProperties: true
+  performance_state:
+    type: object
+    additionalProperties: true
+  crowd_state:
+    type: object
+    additionalProperties: true
+  audio_state:
+    type: object
+    additionalProperties: true
+  duration_state:
+    type: object
+    additionalProperties: true
+  constraint_fingerprint:
+    type:
+    - string
+    - 'null'
+  invalidation_triggers:
+    type: array
+    items:
+      type: string
+  video_take_id:
+    type:
+    - string
+    - 'null'
+  video_take_fingerprint:
+    type:
+    - string
+    - 'null'
+  video_unit_id:
+    type:
+    - string
+    - 'null'
+  execution_plan_ref:
+    type:
+    - string
+    - 'null'
+  execution_plan_fingerprint:
+    type:
+    - string
+    - 'null'
+  execution_plan_source_fingerprints:
+    type: object
+    additionalProperties:
+      type: string
+  prompt_artifact_ref:
+    type:
+    - string
+    - 'null'
+  prompt_ref:
+    type:
+    - string
+    - 'null'
+  prompt_fingerprint:
+    type:
+    - string
+    - 'null'
+  continuity_snapshot_ref:
+    type:
+    - string
+    - 'null'
+  ending_frame_ref:
+    type:
+    - string
+    - 'null'

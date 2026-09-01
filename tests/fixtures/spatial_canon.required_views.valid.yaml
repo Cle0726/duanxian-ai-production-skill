@@ -1,0 +1,150 @@
+schema_version: 2
+skill_version: 4.5.4
+episode_id: REGRESSION_NOT_CANON_WAGON
+locations:
+- location_entity_id: WAGON_INTERIOR_01
+  display_name: 测试旅行车车厢
+  reuse_tier: B
+  location_kind: INTERIOR
+  parent_location_id: null
+  zones:
+  - FRONT_CABIN
+  - REAR_BENCH
+  anchors:
+  - anchor_id: CAM_REAR_CENTER
+    anchor_type: CAMERA_ZONE
+    zone_id: REAR_BENCH
+    connects_to: []
+    visible_targets:
+    - WINDSHIELD
+  - anchor_id: CAM_FRONT_CENTER
+    anchor_type: CAMERA_ZONE
+    zone_id: FRONT_CABIN
+    connects_to: []
+    visible_targets:
+    - REAR_BENCH_ANCHOR
+  - anchor_id: WINDSHIELD
+    anchor_type: WINDOW
+    zone_id: FRONT_CABIN
+    connects_to: []
+    visible_targets: []
+  - anchor_id: DRIVER_SEAT
+    anchor_type: OTHER
+    zone_id: FRONT_CABIN
+    connects_to: []
+    visible_targets: []
+  - anchor_id: PASSENGER_SEAT
+    anchor_type: OTHER
+    zone_id: FRONT_CABIN
+    connects_to: []
+    visible_targets: []
+  - anchor_id: DASHBOARD
+    anchor_type: OTHER
+    zone_id: FRONT_CABIN
+    connects_to: []
+    visible_targets: []
+  - anchor_id: REAR_BENCH_ANCHOR
+    anchor_type: OTHER
+    zone_id: REAR_BENCH
+    connects_to: []
+    visible_targets: []
+  status: LOCKED
+  look_domain: INTERIOR
+  spatial_diagram_ids:
+  - D_WAGON_LAYOUT
+  visual_parent_asset_ids:
+  - ASSET_WAGON_CANON
+  event_node_ids:
+  - EV_WAGON_DIALOG
+relations: []
+event_nodes:
+- event_node_id: EV_WAGON_DIALOG
+  scene_id: SC_WAGON
+  location_entity_id: WAGON_INTERIOR_01
+  description: 车内对话需要前向与反向覆盖
+  required_zone_ids:
+  - FRONT_CABIN
+  - REAR_BENCH
+  actor_ids:
+  - A
+  - B
+  - C
+  primary_zone_id: REAR_BENCH
+  required_spatial_relation_ids: []
+  required_view_roles:
+  - FORWARD
+  - REVERSE
+view_requirements:
+- view_requirement_id: VR_WAGON_FORWARD
+  scene_id: SC_WAGON
+  location_entity_id: WAGON_INTERIOR_01
+  event_node_ids:
+  - EV_WAGON_DIALOG
+  shot_ids:
+  - SH03
+  relation_ids: []
+  character_route_ids: []
+  view_role: FORWARD
+  priority: P0
+  camera_origin_zone_id: REAR_BENCH
+  camera_origin_anchor_id: CAM_REAR_CENTER
+  view_target_entity_id: WAGON_INTERIOR_01
+  view_target_anchor_id: WINDSHIELD
+  view_direction_code: AXIS_TO_FRONT_WINDSHIELD
+  required_visible_anchor_ids:
+  - WINDSHIELD
+  - DRIVER_SEAT
+  - PASSENGER_SEAT
+  - DASHBOARD
+  forbidden_visible_anchor_ids: []
+  required_visual_fact_codes:
+  - CABIN_FORWARD_AXIS_READABLE
+  forbidden_visual_fact_codes:
+  - CAMERA_FACING_REAR_BENCH
+  candidate_budget: 2
+  selected_fulfillment_asset_id: ASSET_WAGON_FORWARD
+  status: FULFILLED
+  waiver_ref: null
+- view_requirement_id: VR_WAGON_REVERSE
+  scene_id: SC_WAGON
+  location_entity_id: WAGON_INTERIOR_01
+  event_node_ids:
+  - EV_WAGON_DIALOG
+  shot_ids:
+  - SH05
+  relation_ids: []
+  character_route_ids: []
+  view_role: REVERSE
+  priority: P1
+  camera_origin_zone_id: FRONT_CABIN
+  camera_origin_anchor_id: CAM_FRONT_CENTER
+  view_target_entity_id: WAGON_INTERIOR_01
+  view_target_anchor_id: REAR_BENCH_ANCHOR
+  view_direction_code: AXIS_TO_REAR_BENCH
+  required_visible_anchor_ids:
+  - REAR_BENCH_ANCHOR
+  forbidden_visible_anchor_ids: []
+  required_visual_fact_codes:
+  - CABIN_REVERSE_AXIS_READABLE
+  forbidden_visual_fact_codes: []
+  candidate_budget: 2
+  selected_fulfillment_asset_id: ASSET_WAGON_REVERSE
+  status: FULFILLED
+  waiver_ref: null
+character_routes: []
+planning_diagrams:
+- diagram_id: D_WAGON_LAYOUT
+  diagram_type: ROOM_LAYOUT
+  scope_location_ids:
+  - WAGON_INTERIOR_01
+  asset_id: ASSET_WAGON_LAYOUT
+  relation_ids: []
+  character_route_ids: []
+  event_node_ids:
+  - EV_WAGON_DIALOG
+  annotation_policy: PLANNING_ANNOTATIONS_ALLOWED
+  status: APPROVED
+  north_angle_deg: 0
+  scale_note: test
+status: LOCKED
+spatial_canon_fingerprint: null

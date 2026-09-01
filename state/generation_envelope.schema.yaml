@@ -1,0 +1,341 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/generation_envelope.schema.yaml
+title: Duanxian Generation Envelope V1 — Shot-to-Generation Grouping + Multishot Storyboard Gate
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- generation_envelope_id
+- episode_id
+- sequence_id
+- format_mode
+- status
+- shot_ids
+- cut_contracts
+- storyboard_grid
+- fallback_strategy
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|8|9|10|11)$
+  generation_envelope_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type: string
+    minLength: 1
+  sequence_id:
+    type: string
+    minLength: 1
+  scene_id:
+    type:
+    - string
+    - 'null'
+  source_editorial_plan_ref:
+    type:
+    - string
+    - 'null'
+  source_editorial_fingerprint:
+    type:
+    - string
+    - 'null'
+  target_generation_profile:
+    type:
+    - string
+    - 'null'
+  format_mode:
+    enum:
+    - ONER
+    - SEQUENTIAL_MULTISHOT
+    - TIMED_MULTISHOT
+    - FREESTYLE_BROLL
+  status:
+    enum:
+    - DRAFT
+    - STORYBOARD_REQUIRED
+    - STORYBOARD_READY
+    - READY_FOR_COMPILE
+    - BLOCKED
+    - STALE
+  total_duration_sec:
+    type:
+    - number
+    - 'null'
+    exclusiveMinimum: 0
+  shot_ids:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: string
+      minLength: 1
+  cut_contracts:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - cut_id
+      - order
+      - shot_id
+      - narrative_function
+      - viewpoint_role
+      - camera_character
+      - camera_start
+      - camera_path
+      - camera_end
+      - action_beat
+      - performance_beat
+      - cut_in_trigger
+      - cut_out_trigger
+      - continuity_handoff
+      - storyboard_panel_asset_id
+      properties:
+        cut_id:
+          type: string
+          minLength: 1
+        order:
+          type: integer
+          minimum: 1
+        shot_id:
+          type: string
+          minLength: 1
+        narrative_function:
+          type: string
+          minLength: 1
+        viewpoint_role:
+          enum:
+          - OBJECTIVE_OBSERVER
+          - CHARACTER_ALIGNED
+          - OTS_RELATIONAL
+          - POV_DIRECT
+          - REACTION_ACCESS
+          - DETAIL_EVIDENCE
+          - ENVIRONMENT_WITNESS
+          - DISTANT_OBSERVATION
+          - DISORIENTED_SUBJECTIVE
+          - OTHER
+        camera_character:
+          enum:
+          - LOCKED_OBSERVATIONAL
+          - STABLE_RELATIONAL
+          - SUBJECTIVE_HANDHELD
+          - TRACKING_PARTICIPANT
+          - REVEALING_MOVE
+          - COMPRESSED_WATCHING
+          - WIDE_SPATIAL
+          - DETAIL_INSPECTION
+          - DISORIENTED_SUBJECTIVE
+          - OTHER
+        core_lens_intent:
+          type:
+          - string
+          - 'null'
+        provider_fov_anchor_deg:
+          type:
+          - number
+          - 'null'
+          minimum: 1
+          maximum: 179
+        camera_start:
+          type: string
+          minLength: 1
+        camera_path:
+          type: string
+          minLength: 1
+        camera_end:
+          type: string
+          minLength: 1
+        action_beat:
+          type: string
+          minLength: 1
+        performance_beat:
+          type: string
+          minLength: 1
+        information_revealed:
+          type:
+          - string
+          - 'null'
+        cut_in_trigger:
+          type: string
+          minLength: 1
+        cut_out_trigger:
+          type: string
+          minLength: 1
+        continuity_handoff:
+          type: string
+          minLength: 1
+        boundary_contract_ref:
+          type:
+          - string
+          - 'null'
+        continuity_distance:
+          enum:
+          - LOW
+          - MEDIUM
+          - HIGH
+          - SCENE_BOUNDARY
+          - null
+        structured_continuity:
+          type: object
+          additionalProperties: true
+          properties:
+            inheritance_mode:
+              type:
+              - string
+              - 'null'
+            from_state_ref:
+              type:
+              - string
+              - 'null'
+            to_state_ref:
+              type:
+              - string
+              - 'null'
+            required_invariants:
+              type: array
+              items:
+                type: string
+            allowed_changes:
+              type: array
+              items:
+                type: string
+        start_sec:
+          type:
+          - number
+          - 'null'
+          minimum: 0
+        end_sec:
+          type:
+          - number
+          - 'null'
+          exclusiveMinimum: 0
+        storyboard_panel_asset_id:
+          type: string
+          minLength: 1
+        primary_visual_asset_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        positive_locks:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+  storyboard_grid:
+    type: object
+    additionalProperties: false
+    required:
+    - required
+    - panel_asset_ids
+    - sequence_board_asset_id
+    - sequence_board_fingerprint
+    - qc_status
+    - assembly_tool
+    properties:
+      required:
+        type: boolean
+      panel_asset_ids:
+        type: array
+        uniqueItems: true
+        items:
+          type: string
+          minLength: 1
+      sequence_board_asset_id:
+        type:
+        - string
+        - 'null'
+      sequence_board_fingerprint:
+        type:
+        - string
+        - 'null'
+      qc_status:
+        enum:
+        - NOT_REQUIRED
+        - NOT_READY
+        - PASS
+        - FAIL
+      assembly_tool:
+        type: string
+        const: tools/storyboard_grid_assembler.py
+      manifest_ref:
+        type:
+        - string
+        - 'null'
+  fallback_strategy:
+    enum:
+    - ASSEMBLY_FIRST
+    - SPLIT_TO_SINGLE_SHOT_ENVELOPES
+  generation_envelope_fingerprint:
+    type:
+    - string
+    - 'null'
+allOf:
+- if:
+    properties:
+      format_mode:
+        const: ONER
+    required:
+    - format_mode
+  then:
+    properties:
+      shot_ids:
+        minItems: 1
+        maxItems: 1
+      cut_contracts:
+        minItems: 1
+        maxItems: 1
+      storyboard_grid:
+        properties:
+          required:
+            const: false
+          qc_status:
+            const: NOT_REQUIRED
+- if:
+    properties:
+      format_mode:
+        enum:
+        - SEQUENTIAL_MULTISHOT
+        - TIMED_MULTISHOT
+        - FREESTYLE_BROLL
+    required:
+    - format_mode
+  then:
+    properties:
+      shot_ids:
+        minItems: 2
+      cut_contracts:
+        minItems: 2
+      storyboard_grid:
+        properties:
+          required:
+            const: true
+          sequence_board_asset_id:
+            type: string
+            minLength: 1
+          sequence_board_fingerprint:
+            type: string
+            minLength: 16
+          qc_status:
+            const: PASS
+- if:
+    properties:
+      format_mode:
+        const: TIMED_MULTISHOT
+    required:
+    - format_mode
+  then:
+    required:
+    - total_duration_sec
+    properties:
+      total_duration_sec:
+        type: number
+        exclusiveMinimum: 0

@@ -1,0 +1,76 @@
+profile_id: SEEDANCE_CONTROLLED_MULTISHOT
+profile_version: 1
+skill_version: 4.5.10
+status: OPTIONAL_TARGET_ADAPTER
+purpose: 将GENERATION_ENVELOPE编译成Seedance类受控多镜头提示词；不拥有Director/Edit事实。
+capabilities:
+  controlled_multishot: PUBLIC_WORKFLOW_SUPPORTED
+  supported_format_modes:
+  - ONER
+  - SEQUENTIAL_MULTISHOT
+  - TIMED_MULTISHOT
+  - FREESTYLE_BROLL
+  exact_cut_count_instruction: true
+  explicit_hard_cut_instruction: true
+  storyboard_grid_auxiliary_reference: true
+  storyboard_grid_primary_visual: false
+  reference_capability_class: MULTIMODAL_ALL_ROUND_REFERENCE
+  supported_reference_media:
+  - TEXT
+  - IMAGE
+  - AUDIO
+  role_aware_reference_assignment: true
+  minimum_sufficient_reference_selection_required: true
+  exact_material_limits: CURRENT_PROVIDER_ENTRY_REQUIRED
+format_surface:
+  ONER:
+    header: FORMAT MODE = ONER / NO CUT
+    rule: 单一连续摄影机路径，不出现CUT词。
+  SEQUENTIAL_MULTISHOT:
+    header: FORMAT MODE = SEQUENCE OF SPECIFIED CUTS
+    rule: 只在CUT_CONTRACT指定边界切换，不新增CUT。
+  TIMED_MULTISHOT:
+    header: FORMAT MODE = TIMED MULTISHOT
+    rule: 每个CUT写累积时间范围并保持总时长闭合。
+  FREESTYLE_BROLL:
+    header: FORMAT MODE = CONTROLLED B-ROLL WITHIN APPROVED VIEWS
+    rule: 只在批准的CUT/VIEW集合内探索，不发明人物、地点或叙事事实。
+fov_anchor_compiler:
+  anchors_deg:
+  - 107
+  - 84
+  - 63
+  - 47
+  - 29
+  - 18
+  - 12
+  mappings:
+    extreme_spatial_expansion: 107
+    wide_spatial: 84
+    observational_wide: 63
+    natural_human_relation: 47
+    portrait_dialogue: 29
+    close_portrait: 18
+    detail_evidence: 12
+  rule: Core Lens Intent优先；FOV只是Provider执行锚点，不得反向改写摄影意图。
+positive_lock_policy:
+  prefer_observable_positive_state: true
+  preserve_core_failure_codes: true
+  do_not_repeat_negative_tokens_without_need: true
+  rule: 将结构化禁止项优先编译成可观察的正向状态；高风险不可正向表达时才保留最短禁止句。
+storyboard_grid_policy:
+  required_for_non_oner: true
+  asset_type: STORYBOARD_CLEAN_SEQUENCE_BOARD
+  auxiliary_direct_input_allowed: true
+  primary_visual_eligible: false
+  assembler_tool: tools/storyboard_grid_assembler.py
+fallback:
+  on_multishot_instability: SPLIT_TO_SINGLE_SHOT_ENVELOPES
+  preserve_editorial_plan: true
+project_reference_policy:
+  reference_video_policy: FORBIDDEN_QUOTA_COST
+  allowed_reference_media:
+  - TEXT
+  - IMAGE
+  - AUDIO
+  audio_reference_source: AUDIO_ASSET_MANIFEST_ONLY

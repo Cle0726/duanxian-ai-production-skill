@@ -1,0 +1,14 @@
+profile_id: WEB_MULTIMODAL_QC_DEFAULT
+profile_version: 1
+status: CURRENT_PROJECT_DEFAULT
+verified_for: "当前《断弦之歌》网页版独立QC工作流"
+image_upload_cap: 10
+video_take_per_qc_packet: 1
+batch_numbering_resets_image_index: true
+watermark_policy:
+  dola_ai: NEUTRAL_PLATFORM_WATERMARK
+  doubao_ai: NEUTRAL_PLATFORM_WATERMARK
+notes:
+  - "该上限只约束Web QC Evidence Packet，不自动限制视频生成Reference Pack。"
+  - "平台UI/能力变化时必须更新本Profile并触发QC_RUNTIME失效。"
+  - "未在本Profile中声明的能力保持UNKNOWN。"

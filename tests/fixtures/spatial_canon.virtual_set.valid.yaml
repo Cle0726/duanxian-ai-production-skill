@@ -1,0 +1,259 @@
+schema_version: 2
+skill_version: 4.5.2
+episode_id: REGRESSION_NOT_CANON
+locations:
+- location_entity_id: FOREST_A
+  display_name: 测试雪林
+  reuse_tier: B
+  location_kind: OUTDOOR
+  parent_location_id: null
+  zones:
+  - START
+  - SLOPE_CORNER
+  anchors:
+  - anchor_id: FOREST_LANDMARK
+    anchor_type: LANDMARK
+    zone_id: SLOPE_CORNER
+    connects_to: []
+    visible_targets:
+    - FARMHOUSE_01
+  look_domain: EXTERIOR
+  spatial_diagram_ids:
+  - D_TOPO
+  event_node_ids:
+  - EV_A
+  - EV_C
+  status: LOCKED
+- location_entity_id: FARMHOUSE_01
+  display_name: 测试农舍
+  reuse_tier: B
+  location_kind: BUILDING
+  parent_location_id: null
+  zones:
+  - EXTERIOR
+  - FOYER
+  - DINING
+  - STAIR
+  anchors:
+  - anchor_id: DOOR_MAIN
+    anchor_type: DOOR
+    zone_id: FOYER
+    connects_to:
+    - DINING
+    visible_targets: []
+  - anchor_id: WINDOW_W1
+    anchor_type: WINDOW
+    zone_id: DINING
+    connects_to: []
+    visible_targets:
+    - FOREST_A
+  look_domain: MIXED
+  spatial_diagram_ids:
+  - D_FLOOR
+  event_node_ids:
+  - EV_D
+  status: LOCKED
+relations:
+- spatial_relation_id: SP_VIS_FOREST_HOUSE
+  relation_kind: VISIBLE_FROM
+  from_entity_id: FOREST_A
+  to_entity_id: FARMHOUSE_01
+  from_anchor_id: FOREST_LANDMARK
+  to_anchor_id: null
+  direction: DOWN_SLOPE
+  distance_class: FAR
+  elevation_relation: ABOVE
+  occlusion: PARTIAL
+  status: LOCKED
+- spatial_relation_id: SP_ACCESS_FOREST_HOUSE
+  relation_kind: ADJACENT
+  from_entity_id: FOREST_A
+  to_entity_id: FARMHOUSE_01
+  from_anchor_id: null
+  to_anchor_id: DOOR_MAIN
+  direction: DOWN_SLOPE
+  distance_class: MID
+  elevation_relation: ABOVE
+  occlusion: NONE
+  status: LOCKED
+event_nodes:
+- event_node_id: EV_A
+  scene_id: SC_TEST
+  location_entity_id: FOREST_A
+  description: 一家三口从雪林起点逃亡
+  required_zone_ids:
+  - START
+  primary_zone_id: START
+  actor_ids:
+  - FATHER
+  - MOTHER
+  - CHILD
+  character_route_id: ROUTE_ESCAPE
+  required_spatial_relation_ids: []
+  required_view_roles:
+  - ESTABLISH
+- event_node_id: EV_C
+  scene_id: SC_TEST
+  location_entity_id: FOREST_A
+  description: 到坡角看到农舍
+  required_zone_ids:
+  - SLOPE_CORNER
+  primary_zone_id: SLOPE_CORNER
+  actor_ids:
+  - FATHER
+  - MOTHER
+  - CHILD
+  character_route_id: ROUTE_ESCAPE
+  attention_target_entity_id: FARMHOUSE_01
+  required_spatial_relation_ids:
+  - SP_VIS_FOREST_HOUSE
+  required_view_roles:
+  - LANDMARK
+  - REVERSE
+- event_node_id: EV_D
+  scene_id: SC_TEST
+  location_entity_id: FARMHOUSE_01
+  description: 抵达农舍入口
+  required_zone_ids:
+  - FOYER
+  primary_zone_id: FOYER
+  entry_anchor_id: DOOR_MAIN
+  actor_ids:
+  - FATHER
+  - MOTHER
+  - CHILD
+  character_route_id: ROUTE_ESCAPE
+  required_spatial_relation_ids:
+  - SP_ACCESS_FOREST_HOUSE
+  required_view_roles:
+  - ENTRY
+character_routes:
+- route_id: ROUTE_ESCAPE
+  actor_ids:
+  - FATHER
+  - MOTHER
+  - CHILD
+  event_node_ids:
+  - EV_A
+  - EV_C
+  - EV_D
+  nodes:
+  - order: 0
+    location_entity_id: FOREST_A
+    zone_id: START
+    event_node_id: EV_A
+    movement_mode: RUN
+    distance_m: 0
+    slope: DOWN
+    spatial_relation_ids: []
+  - order: 1
+    location_entity_id: FOREST_A
+    zone_id: SLOPE_CORNER
+    anchor_id: FOREST_LANDMARK
+    event_node_id: EV_C
+    movement_mode: RUN
+    distance_m: 110
+    slope: DOWN
+    spatial_relation_ids:
+    - SP_VIS_FOREST_HOUSE
+  - order: 2
+    location_entity_id: FARMHOUSE_01
+    zone_id: FOYER
+    anchor_id: DOOR_MAIN
+    event_node_id: EV_D
+    movement_mode: RUN
+    distance_m: 140
+    slope: DOWN
+    spatial_relation_ids:
+    - SP_ACCESS_FOREST_HOUSE
+  status: LOCKED
+planning_diagrams:
+- diagram_id: D_TOPO
+  diagram_type: OUTDOOR_TOPOLOGY
+  scope_location_ids:
+  - FOREST_A
+  - FARMHOUSE_01
+  asset_id: ASSET_TOPO
+  relation_ids:
+  - SP_VIS_FOREST_HOUSE
+  - SP_ACCESS_FOREST_HOUSE
+  character_route_ids:
+  - ROUTE_ESCAPE
+  event_node_ids:
+  - EV_A
+  - EV_C
+  annotation_policy: PLANNING_ANNOTATIONS_ALLOWED
+  status: APPROVED
+  north_angle_deg: 0
+  scale_note: schematic; distances from Spatial Canon
+  nodes:
+  - node_ref: EV_A
+    label: A 起点
+    x: 0.12
+    y: 0.25
+    node_kind: EVENT
+  - node_ref: EV_C
+    label: C 坡角
+    x: 0.48
+    y: 0.48
+    node_kind: EVENT
+  - node_ref: EV_D
+    label: D 农舍入口
+    x: 0.82
+    y: 0.68
+    node_kind: EVENT
+  edges:
+  - from_ref: EV_A
+    to_ref: EV_C
+    relation_id: null
+    label: 110m / 下坡
+    directed: true
+  - from_ref: EV_C
+    to_ref: EV_D
+    relation_id: SP_ACCESS_FOREST_HOUSE
+    label: 140m / 下坡
+    directed: true
+- diagram_id: D_FLOOR
+  diagram_type: BUILDING_FLOOR_PLAN
+  scope_location_ids:
+  - FARMHOUSE_01
+  asset_id: ASSET_FLOOR
+  relation_ids: []
+  character_route_ids:
+  - ROUTE_ESCAPE
+  event_node_ids:
+  - EV_D
+  annotation_policy: PLANNING_ANNOTATIONS_ALLOWED
+  status: APPROVED
+  north_angle_deg: 0
+  scale_note: schematic floor plan
+  zone_boxes:
+  - zone_id: FOYER
+    label: 门厅
+    x: 0.08
+    y: 0.15
+    w: 0.3
+    h: 0.3
+  - zone_id: DINING
+    label: 餐厅
+    x: 0.42
+    y: 0.15
+    w: 0.42
+    h: 0.45
+  - zone_id: STAIR
+    label: 楼梯
+    x: 0.08
+    y: 0.52
+    w: 0.3
+    h: 0.3
+  anchor_points:
+  - anchor_id: DOOR_MAIN
+    label: D01
+    x: 0.23
+    y: 0.15
+  - anchor_id: WINDOW_W1
+    label: W01
+    x: 0.84
+    y: 0.35
+status: LOCKED
+spatial_canon_fingerprint: null

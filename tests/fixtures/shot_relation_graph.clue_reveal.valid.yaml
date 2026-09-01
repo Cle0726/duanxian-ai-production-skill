@@ -1,0 +1,50 @@
+schema_version: 2
+skill_version: 4.5.2
+episode_id: REGRESSION_NOT_CANON
+source_director_runtime_ref: fixture
+source_director_fingerprint: null
+shot_order:
+- REST_SHOT_A
+- CLOCK_SHOT_B
+relations:
+- relation_id: REL_A_B
+  from_shot_id: REST_SHOT_A
+  to_shot_id: CLOCK_SHOT_B
+  relation_type: CLUE_REVEAL_CUT
+  cut_motivation: 餐馆深处的远景钟楼线索被建立后，切入同一钟楼内部机械空间。
+  narrative_attention_target: 餐馆深处指定窗口可见的钟楼识别点
+  source_visual_fact: A出口前必须能读到深处窗口中的钟楼线索，不是右侧近窗。
+  destination_visual_fact: B入口必须立即成立为同一钟楼的内部机械室。
+  shared_entity_ids:
+  - CLOCK_TOWER_01
+  world_relations:
+  - relation_kind: VISIBLE_FROM
+    entity_id: CLOCK_TOWER_01
+    from_location_id: RESTAURANT_01
+    to_location_id: CLOCK_TOWER_01
+    sightline_anchor: RESTAURANT_DEEP_WINDOW
+  - relation_kind: EXTERIOR_INTERIOR_SAME_ENTITY
+    entity_id: CLOCK_TOWER_01
+    from_location_id: CLOCK_TOWER_01
+    to_location_id: CLOCK_TOWER_MECH_01
+    sightline_anchor: null
+  bridge_requirements:
+  - SOURCE_CLUE_VISIBLE
+  - DESTINATION_IDENTITY_PROVEN
+  - LOCATION_RELATION_PROVEN
+  - EXIT_ENTRY_PAIR_ALIGNED
+  forbidden_interpretations:
+  - 右侧近窗直接变成机械结构
+  - 餐馆与机械室空间融化过渡
+  asset_obligation_ids:
+  - OB_CLUE
+  - OB_IDENTITY
+  - OB_EXIT
+  - OB_ENTRY
+  status: LOCKED
+  spatial_relation_ids:
+  - SP_VIS_REST_CLOCK
+  - SP_ID_CLOCK_EXT_INT
+  spatial_proof_status: PASS
+status: LOCKED
+graph_fingerprint: null

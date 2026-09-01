@@ -1,0 +1,251 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/shot_state.schema.yaml
+title: Duanxian Shot State
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- episode_id
+- shot_id
+properties:
+  schema_version:
+    type: integer
+    const: 3
+  skill_version:
+    type: string
+    pattern: ^4\.5\.
+  episode_id:
+    type: string
+  scene_id:
+    type:
+    - string
+    - 'null'
+  segment_id:
+    type:
+    - string
+    - 'null'
+  shot_id:
+    type: string
+  entry_mode:
+    enum:
+    - SCENE_OPENING
+    - CUT_ENTRY
+    - CONTINUITY_ENTRY
+    - UNKNOWN
+  director:
+    type: object
+    additionalProperties: true
+    properties:
+      contract_ref:
+        type:
+        - string
+        - 'null'
+      contract_fingerprint:
+        type:
+        - string
+        - 'null'
+      invariants:
+        type: array
+        items:
+          type: string
+  continuity:
+    type: object
+    additionalProperties: true
+    properties:
+      previous_snapshot_ref:
+        type:
+        - string
+        - 'null'
+      world_state_delta:
+        type: object
+        additionalProperties: true
+      wardrobe_state:
+        type: object
+        additionalProperties: true
+      injury_state:
+        type: object
+        additionalProperties: true
+      prop_state:
+        type: object
+        additionalProperties: true
+  storyboard:
+    type: object
+    additionalProperties: true
+    properties:
+      mandatory_coverage_planned:
+        type: boolean
+      required_panel_count:
+        type: integer
+        minimum: 1
+      mandatory_panel_asset_ids:
+        type: array
+        minItems: 1
+        uniqueItems: true
+        items:
+          type: string
+          minLength: 1
+      status:
+        enum:
+        - NOT_STARTED
+        - IN_PROGRESS
+        - QC_PASS_WAITING_APPROVAL
+        - APPROVED
+        - REVISE
+        - UNKNOWN
+      artifact_ref:
+        type:
+        - string
+        - 'null'
+      fingerprint:
+        type:
+        - string
+        - 'null'
+  conditioning:
+    type: object
+    additionalProperties: true
+    properties:
+      runtime_ref:
+        type:
+        - string
+        - 'null'
+      plan_status:
+        enum:
+        - NOT_PLANNED
+        - PLANNED
+        - IN_PROGRESS
+        - QC_PASS_WAITING_APPROVAL
+        - READY
+        - BLOCKED
+        - UNKNOWN
+      video_unit_ids:
+        type: array
+        items:
+          type: string
+      primary_visual_asset_ids:
+        type: array
+        items:
+          type: string
+      readiness:
+        enum:
+        - NOT_READY
+        - READY
+        - BLOCKED
+        - UNKNOWN
+      approval_ref:
+        type:
+        - string
+        - 'null'
+  references:
+    type: object
+    additionalProperties: true
+    properties:
+      runtime_ref:
+        type:
+        - string
+        - 'null'
+      coverage_status:
+        enum:
+        - PASS
+        - GAP
+        - SLOT_OVERFLOW
+        - UNKNOWN
+  video:
+    type: object
+    additionalProperties: true
+    properties:
+      execution_state_ref:
+        type:
+        - string
+        - 'null'
+      readiness:
+        enum:
+        - NOT_READY
+        - READY
+        - BLOCKED
+        - UNKNOWN
+      takes_used:
+        type: integer
+        minimum: 0
+      approved_take_ref:
+        type:
+        - string
+        - 'null'
+  qc:
+    type: object
+    additionalProperties: true
+    properties:
+      open_dimensions:
+        type: array
+        items:
+          type: string
+      verdict:
+        enum:
+        - NOT_RUN
+        - PASS
+        - REVISE
+        - FAIL
+        - UNKNOWN
+  editorial:
+    type: object
+    additionalProperties: true
+    properties:
+      plan_ref:
+        type:
+        - string
+        - 'null'
+      viewpoint_role:
+        type:
+        - string
+        - 'null'
+      edit_entry_function:
+        type:
+        - string
+        - 'null'
+      edit_exit_function:
+        type:
+        - string
+        - 'null'
+      protected_moment:
+        type:
+        - string
+        - 'null'
+      incoming_edit_id:
+        type:
+        - string
+        - 'null'
+      outgoing_edit_id:
+        type:
+        - string
+        - 'null'
+  relations:
+    type: object
+    additionalProperties: true
+    properties:
+      graph_ref:
+        type:
+        - string
+        - 'null'
+      incoming_relation_ids:
+        type: array
+        items:
+          type: string
+      outgoing_relation_ids:
+        type: array
+        items:
+          type: string
+      narrative_attention_target:
+        type:
+        - string
+        - 'null'
+      asset_obligation_ref:
+        type:
+        - string
+        - 'null'
+      relation_readiness:
+        enum:
+        - NOT_PLANNED
+        - PLANNED
+        - PASS
+        - BLOCKED
+        - UNKNOWN

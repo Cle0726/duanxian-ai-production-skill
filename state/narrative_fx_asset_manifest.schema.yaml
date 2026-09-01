@@ -1,0 +1,127 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/narrative_fx_asset_manifest.schema.yaml
+title: Duanxian Narrative FX Asset Manifest V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- episode_id
+- effects
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  episode_id:
+    type: string
+    minLength: 1
+  effects:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - narrative_fx_id
+      - display_name
+      - scope
+      - scope_id
+      - scene_ids
+      - reuse_key
+      - authority_mode
+      - consistency_risk
+      - narrative_role
+      - recurrence_count
+      - shot_ids
+      - required_visual_states
+      - asset_ids
+      - status
+      properties:
+        narrative_fx_id:
+          type: string
+          minLength: 1
+        display_name:
+          type: string
+          minLength: 1
+        scope:
+          enum:
+          - SHOT
+          - SHOT_GROUP
+          - SCENE
+          - SEQUENCE
+          - EPISODE
+        scope_id:
+          type: string
+          minLength: 1
+        scene_ids:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+        shot_ids:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+        reuse_key:
+          type: string
+          minLength: 1
+        authority_mode:
+          enum:
+          - TEXT_GRAMMAR_ONLY
+          - NARRATIVE_FX_REFERENCE
+        consistency_risk:
+          enum:
+          - LOW
+          - MEDIUM
+          - HIGH
+        narrative_role:
+          enum:
+          - ATMOSPHERIC
+          - PLOT_CLUE
+          - CAUSAL_EVENT
+          - SIGNATURE_PHENOMENON
+          - CONTINUITY_STATE
+        recurrence_count:
+          type: integer
+          minimum: 1
+        required_visual_states:
+          type: array
+          uniqueItems: true
+          items:
+            enum:
+            - STATIC
+            - START
+            - DEVELOPING
+            - PEAK
+            - END
+            - AFTERMATH
+        asset_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        status:
+          enum:
+          - TEXT_ONLY_READY
+          - REQUIRED
+          - IN_PROGRESS
+          - APPROVED
+          - STALE
+          - BLOCKED
+  status:
+    enum:
+    - PLANNED
+    - READY_FOR_BUILD
+    - FROZEN
+    - STALE
+    - BLOCKED
+  fingerprint:
+    type:
+    - string
+    - 'null'

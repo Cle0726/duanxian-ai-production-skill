@@ -1,0 +1,63 @@
+schema_version: 1
+skill_version: 4.5.5
+records:
+- evidence_id: VE_WAGON_REALISM_FORWARD
+  asset_id: ASSET_WAGON_REALISM_FORWARD
+  asset_version: 1
+  source_fingerprint_type: FILE_SHA256
+  source_fingerprint: hash-realism-forward
+  evidence_status: CURRENT
+  inspector:
+    mode: MULTIMODAL_MODEL
+    actor_id: REGRESSION
+    inspected_at: '2026-08-19T20:00:00+08:00'
+  observed:
+    fact_codes:
+    - CABIN_FORWARD_AXIS_READABLE
+    issue_codes: []
+    summary: REGRESSION_NOT_CANON three occupants in correct functional positions
+    depicted_entities:
+    - WAGON_INTERIOR_REALISM_TEST
+    - JIELA
+    - KAIDENG
+    - XILIYA
+    transient_entities: []
+    layout_type: SINGLE_FRAME
+    spatial:
+      camera_origin: REAR_BENCH
+      view_direction: AXIS_TO_FRONT_WINDSHIELD
+      visible_anchor_ids:
+      - WINDSHIELD
+      - DRIVER_SEAT
+      - FRONT_PASSENGER_SEAT
+      - REAR_SEAT_LEFT
+      - DRIVER_CONTROLS
+      visible_location_entity_ids:
+      - WAGON_INTERIOR_REALISM_TEST
+      view_role: FORWARD
+      view_roles:
+      - FORWARD
+      camera_origin_zone_id: REAR_BENCH
+      camera_origin_anchor_id: CAM_REAR_CENTER
+      view_target_entity_id: WAGON_INTERIOR_REALISM_TEST
+      view_target_anchor_id: WINDSHIELD
+      view_direction_code: AXIS_TO_FRONT_WINDSHIELD
+    appearance:
+      look_domain: INTERIOR
+      lighting_summary: regression
+      palette_summary: regression
+    cleanliness:
+      visible_text: false
+      arrows_or_motion_lines: false
+      multi_panel: false
+      watermark_or_logo: false
+  realism_contract_refs:
+  - RC_WAGON_01
+  role_assessment:
+    safe_roles:
+    - PRIMARY_VIEW
+    unsafe_roles: []
+    primary_visual_eligible: true
+    direct_video_eligible: true
+  confidence: HIGH
+  notes: REGRESSION_NOT_CANON

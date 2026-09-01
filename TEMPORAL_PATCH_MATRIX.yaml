@@ -1,0 +1,64 @@
+version: V4.5.7-temporal-reference-hygiene-logic-closed
+status: IMPLEMENTED_LOGIC_CLOSED_RELEASE
+baseline:
+  archive: skill_v4.5.7_voice_direction_logic_closed_release_20260824.zip
+  sha256: f1e466236b740acf772fe81ac55bb13908feddb89f2535e7c9cd8f3a5e01be59
+principles:
+- INTERNAL_AUTHORITY_COMPLETE_MODEL_INPUT_MODE_SPECIFIC
+- INTERNAL_CONDITIONING_PRIMARY_NE_MODEL_T0_PRIMARY
+- PIXELS_OWN_PRESENT_PROMPT_OWNS_FUTURE_CANON_OWNS_RESET
+- SAME_TAKE_VISUAL_ISOLATION
+- CUT_REPROJECT_FROM_WORLD_STATE_AND_CAMERA_TOPOLOGY
+- ENDING_ANCHOR_MUST_HAVE_PROVENANCE
+- PIXEL_LINEAGE_MUST_BE_DERIVED
+- DIRECT_REFERENCE_CONFLICT_MAY_REQUIRE_TEMPORAL_RESET
+entry_modes:
+  SEAMLESS_EXTEND:
+    model_t0_owner: PREVIOUS_ENDING_ANCHOR
+    prompt_profile: DELTA_CONTINUATION_PROMPT
+    auxiliary_static_visual_direct_reference: FORBIDDEN_BY_DEFAULT
+  GUIDED_CONTINUATION:
+    model_t0_owner: PREVIOUS_ENDING_ANCHOR
+    target_owner: TARGET_FRAME
+    prompt_profile: TRANSITION_PROMPT
+    provider_endpoint_semantics_required: true
+  CUT_REPROJECT:
+    model_t0_owner: SHOT_EXECUTION_FRAME
+    prompt_profile: FULL_SHOT_PROMPT
+    camera_topology_required: true
+  SCENE_REBASE:
+    model_t0_owner: SHOT_EXECUTION_FRAME_OR_CANON_DERIVED_EXECUTION_FRAME
+    prompt_profile: FULL_SHOT_PROMPT
+    reset_pixel_lineage: true
+expected_new_artifacts: &id001
+  state:
+  - temporal_entry_plan.schema.yaml
+  - temporal_t0_sufficiency_assessment.schema.yaml
+  tools:
+  - temporal_entry_planner.py
+  - temporal_t0_sufficiency_builder.py
+  validators:
+  - temporal_entry_plan_lint.py
+  - temporal_t0_sufficiency_lint.py
+  - continuity_snapshot_lint.py
+  templates:
+  - temporal_reference_hygiene.md
+expected_failure_codes:
+- TAIL_FRAME_QUALITY_DEGRADED
+- TEMPORAL_PIXEL_LINEAGE_EXCEEDED
+- TAIL_FRAME_COLOR_AUTHORITY_VIOLATION
+- CONTINUITY_REBASE_REQUIRED
+- TEMPORAL_RESET_REQUIRED
+- TEMPORAL_T0_MULTIPLE_PRIMARY_VISUAL_CONFLICT
+- TEMPORAL_CONTINUITY_AUXILIARY_VISUAL_REFERENCE_CONFLICT
+- TEMPORAL_CONTINUITY_DIRECT_COLOR_REFERENCE_CONFLICT
+validation:
+  full_regression: 37/37 PASS
+  temporal_adversarial: PASS
+  yaml_count: 140
+  python_count: 132
+  state_runtime_schema_count: 46
+  architecture_lint: PASS
+  gate_producer_lint: PASS
+  release_date: '2026-08-27'
+implemented_artifacts: *id001

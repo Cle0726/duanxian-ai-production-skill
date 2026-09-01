@@ -1,0 +1,37 @@
+schema_version: 1
+skill_version: 4.5.7
+generation_job_id: JOB-CHR-A-001
+media_kind: IMAGE
+target_asset_id: CHR-A
+target_asset_type: CHARACTER_MASTER
+route: CHARACTER_MASTER
+scene_id: null
+shot_id: null
+video_unit_id: null
+attempt_no: 1
+status: PLANNED
+host_profile: NAMED_ASSET_PLATFORM
+prompt_ref: null
+prompt_fingerprint: null
+required_bindings:
+- asset_id: COLOR-GLOBAL-01
+  role: COLOR_AUTHORITY
+  binding_mode: COLOR_AUTHORITY
+  native_token: '@基础色卡'
+  asset_display_name: 基础色卡
+  time_scope: null
+color_binding:
+  required: true
+  authority_level: GLOBAL_COLOR_CARD
+  color_asset_id: COLOR-GLOBAL-01
+  scene_scope: null
+  native_token: '@基础色卡'
+  binding_status: BOUND
+lineage:
+  parent_asset_ids: []
+  derivation_kind: MASTER
+  source_generation_job_ids: []
+result_handles: []
+selected_candidate_id: null
+approval_ref: null
+failure_code: null

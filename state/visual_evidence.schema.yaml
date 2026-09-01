@@ -1,0 +1,581 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/visual_evidence.schema.yaml
+title: Duanxian Visual Evidence Cache
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- records
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(3|4|5|6|7|8|11)$
+  records:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - evidence_id
+      - asset_id
+      - source_fingerprint
+      - evidence_status
+      - inspector
+      - observed
+      - role_assessment
+      - confidence
+      properties:
+        evidence_id:
+          type: string
+          minLength: 1
+        asset_id:
+          type: string
+          minLength: 1
+        asset_version:
+          type:
+          - integer
+          - string
+          - 'null'
+        source_fingerprint_type:
+          enum:
+          - FILE_SHA256
+          - CONTENT_SHA256
+          - STRUCTURED_SHA256
+          - UNKNOWN
+        source_fingerprint:
+          type: string
+          minLength: 1
+        evidence_status:
+          enum:
+          - CURRENT
+          - STALE
+          - PENDING
+          - UNVERIFIED
+          - REJECTED
+        inspector:
+          type: object
+          additionalProperties: false
+          required:
+          - mode
+          properties:
+            mode:
+              enum:
+              - MULTIMODAL_MODEL
+              - HUMAN
+              - MIXED
+            actor_id:
+              type:
+              - string
+              - 'null'
+            inspected_at:
+              type:
+              - string
+              - 'null'
+        observed:
+          type: object
+          additionalProperties: true
+          required:
+          - fact_codes
+          - issue_codes
+          - summary
+          properties:
+            fact_codes:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+            issue_codes:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+            summary:
+              type: string
+            depicted_entities:
+              type: array
+              items:
+                type: string
+            transient_entities:
+              type: array
+              items:
+                type: string
+            layout_type:
+              type:
+              - string
+              - 'null'
+            spatial:
+              type: object
+              additionalProperties: true
+              properties:
+                camera_origin:
+                  type:
+                  - string
+                  - 'null'
+                view_direction:
+                  type:
+                  - string
+                  - 'null'
+                visible_anchor_ids:
+                  type: array
+                  items:
+                    type: string
+                visible_location_entity_ids:
+                  type: array
+                  items:
+                    type: string
+                view_role:
+                  type:
+                  - string
+                  - 'null'
+                view_roles:
+                  type: array
+                  items:
+                    type: string
+                  uniqueItems: true
+                camera_origin_zone_id:
+                  type:
+                  - string
+                  - 'null'
+                camera_origin_anchor_id:
+                  type:
+                  - string
+                  - 'null'
+                view_target_entity_id:
+                  type:
+                  - string
+                  - 'null'
+                view_target_anchor_id:
+                  type:
+                  - string
+                  - 'null'
+                view_direction_code:
+                  type:
+                  - string
+                  - 'null'
+            appearance:
+              type: object
+              additionalProperties: true
+              properties:
+                look_domain:
+                  type:
+                  - string
+                  - 'null'
+                lighting_summary:
+                  type:
+                  - string
+                  - 'null'
+                palette_summary:
+                  type:
+                  - string
+                  - 'null'
+            identity_readability:
+              type: object
+              additionalProperties: true
+              properties:
+                target_platform_profile_id:
+                  type:
+                  - string
+                  - 'null'
+                evaluation_basis:
+                  enum:
+                  - PLATFORM_ACTUAL_SCALE
+                  - PLATFORM_PROFILE_SIMULATION
+                  - ORIGINAL_RESOLUTION_ONLY
+                  - FILE_SIZE_ONLY
+                  - UNKNOWN
+                  - null
+                effective_width_px:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 1
+                effective_height_px:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 1
+                characters:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: true
+                    properties:
+                      entity_id:
+                        type: string
+                      identity_readability_verdict:
+                        enum:
+                        - PASS
+                        - FAIL
+                        - UNKNOWN
+                        - NOT_APPLICABLE
+                      identity_match_confidence:
+                        enum:
+                        - HIGH
+                        - MEDIUM
+                        - LOW
+                        - UNKNOWN
+                        - NOT_APPLICABLE
+            cleanliness:
+              type: object
+              additionalProperties: true
+              properties:
+                visible_text:
+                  type: boolean
+                arrows_or_motion_lines:
+                  type: boolean
+                multi_panel:
+                  type: boolean
+                watermark_or_logo:
+                  type: boolean
+            realism:
+              type: object
+              additionalProperties: false
+              properties:
+                human_count:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 0
+                unexpected_human_count:
+                  type:
+                  - integer
+                  - 'null'
+                  minimum: 0
+                characters:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - character_id
+                    - count
+                    properties:
+                      character_id:
+                        type: string
+                      count:
+                        type: integer
+                        minimum: 1
+                      zone_id:
+                        type:
+                        - string
+                        - 'null'
+                      functional_position_id:
+                        type:
+                        - string
+                        - 'null'
+                      posture:
+                        enum:
+                        - STAND
+                        - SIT
+                        - KNEEL
+                        - LIE
+                        - CROUCH
+                        - MOVE
+                        - UNKNOWN
+                      support_surface_id:
+                        type:
+                        - string
+                        - 'null'
+                      body_orientation:
+                        type:
+                        - string
+                        - 'null'
+                      gaze_target_ids:
+                        type: array
+                        items:
+                          type: string
+                        uniqueItems: true
+                      contact_object_ids:
+                        type: array
+                        items:
+                          type: string
+                        uniqueItems: true
+                      identity_confidence:
+                        enum:
+                        - HIGH
+                        - MEDIUM
+                        - LOW
+                        - UNKNOWN
+                character_relations:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - character_a
+                    - character_b
+                    - relation
+                    properties:
+                      character_a:
+                        type: string
+                      character_b:
+                        type: string
+                      relation:
+                        enum:
+                        - CONTACT
+                        - NEAR
+                        - CONVERSATIONAL
+                        - MEDIUM
+                        - FAR
+                        - SEPARATED
+                        - UNKNOWN
+                      eyeline_access:
+                        enum:
+                        - 'YES'
+                        - 'NO'
+                        - AMBIGUOUS
+                        - UNKNOWN
+                environment:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    environment_kind:
+                      type:
+                      - string
+                      - 'null'
+                    specific_type:
+                      type:
+                      - string
+                      - 'null'
+                    visible_zone_ids:
+                      type: array
+                      items:
+                        type: string
+                      uniqueItems: true
+                    visible_functional_position_ids:
+                      type: array
+                      items:
+                        type: string
+                      uniqueItems: true
+                    access_path_ids:
+                      type: array
+                      items:
+                        type: string
+                      uniqueItems: true
+                    scale_plausibility:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    functional_layout_plausibility:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    ingress_egress_plausibility:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    circulation_plausibility:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    vehicle_type:
+                      type:
+                      - string
+                      - 'null'
+                    driver_zone_id:
+                      type:
+                      - string
+                      - 'null'
+                    passenger_zone_ids:
+                      type: array
+                      items:
+                        type: string
+                      uniqueItems: true
+                    driver_forward_visibility:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    front_direction_code:
+                      type:
+                      - string
+                      - 'null'
+                    entry_anchor_ids:
+                      type: array
+                      uniqueItems: true
+                      items:
+                        type: string
+                    passenger_count:
+                      type:
+                      - integer
+                      - 'null'
+                      minimum: 0
+                object_affordances:
+                  type: array
+                  items:
+                    type: object
+                    additionalProperties: false
+                    required:
+                    - object_id
+                    - verdict
+                    properties:
+                      object_id:
+                        type: string
+                      reachable:
+                        enum:
+                        - 'YES'
+                        - 'NO'
+                        - UNKNOWN
+                      supported:
+                        enum:
+                        - 'YES'
+                        - 'NO'
+                        - UNKNOWN
+                      operable:
+                        enum:
+                        - 'YES'
+                        - 'NO'
+                        - UNKNOWN
+                      verdict:
+                        enum:
+                        - PASS
+                        - FAIL
+                        - UNKNOWN
+                        - NOT_APPLICABLE
+                category_verdicts:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    ENVIRONMENT_FUNCTIONAL_REALISM:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    ARCHITECTURAL_REALISM:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    VEHICLE_REALISM:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    HUMAN_ERGONOMICS:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    OBJECT_AFFORDANCE:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    SOCIAL_SPATIAL_PLAUSIBILITY:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    MUNDANE_PHYSICS:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    MUNDANE_CONTINUITY:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                overall_verdict:
+                  enum:
+                  - PASS
+                  - FAIL
+                  - UNKNOWN
+                  - NOT_APPLICABLE
+                reconciliation_notes:
+                  type:
+                  - string
+                  - 'null'
+                continuity:
+                  type: object
+                  additionalProperties: false
+                  properties:
+                    character_relocation:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    prop_state:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    environment_reset:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    wetness_damage_reset:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+                    task_continuity:
+                      enum:
+                      - PASS
+                      - FAIL
+                      - UNKNOWN
+                      - NOT_APPLICABLE
+        role_assessment:
+          type: object
+          additionalProperties: false
+          required:
+          - safe_roles
+          - unsafe_roles
+          - primary_visual_eligible
+          - direct_video_eligible
+          properties:
+            safe_roles:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+            unsafe_roles:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+            primary_visual_eligible:
+              type: boolean
+            direct_video_eligible:
+              type: boolean
+        confidence:
+          enum:
+          - HIGH
+          - MEDIUM
+          - LOW
+          - UNKNOWN
+        notes:
+          type:
+          - string
+          - 'null'
+        realism_contract_refs:
+          type: array
+          items:
+            type: string
+          uniqueItems: true

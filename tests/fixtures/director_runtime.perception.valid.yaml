@@ -1,0 +1,128 @@
+runtime_type: DIRECTOR_RUNTIME
+schema_version: 1
+skill_version: 4.5.7
+status: VALID
+scope:
+  episode_id: EP01
+  sequence_id: SQ01
+source_fingerprints:
+  screenplay: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+runtime_fingerprint: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+perception_context:
+  unresolved_state:
+    what_character_wants: A想确认门后是否有人而不暴露自己的怀疑
+    what_prevents_resolution: 她不能直接开门询问，否则会暴露她已经察觉异常
+    why_not_resolvable_now: 当前关系与风险要求她先观察证据
+    what_can_change_state: 门把手异常与门内反应足以迫使她做决定
+  relational_pressure:
+    pressure_source: 未知门内存在
+    pressure_target: A
+    knowledge_asymmetry: 观众与A都不知道门内是否有人，但A知道此前的异常背景
+    power_asymmetry: 门内未知者掌握空间与信息优势
+    spatial_constraint: A被走廊与关闭的门隔在外侧
+    social_constraint: A不能公开表现出怀疑
+shot_perception_contracts:
+  SH01:
+    camera_ethics: NEUTRAL_WITNESS
+    attention_flow:
+      entry: 走廊纵深和A的移动方向
+      resistance: 门框形成第一次视觉停顿
+      decisive_landing: A停止并把视线落到门把手
+      residual_information: 关闭的门仍遮住内部信息
+      exit: A的视线方向把观众带向下一镜证据
+    shot_scale_justification:
+      shot_size_family: WIDE
+      required_information: 必须同时读到A、走廊和门之间的空间距离
+      why_wider_fails: 更宽会让A的停顿与视线过小
+      why_closer_fails: 更近会丢失A被走廊和门限制的空间关系
+      spatial_information_sacrificed: NONE
+      narrative_gain: 建立观察关系和空间压力
+    camera_placement_justification:
+      physical: 摄影机位于走廊转角，不穿墙也不占用人物路径
+      narrative: 让观众先作为相对客观的现场见证者读懂A与门的距离
+    composition_mechanism:
+      primary: SPATIAL_PRESSURE
+      secondary: FRAME_WITHIN_FRAME
+    visual_force_stack:
+      primary_force: Spatial Pressure
+      supporting_forces: [Performance, Attention Delay]
+    visual_salience_budget:
+      primary_salience: A停下并看向门把手
+      secondary_salience: 门框与门把手
+      ambient_information: 走廊普通墙面和地面只维持空间连续
+      suppressed_information: 门内不提供可读人物或线索
+      allowed_mundane_area: 走廊大面积普通墙面允许保持空和低信息
+  SH02:
+    camera_ethics: CHARACTER_ALIGNED
+    attention_flow:
+      entry: A的视线方向延续到门把手
+      resistance: 浅层遮挡让水迹不是第一帧全部解释
+      decisive_landing: 门把手上的新鲜水迹
+      residual_information: 门缝内部仍不可读
+      exit: 水迹证据把注意力送回A的判断
+    shot_scale_justification:
+      shot_size_family: INSERT
+      required_information: 必须辨认水迹的新鲜程度与位置
+      why_wider_fails: 中景无法稳定辨认门把手表面的新鲜水迹
+      why_closer_fails: 更近会失去门把手属于当前这扇门的基本位置关系
+      spatial_information_sacrificed: 牺牲A与走廊的大部分空间关系，只保留门把手与门面的局部
+      narrative_gain: 让观众获得可验证的外部异常证据
+    camera_placement_justification:
+      physical: 摄影机可从A视线附近靠近门面，不进入门体内部
+      narrative: 暂时把观众的访问权限交给A正在检查的证据
+    composition_mechanism:
+      primary: DETAIL_EVIDENCE
+      secondary: null
+    visual_force_stack:
+      primary_force: Evidence Read
+      supporting_forces: [Texture Contrast]
+    visual_salience_budget:
+      primary_salience: 新鲜水迹
+      secondary_salience: 门把手边缘
+      ambient_information: 门面材质只提供归属
+      suppressed_information: 不展示门内空间和额外装饰
+      allowed_mundane_area: 门面其余区域保持普通低细节
+  SH03:
+    camera_ethics: CHARACTER_ALIGNED
+    attention_flow:
+      entry: A眼睛附近的静止区域
+      resistance: A没有立即夸张反应，注意力被延迟
+      decisive_landing: 眼神收紧与呼吸停顿
+      residual_information: 画面边缘仍保留门的暗色体块
+      exit: 反应停留，不立即给下一行动
+    shot_scale_justification:
+      shot_size_family: CU
+      required_information: 必须读到A极小的眼神收紧和呼吸停顿
+      why_wider_fails: 中景会让这次微小判断变化无法稳定读取
+      why_closer_fails: 更近会失去门仍在场的关系提示并让表演变成抽象眼部特写
+      spatial_information_sacrificed: 牺牲走廊完整空间，只保留门的边缘体块作为关系锚点
+      narrative_gain: 让观众确认A已经把水迹解释为威胁，而不是只看到一般注意
+    camera_placement_justification:
+      physical: 摄影机位于走廊A前侧安全距离，不侵入门体或阻挡行动
+      narrative: 在证据之后短暂允许观众进入A的判断层
+    composition_mechanism:
+      primary: PERFORMANCE_ACCESS
+      secondary: RELATIONAL_EDGE_ANCHOR
+    visual_force_stack:
+      primary_force: Performance
+      supporting_forces: [Residual Spatial Anchor]
+    visual_salience_budget:
+      primary_salience: A的眼神与呼吸停顿
+      secondary_salience: 画面边缘的门体暗块
+      ambient_information: 背景走廊保持柔化
+      suppressed_information: 不增加额外线索和表情戏
+      allowed_mundane_area: 背景墙面可保持低信息和轻微失焦
+shot_grammar_history:
+  - shot_id: OLD01
+    sequence_id: OLD-SQ
+    status: STORYBOARD_APPROVED
+    shot_size_family: WIDE
+    viewpoint_role: OBJECTIVE_OBSERVER
+    camera_ethics: NEUTRAL_WITNESS
+    composition_mechanism: SPATIAL_ORDER
+    camera_character: STATIC
+    recorded_at: "2026-08-20T10:00:00Z"
+creative_drift_telemetry:
+  window_size: 24
+  warnings: []
+  intentional_pattern_overrides: []

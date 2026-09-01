@@ -1,0 +1,9 @@
+schema_version: 1
+skill_version: '4.5.7'
+environment_id: ENV_ROOM
+closure_status: PARTIAL
+anchors:
+  - anchor_id: ENV_A
+    camera_zone: DOOR_SIDE
+    optical_axis: TOWARD_PIANO
+    must_see_anchors: [DOOR_01, PIANO_01]

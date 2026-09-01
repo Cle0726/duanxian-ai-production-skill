@@ -1,0 +1,49 @@
+schema_version: 1
+skill_version: 4.5.7
+generation_envelope_id: ENV-ONER-001
+episode_id: EP1
+sequence_id: SEQ1
+scene_id: SC1
+source_editorial_plan_ref: null
+source_editorial_fingerprint: null
+target_generation_profile: NAMED_ASSET_PLATFORM
+format_mode: ONER
+status: READY_FOR_COMPILE
+total_duration_sec: 6.0
+shot_ids:
+- SH1
+cut_contracts:
+- cut_id: C1
+  order: 1
+  shot_id: SH1
+  narrative_function: hold one continuous performance beat
+  viewpoint_role: CHARACTER_ALIGNED
+  camera_character: STABLE_RELATIONAL
+  core_lens_intent: natural human relation
+  provider_fov_anchor_deg: null
+  camera_start: stable medium composition
+  camera_path: one slow lateral move
+  camera_end: stable medium landing
+  action_beat: character crosses to the door and settles
+  performance_beat: hears sound, processes, then moves
+  information_revealed: null
+  cut_in_trigger: START_OF_ENVELOPE
+  cut_out_trigger: END_OF_ENVELOPE
+  continuity_handoff: end state preserves eyeline and screen direction
+  start_sec: null
+  end_sec: null
+  storyboard_panel_asset_id: SB-SH1
+  primary_visual_asset_ids:
+  - PV-SH1
+  positive_locks:
+  - identity remains stable
+storyboard_grid:
+  required: false
+  panel_asset_ids: []
+  sequence_board_asset_id: null
+  sequence_board_fingerprint: null
+  qc_status: NOT_REQUIRED
+  assembly_tool: tools/storyboard_grid_assembler.py
+  manifest_ref: null
+fallback_strategy: ASSEMBLY_FIRST
+generation_envelope_fingerprint: null

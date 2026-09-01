@@ -1,0 +1,20 @@
+primary_visual_asset_id: SHOT_EXEC_01
+slot_requests:
+  - slot_id: H_A
+    resolution_mode: DIRECT_REFERENCE
+    asset_id: CHAR_A_3Q
+    reason: 当前反打角度人物A身份需要额外视觉锁定
+    prompt_identity_anchor: '@角色A保持角色A身份'
+    blocking_anchor: '@角色A站在控制台左侧中景，身体朝向角色B'
+    action_anchor: '右臂向前伸出，动作处于递交中段'
+  - slot_id: H_B
+    resolution_mode: PRIMARY_VISUAL_BAKED
+    reason: 已批准执行帧已清楚烘焙角色B身份
+    coverage_evidence_ref: VE_SHOT_EXEC_HB
+    prompt_identity_anchor: '角色B保持角色B身份'
+    blocking_anchor: '角色B位于角色A右侧半步，身体朝向角色A'
+    action_anchor: '角色B抬手准备接取，动作处于接取准备阶段'
+  - slot_id: P_A
+    resolution_mode: DIRECT_REFERENCE
+    asset_id: PROP_SCORE_BACK
+    reason: 当前镜头看到谱盒背面，执行帧不足以证明背面结构

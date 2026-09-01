@@ -1,0 +1,198 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/visual_asset_obligation.schema.yaml
+title: VISUAL_ASSET_OBLIGATION
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- episode_id
+- obligations
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 3
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(2|3|4|5|6|7|8|11)$
+  episode_id:
+    type: string
+  source_relation_graph_ref:
+    type:
+    - string
+    - 'null'
+  source_relation_graph_fingerprint:
+    type:
+    - string
+    - 'null'
+  obligations:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - obligation_id
+      - trigger_type
+      - obligation_type
+      - fulfill_by
+      - reason
+      - status
+      properties:
+        obligation_id:
+          type: string
+        trigger_type:
+          enum:
+          - SHOT
+          - SHOT_RELATION
+          - LOCATION_RELATION
+          - CONTINUITY
+          - STORYBOARD
+        relation_id:
+          type:
+          - string
+          - 'null'
+        shot_ids:
+          type: array
+          items:
+            type: string
+        obligation_type:
+          enum:
+          - DERIVED_COVERAGE
+          - ENVIRONMENT_COVERAGE
+          - SCENE_CLUE_VIEW
+          - LOCATION_VISIBILITY_VIEW
+          - LOCATION_IDENTITY_VIEW
+          - PRODUCTION_SUPPORT_REFERENCE
+          - SHOT_ASSEMBLY
+          - VIDEO_FIRST_FRAME
+          - VIDEO_TARGET_FRAME
+          - VIDEO_LAST_FRAME
+          - VIDEO_CUT_EXIT_FRAME
+          - VIDEO_CUT_ENTRY_FRAME
+          - VIDEO_KEY_POSE
+          - VIDEO_CONTACT_FRAME
+          - OTHER
+          - EVENT_NODE_VIEW
+          - RECIPROCAL_COVERAGE_VIEW
+          - PREDICTIVE_COVERAGE_VIEW
+          - OUTDOOR_TOPOLOGY_DIAGRAM
+          - BUILDING_FLOOR_PLAN_DIAGRAM
+          - SCENE_LOOK_CARD
+          - EMPTY_ENVIRONMENT_MASTER
+          - FUNCTIONAL_MINOR_HUMAN_MASTER
+          - PERFORMANCE_EXPRESSION_SUPPORT
+          - PERFORMANCE_ACTION_POSE_SUPPORT
+          - PERFORMANCE_CONTACT_POSE_SUPPORT
+          - NARRATIVE_FX_REFERENCE
+        fulfill_by:
+          enum:
+          - STAGE_03_FREEZE
+          - STAGE_04_STORYBOARD_QC
+          - STAGE_04_VIDEO_CONDITIONING_QC
+        reason:
+          type: string
+          minLength: 1
+        authority_fields:
+          type: array
+          items:
+            type: string
+        required_visual_fact:
+          type:
+          - string
+          - 'null'
+        location_entity_id:
+          type:
+          - string
+          - 'null'
+        source_asset_family_ids:
+          type: array
+          items:
+            type: string
+        fulfillment_asset_ids:
+          type: array
+          items:
+            type: string
+        waiver_reason:
+          type:
+          - string
+          - 'null'
+        status:
+          enum:
+          - REQUIRED
+          - IN_PROGRESS
+          - FULFILLED
+          - WAIVED
+          - BLOCKED
+        waiver_policy:
+          enum:
+          - NON_WAIVABLE
+          - DIRECTOR_CHANGE_ONLY
+          - USER_APPROVAL_REQUIRED
+          - WAIVABLE
+        proof_status:
+          enum:
+          - NOT_RUN
+          - PASS
+          - FAIL
+          - UNKNOWN
+        coverage_reason_codes:
+          type: array
+          uniqueItems: true
+          items:
+            enum:
+            - EVENT_NODE
+            - RECIPROCAL
+            - PREDICTIVE
+            - CLUE_REVEAL
+            - LOCATION_VISIBILITY
+            - LOCATION_IDENTITY
+            - REQUIRED_VIEW
+            - SHOT_DIRECTION
+            - OTHER
+        event_node_ids:
+          type: array
+          items:
+            type: string
+        character_route_ids:
+          type: array
+          items:
+            type: string
+        spatial_parent_refs:
+          type: array
+          items:
+            type: string
+        visual_parent_refs:
+          type: array
+          items:
+            type: string
+        predicted_downstream_uses:
+          type: array
+          items:
+            type: string
+        reciprocal_relation_id:
+          type:
+          - string
+          - 'null'
+        subject_entity_id:
+          type:
+          - string
+          - 'null'
+        performance_requirement_id:
+          type:
+          - string
+          - 'null'
+        narrative_fx_id:
+          type:
+          - string
+          - 'null'
+  status:
+    enum:
+    - PLANNED
+    - IN_PROGRESS
+    - COMPLETE
+    - BLOCKED
+  obligations_fingerprint:
+    type:
+    - string
+    - 'null'

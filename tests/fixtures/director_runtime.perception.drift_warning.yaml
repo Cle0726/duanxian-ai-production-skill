@@ -1,0 +1,39 @@
+runtime_type: DIRECTOR_RUNTIME
+schema_version: 1
+skill_version: 4.5.7
+status: VALID
+scope: {episode_id: EP01, sequence_id: SQ01}
+source_fingerprints: {screenplay: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa}
+runtime_fingerprint: bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+perception_context:
+  unresolved_state:
+    what_character_wants: A想确认信息
+    what_prevents_resolution: 缺少证据
+    why_not_resolvable_now: 必须先观察
+    what_can_change_state: 新证据出现
+  relational_pressure:
+    pressure_source: 对手
+    pressure_target: A
+    knowledge_asymmetry: 对手知道更多
+    power_asymmetry: 对手掌握主动
+    spatial_constraint: 双方隔着门
+    social_constraint: NONE
+shot_perception_contracts:
+  SH01:
+    camera_ethics: NEUTRAL_WITNESS
+    attention_flow: {entry: 空间, resistance: 门, decisive_landing: A, residual_information: 门后, exit: A视线}
+    shot_scale_justification: {shot_size_family: WIDE, required_information: 空间关系, why_wider_fails: 主体太小, why_closer_fails: 丢空间, spatial_information_sacrificed: NONE, narrative_gain: 建立关系}
+    camera_placement_justification: {physical: 走廊可达位置, narrative: 客观建立关系}
+    composition_mechanism: {primary: SPATIAL_PRESSURE, secondary: null}
+    visual_force_stack: {primary_force: Spatial Pressure, supporting_forces: [Performance]}
+    visual_salience_budget: {primary_salience: A, secondary_salience: 门, ambient_information: 墙面, suppressed_information: 门后, allowed_mundane_area: 普通走廊}
+shot_grammar_history:
+  - {shot_id: H01, shot_size_family: CU, viewpoint_role: REACTION_ACCESS, camera_ethics: CHARACTER_ALIGNED, composition_mechanism: FACE_ACCESS, camera_character: STATIC}
+  - {shot_id: H02, shot_size_family: CU, viewpoint_role: REACTION_ACCESS, camera_ethics: CHARACTER_ALIGNED, composition_mechanism: FACE_ACCESS, camera_character: STATIC}
+  - {shot_id: H03, shot_size_family: CU, viewpoint_role: REACTION_ACCESS, camera_ethics: CHARACTER_ALIGNED, composition_mechanism: FACE_ACCESS, camera_character: STATIC}
+  - {shot_id: H04, shot_size_family: CU, viewpoint_role: REACTION_ACCESS, camera_ethics: CHARACTER_ALIGNED, composition_mechanism: FACE_ACCESS, camera_character: STATIC}
+  - {shot_id: H05, shot_size_family: CU, viewpoint_role: REACTION_ACCESS, camera_ethics: CHARACTER_ALIGNED, composition_mechanism: FACE_ACCESS, camera_character: STATIC}
+  - {shot_id: H06, shot_size_family: CU, viewpoint_role: REACTION_ACCESS, camera_ethics: CHARACTER_ALIGNED, composition_mechanism: FACE_ACCESS, camera_character: STATIC}
+  - {shot_id: H07, shot_size_family: MEDIUM, viewpoint_role: OBJECTIVE_OBSERVER, camera_ethics: NEUTRAL_WITNESS, composition_mechanism: SPATIAL_PRESSURE, camera_character: STATIC}
+  - {shot_id: H08, shot_size_family: CU, viewpoint_role: REACTION_ACCESS, camera_ethics: CHARACTER_ALIGNED, composition_mechanism: FACE_ACCESS, camera_character: STATIC}
+creative_drift_telemetry: {window_size: 24, warnings: [], intentional_pattern_overrides: []}

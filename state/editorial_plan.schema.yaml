@@ -1,0 +1,344 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/editorial_plan.schema.yaml
+title: Duanxian Editorial Plan
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- episode_id
+- sequence_id
+- editing_mode
+- status
+- shot_order
+- shots
+- edits
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.
+  episode_id:
+    type: string
+    minLength: 1
+  scene_id:
+    type:
+    - string
+    - 'null'
+  sequence_id:
+    type: string
+    minLength: 1
+  source_director_runtime_ref:
+    type:
+    - string
+    - 'null'
+  source_director_fingerprint:
+    type:
+    - string
+    - 'null'
+  source_shot_relation_graph_ref:
+    type:
+    - string
+    - 'null'
+  editing_mode:
+    enum:
+    - ASSEMBLY_FIRST
+    - IN_MODEL_MULTISHOT
+  status:
+    enum:
+    - DRAFT
+    - LOCKED
+    - REVISE_REQUIRED
+  sequence_strategy:
+    type: object
+    additionalProperties: true
+    properties:
+      opening_viewpoint:
+        type:
+        - string
+        - 'null'
+      closing_viewpoint:
+        type:
+        - string
+        - 'null'
+      viewpoint_arc:
+        type:
+        - string
+        - 'null'
+      cut_density_arc:
+        type:
+        - string
+        - 'null'
+      rhythm_strategy:
+        type:
+        - string
+        - 'null'
+      sustained_strategy:
+        type:
+        - string
+        - 'null'
+      sequence_logic:
+        enum:
+        - CAUSAL
+        - ASSOCIATIVE
+        - MONTAGE
+      closeup_policy:
+        type:
+        - string
+        - 'null'
+  shot_order:
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: string
+      minLength: 1
+  shots:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - shot_id
+      - viewpoint_role
+      - entry_function
+      - exit_function
+      properties:
+        shot_id:
+          type: string
+          minLength: 1
+        viewpoint_role:
+          enum:
+          - OBJECTIVE_OBSERVER
+          - CHARACTER_ALIGNED
+          - OTS_RELATIONAL
+          - POV_DIRECT
+          - REACTION_ACCESS
+          - DETAIL_EVIDENCE
+          - ENVIRONMENT_WITNESS
+          - DISTANT_OBSERVATION
+          - DISORIENTED_SUBJECTIVE
+          - OTHER
+        shot_size_family:
+          type:
+          - string
+          - 'null'
+        subject_view:
+          type:
+          - string
+          - 'null'
+        performance_access:
+          type:
+          - string
+          - 'null'
+        entry_function:
+          type: string
+          minLength: 1
+        exit_function:
+          type: string
+          minLength: 1
+        protected_moment:
+          type:
+          - string
+          - 'null'
+        edit_handle_need:
+          type:
+          - string
+          - 'null'
+        information_state_in:
+          type:
+          - string
+          - 'null'
+        information_revealed:
+          type:
+          - string
+          - 'null'
+        information_withheld:
+          type:
+          - string
+          - 'null'
+        information_state_out:
+          type:
+          - string
+          - 'null'
+        editorial_weight:
+          enum:
+          - TRANSIENT
+          - NORMAL
+          - EMPHASIS
+          - HOLD
+        breathing_function:
+          enum:
+          - NONE
+          - DECOMPRESSION
+          - ANTICIPATION
+          - SPATIAL_REORIENTATION
+          - EMOTIONAL_DELAY
+          - TEMPORAL_REALISM
+  edits:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - edit_id
+      - from_shot_id
+      - to_shot_id
+      - edit_function
+      - cut_trigger
+      - cut_timing
+      - transition_type
+      - continuity_strategy
+      - status
+      properties:
+        edit_id:
+          type: string
+          minLength: 1
+        from_shot_id:
+          type: string
+          minLength: 1
+        to_shot_id:
+          type: string
+          minLength: 1
+        relation_id:
+          type:
+          - string
+          - 'null'
+        edit_function:
+          enum:
+          - INFORMATION_CHANGE
+          - POWER_SHIFT
+          - GAZE_REVEAL
+          - ACTION_CONSEQUENCE
+          - REACTION_ACCESS
+          - SPATIAL_REORIENTATION
+          - RHYTHM_CONTRAST
+          - MATCH_ACTION
+          - TEMPORAL_ELLIPSIS
+          - TRANSFORMATION_REVEAL
+          - PARALLEL_ESCALATION
+          - WITHHOLD_REVEAL
+          - OTHER
+        cut_trigger:
+          enum:
+          - INFORMATION_CHANGE
+          - GAZE_TRIGGER
+          - ACTION_TRIGGER
+          - REACTION_THRESHOLD
+          - POWER_SHIFT
+          - SOUND_TRIGGER
+          - RHYTHM_TRIGGER
+          - SPATIAL_REORIENTATION
+          - TEMPORAL_ELLIPSIS
+          - MOTIF_MATCH
+          - TRANSFORMATION_REVEAL
+          - OTHER
+        cut_timing:
+          enum:
+          - BEFORE_ACTION
+          - ON_ACTION
+          - AFTER_ACTION
+          - ON_GAZE_LANDING
+          - BEFORE_REACTION
+          - ON_REACTION_LEAK
+          - AFTER_REACTION_HOLD
+          - ON_SOUND_PRELAP
+          - ON_SOUND_TAIL
+          - ON_IMPACT
+          - ON_SILENCE
+          - OTHER
+        transition_type:
+          enum:
+          - HARD_CUT
+          - MATCH_CUT
+          - SMASH_CUT
+          - J_CUT
+          - L_CUT
+          - DISSOLVE
+          - FADE
+          - WIPE_OR_GRAPHIC_TRANSITION
+          - JUMP_CUT_INTENTIONAL
+          - OTHER
+        continuity_strategy:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            enum:
+            - MATCH_ON_ACTION
+            - EYELINE_MATCH
+            - SCREEN_DIRECTION_HOLD
+            - SPATIAL_ANCHOR_HOLD
+            - GRAPHIC_MATCH
+            - MOTION_VECTOR_MATCH
+            - SOUND_BRIDGE
+            - PERFORMANCE_CONTINUITY
+            - PROP_STATE_CONTINUITY
+            - LIGHT_COLOR_CONTINUITY
+            - INTENTIONAL_DISCONTINUITY
+            - NONE_REQUIRED
+        information_delta:
+          type:
+          - string
+          - 'null'
+        rhythm_function:
+          type:
+          - string
+          - 'null'
+        audience_effect:
+          type:
+          - string
+          - 'null'
+        audio_bridge:
+          enum:
+          - NONE
+          - J_CUT
+          - L_CUT
+          - SOUND_MATCH
+          - SOUND_LEAD_OTHER
+        required_exit_state:
+          type:
+          - string
+          - 'null'
+        required_entry_state:
+          type:
+          - string
+          - 'null'
+        forbidden_failure:
+          type:
+          - string
+          - 'null'
+        status:
+          enum:
+          - DRAFT
+          - LOCKED
+          - REVISE_REQUIRED
+  editorial_fingerprint:
+    type:
+    - string
+    - 'null'
+  shuffle_test:
+    type: object
+    additionalProperties: true
+    properties:
+      status:
+        enum:
+        - PASS
+        - FAIL
+        - NOT_REQUIRED
+        - NOT_RUN
+      counterfactual_swap_breaks_sequence:
+        type:
+        - boolean
+        - 'null'
+      dependency_reasons:
+        type: array
+        items:
+          type: string
+      rationale:
+        type:
+        - string
+        - 'null'

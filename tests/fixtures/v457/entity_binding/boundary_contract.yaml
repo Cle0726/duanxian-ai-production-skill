@@ -1,0 +1,12 @@
+schema_version: 1
+skill_version: '4.5.7'
+contract_id: BC_SH01_SH02
+from_shot_id: SH01
+to_shot_id: SH02
+from_state_ref: S_BEFORE
+to_state_ref: S_AFTER
+inheritance_mode: CUT_REFRAME
+continuity_distance: LOW
+required_invariants: [WORLD_POSITION, BODY_ORIENTATION, PROP_HOLDER, CONTACT]
+allowed_changes: [FRAME_PROJECTION]
+notes: 反打只允许画面左右重投影

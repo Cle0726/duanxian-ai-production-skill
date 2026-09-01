@@ -1,0 +1,80 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/visual_evidence_runtime.schema.yaml
+title: VISUAL_EVIDENCE_RUNTIME
+
+type: object
+additionalProperties: true
+required:
+  - runtime_type
+  - schema_version
+  - skill_version
+  - status
+  - scope
+  - source_fingerprints
+  - runtime_fingerprint
+  - controller_mode
+  - assets
+properties:
+  runtime_type:
+    const: VISUAL_EVIDENCE_RUNTIME
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: '^4\.5\.'
+  status:
+    enum: [VALID, STALE, REBUILD_REQUIRED]
+  scope:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  controller_mode:
+    enum: [MULTIMODAL_ACTIVE, TEXT_ONLY_CONTINUATION, UNKNOWN]
+  assets:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required: [asset_id, evidence_status]
+      properties:
+        asset_id: {type: string}
+        evidence_ref: {type: [string, 'null']}
+        evidence_status:
+          enum: [CURRENT, STALE, MISSING, NOT_REQUIRED, UNKNOWN]
+        source_fingerprint: {type: [string, 'null']}
+        fact_codes:
+          type: array
+          items: {type: string}
+        issue_codes:
+          type: array
+          items: {type: string}
+        safe_roles:
+          type: array
+          items: {type: string}
+        unsafe_roles:
+          type: array
+          items: {type: string}
+        primary_visual_eligible: {type: [boolean, 'null']}
+        direct_video_eligible: {type: [boolean, 'null']}
+        confidence: {enum: [HIGH, MEDIUM, LOW, UNKNOWN]}
+        short_visual_digest: {type: [string, 'null']}
+  missing_evidence_assets:
+    type: array
+    items: {type: string}
+  stale_evidence_assets:
+    type: array
+    items: {type: string}
+  required_fact_gaps:
+    type: array
+    items: {type: string}
+  forbidden_fact_conflicts:
+    type: array
+    items: {type: string}
+  invalidation_triggers:
+    type: array
+    items: {type: string}

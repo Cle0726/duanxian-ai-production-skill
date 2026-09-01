@@ -1,0 +1,155 @@
+schema_version: 1
+skill_version: 4.5.11
+owner: CONTEXT_LOADING
+purpose: Keep the repository rich while keeping each model execution context minimal. The planner reads the full control plane mechanically; the
+  model receives only the Thin Kernel plus the current route/runtime/conditional authority set.
+kernel_files:
+- SKILL.md
+machine_control_plane_files:
+- controller/workflow_state_machine.yaml
+- controller/route_registry.yaml
+- controller/authority_registry.yaml
+- controller/gate_producer_registry.yaml
+- controller/module_manifest.yaml
+- controller/context_loading_policy.yaml
+- controller/context_module_registry.yaml
+context_tiers:
+  T0_KERNEL: always
+  T1_ROUTE_RUNTIME: prefer_fresh_runtime
+  T2_CONDITIONAL_AUTHORITY: load_on_route_or_capability
+  T3_REPAIR_EXCEPTION: load_only_on_failure_migration_or_stale
+runtime_states:
+- FRESH
+- MISSING
+- STALE
+- INCOMPLETE
+normal_fast_path:
+  runtime_state: FRESH
+  load_source_if_missing_or_stale: false
+  load_compile_runtime_from_source: false
+  load_execute_with: true
+  load_active_conditional_source: true
+fallback_path:
+  runtime_states:
+  - MISSING
+  - STALE
+  - INCOMPLETE
+  load_source_if_missing_or_stale: true
+  load_compile_runtime_from_source: true
+  load_execute_with: true
+  load_active_conditional_source: true
+hard_rules:
+- CONTEXT_BUDGET_MAY_NOT_DROP_REQUIRED_AUTHORITY
+- CONDITIONAL_SOURCE_REQUIRES_ACTIVE_CAPABILITY
+- FRESH_RUNTIME_SKIPS_FALLBACK_SOURCE
+- VALIDATORS_AND_SCHEMAS_ARE_MACHINE_CONTEXT_BY_DEFAULT
+- MACHINE_CONTROL_PLANE_MUST_NOT_BE_CREATIVE_CONTEXT
+- FORBIDDEN_CONTEXT_MUST_BLOCK_CONFLICTING_CAPABILITY
+- CONTEXT_EXPANSION_MUST_BE_INCREMENTAL_NOT_GLOBAL
+- FRESH_RUNTIME_REQUIRES_VERIFIED_PROOF
+- CALLER_MAY_NOT_DECLARE_FRESH
+- COMPATIBILITY_ROUTE_REQUIRES_MIGRATION_MODE
+recommended_limits:
+  creative_source_file_count_soft: 16
+  note: This is a review threshold only. It may never delete required authority. If exceeded, refine route/capabilities or use a fresh runtime;
+    do not compress rules.
+capability_aliases:
+  horror:
+  - genre_pressure
+  threat:
+  - genre_pressure
+  monster:
+  - genre_pressure
+  - creature_threat
+  creature:
+  - genre_pressure
+  - creature_threat
+  suspense:
+  - genre_pressure
+  crisis:
+  - genre_pressure
+  dread:
+  - genre_pressure
+  survival:
+  - genre_pressure
+  combat:
+  - combat
+  - COMBAT_SEGMENT
+  fight:
+  - combat
+  - COMBAT_SEGMENT
+  pursuit:
+  - action
+  - combat
+  - COMBAT_SEGMENT
+  projectile:
+  - action
+  - combat
+  - COMBAT_SEGMENT
+  action:
+  - action
+  performance:
+  - performance
+  acting:
+  - performance
+  crowd:
+  - crowd
+  voice:
+  - voice
+  dialogue_voice:
+  - voice
+  complex_camera:
+  - complex_camera
+  - camera_complex
+  camera_complex:
+  - complex_camera
+  - camera_complex
+  transformation:
+  - transformation
+  complex_contact:
+  - complex_contact
+  - action
+  seedance:
+  - seedance_target
+  stale_prompt:
+  - stale_prompt
+  continuity_entry:
+  - CONTINUITY_ENTRY
+  multishot_continuity:
+  - MULTISHOT_CONTINUITY
+  temporal_same_take:
+  - TEMPORAL_SAME_TAKE
+  scoped_cast:
+  - scoped_cast
+  new_character:
+  - new_character
+  character_requirements:
+  - character_requirements
+  batch:
+  - batch
+  d1_d2:
+  - D1_D2
+  approved_director_grammar:
+  - approved_director_grammar
+  performance_critical:
+  - performance_critical
+  readable_foreground_human:
+  - readable_foreground_human
+  revise_or_partial_failure:
+  - revise_or_partial_failure
+  active_creature:
+  - genre_pressure
+  - creature_threat
+  active_monster:
+  - genre_pressure
+  - creature_threat
+forbidden_capability_aliases:
+  COST_OPTIMIZATION:
+  - cost_optimization
+  - cost_sensitive
+  EXISTING_ASSET_CONVENIENCE:
+  - existing_asset_convenience
+  REFERENCE_SLOT_LIMIT:
+  - reference_slot_limit
+  PLATFORM_DURATION_MAPPING:
+  - platform_duration_mapping

@@ -1,0 +1,146 @@
+schema_version: 1
+skill_version: 4.5.11
+owner: CONTEXT_MODULE_DEPENDENCY_GRAPH
+purpose: Semantic capability packs used by Context Planner. Packs expand dependencies; route_registry remains the authority for exact files on
+  each route.
+packs:
+  GENRE_PRESSURE:
+    trigger_domains:
+    - genre_pressure
+    depends_on: []
+    stages:
+    - '01'
+    - '02'
+    - '04'
+    - '05'
+    intent: Pressure, suspense, crisis, dread, survival, screen-experience elaboration, and anti-shortcut completeness.
+  CREATURE_THREAT:
+    trigger_domains:
+    - creature_threat
+    depends_on:
+    - GENRE_PRESSURE
+    stages:
+    - '02'
+    - '04'
+    - '05'
+    intent: Active creature/monster perception, locomotion, predatory stillness and threat behavior.
+  ACTION:
+    trigger_domains:
+    - action
+    depends_on: []
+    stages:
+    - '04'
+    - '05'
+    intent: Feasibility, limb/prop continuity and natural motion.
+  COMBAT:
+    trigger_domains:
+    - combat
+    - COMBAT_SEGMENT
+    depends_on: []
+    stages:
+    - '02'
+    - '04'
+    - '05'
+    intent: Combat sequence grammar, choreography, impact and combat VFX.
+  PERFORMANCE:
+    trigger_domains:
+    - performance
+    - performance_critical
+    depends_on: []
+    stages:
+    - '02'
+    - '04'
+    - '05'
+    intent: Acting and performance causality.
+  CROWD:
+    trigger_domains:
+    - crowd
+    depends_on: []
+    stages:
+    - '02'
+    - '04'
+    - '05'
+    intent: Crowd presence and ambient life.
+  COMPLEX_CAMERA:
+    trigger_domains:
+    - complex_camera
+    - camera_complex
+    depends_on: []
+    stages:
+    - '02'
+    - '05'
+    intent: Explicit camera path/motion contracts.
+  VOICE:
+    trigger_domains:
+    - voice
+    depends_on: []
+    stages:
+    - '05'
+    - '06'
+    intent: Voice direction/prosody and prompt handoff.
+  TRANSFORMATION:
+    trigger_domains:
+    - transformation
+    depends_on: []
+    stages:
+    - '02'
+    - '04'
+    - '05'
+    intent: Transformation canon and splendor execution.
+  COMPLEX_CONTACT:
+    trigger_domains:
+    - complex_contact
+    depends_on:
+    - ACTION
+    stages:
+    - '03'
+    - '04'
+    - '05'
+    intent: Contact-heavy support or conditioning.
+  TEMPORAL_SAME_TAKE:
+    trigger_domains:
+    - TEMPORAL_SAME_TAKE
+    depends_on: []
+    stages:
+    - '05'
+    intent: Ending Anchor / t0 / same-take continuation structured inputs.
+  CONTINUITY_ENTRY:
+    trigger_domains:
+    - CONTINUITY_ENTRY
+    depends_on: []
+    stages:
+    - '04'
+    - '05'
+    intent: Cross-unit spatial boundary state.
+  MULTISHOT_CONTINUITY:
+    trigger_domains:
+    - MULTISHOT_CONTINUITY
+    depends_on:
+    - CONTINUITY_ENTRY
+    stages:
+    - '05'
+    intent: Multi-shot boundary continuity.
+  SEEDANCE_TARGET:
+    trigger_domains:
+    - seedance_target
+    depends_on: []
+    stages:
+    - '04'
+    - '05'
+    intent: Provider-specific multishot profile.
+  STALE_PROMPT_REPAIR:
+    trigger_domains:
+    - stale_prompt
+    depends_on: []
+    stages:
+    - '05'
+    intent: Stale prompt repair only.
+  SCOPED_CAST:
+    trigger_domains:
+    - scoped_cast
+    - readable_foreground_human
+    depends_on: []
+    stages:
+    - '02'
+    - '03'
+    intent: Functional minor-human authority.

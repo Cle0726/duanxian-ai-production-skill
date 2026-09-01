@@ -1,0 +1,263 @@
+schema_version: 1
+skill_version: 4.5.11
+owner: GATE_PRODUCER_REGISTRY
+purpose: Stage 04/05 transition requirements must name the route/tool/external authority that produces them. A gate may not exist only as a state-machine
+  wish.
+producers:
+  TRUE_FORMAL_ASSET_GAP_CONFIRMED:
+    kind: validator_or_controller
+    owner: EPISODE_ASSET_BUILD
+  REFERENCE_FIELD_COVERAGE_READY:
+    kind: route
+    owner: STAGE_04_STORYBOARD
+  ENTRY_MODE_CONTINUITY_ENTRY:
+    kind: planner
+    owner: STAGE_04_STORYBOARD
+  PREVIOUS_APPROVED_ENDING_FRAME_MISSING:
+    kind: controller
+    owner: STAGE_04_STORYBOARD
+  PREVIOUS_APPROVED_ENDING_FRAME_AVAILABLE:
+    kind: state
+    owner: STAGE_05_ENDING_FRAME
+  MANDATORY_STORYBOARD_QC_COVERAGE_PASS:
+    kind: validator
+    owner: validators/storyboard_coverage_lint.py
+    phase: qc
+  STORYBOARD_QC_PASS:
+    kind: route_qc
+    owner: STAGE_04_STORYBOARD
+  SHOT_RELATION_STORYBOARD_ALIGNMENT_PASS:
+    kind: validator
+    owner: validators/shot_relation_asset_obligation_lint.py
+  STORYBOARD_EVERYDAY_REALISM_PASS:
+    kind: validator
+    owner: validators/everyday_realism_lint.py
+  STORYBOARD_GENERATION_JOBS_QC_READY:
+    kind: validator
+    owner: validators/storyboard_coverage_lint.py
+    phase: qc
+  STORYBOARD_GENERATION_JOBS_PROMOTED:
+    kind: validator
+    owner: validators/storyboard_coverage_lint.py
+    phase: approved
+  MANDATORY_STORYBOARD_APPROVED_COVERAGE_PASS:
+    kind: validator
+    owner: validators/storyboard_coverage_lint.py
+    phase: approved
+  USER_APPROVED_STORYBOARD:
+    kind: external_approval
+    owner: USER
+  APPROVAL_RECORD_WRITTEN:
+    kind: approval_record
+    owner: CONTROLLER
+  VIDEO_CONDITIONING_PLAN_RESOLVED:
+    kind: route
+    owner: STAGE_04_VIDEO_CONDITIONING_BUILD
+  BOUNDARY_PAIR_PLAN_RESOLVED:
+    kind: route
+    owner: STAGE_04_VIDEO_CONDITIONING_BUILD
+  VIDEO_CONDITIONING_ASSETS_AVAILABLE:
+    kind: generation_spine
+    owner: STAGE_04_VIDEO_CONDITIONING_BUILD
+  IDENTITY_READABILITY_PASS:
+    kind: validator_plus_visual_evidence
+    owner: validators/identity_readability_lint.py
+    evidence_owner: templates/identity_readability_gate.md
+  VIDEO_CONDITIONING_QC_PASS:
+    kind: validator
+    owner: validators/video_conditioning_lint.py
+  SHOT_RELATION_CONDITIONING_ALIGNMENT_PASS:
+    kind: validator
+    owner: validators/shot_relation_asset_obligation_lint.py
+  VIDEO_CONDITIONING_EVERYDAY_REALISM_PASS:
+    kind: validator
+    owner: validators/everyday_realism_lint.py
+  SHOT_EXECUTION_GENERATION_JOBS_COMPLETE:
+    kind: generation_spine
+    owner: STAGE_04_VIDEO_CONDITIONING_BUILD
+  VIDEO_CONDITIONING_COLOR_BINDING_PASS:
+    kind: validator
+    owner: validators/scene_color_binding_lint.py
+  USER_APPROVED_VIDEO_CONDITIONING:
+    kind: external_approval
+    owner: USER
+  VIDEO_CONDITIONING_READY_PASS:
+    kind: validator
+    owner: templates/video_conditioning_readiness_gate.md
+  VIDEO_READINESS_PASS:
+    kind: validator
+    owner: templates/video_generation_readiness_gate.md
+  RELATION_DRIVEN_VIDEO_CONDITIONING_PASS:
+    kind: validator
+    owner: validators/shot_relation_asset_obligation_lint.py
+  EVERYDAY_REALISM_PRE_VIDEO_PASS:
+    kind: validator
+    owner: validators/everyday_realism_lint.py
+  VIDEO_COLOR_AUTHORITY_BOUND:
+    kind: validator
+    owner: validators/generation_job_binding_lint.py
+  VIDEO_EXECUTION_PLAN_PASS:
+    kind: validator
+    owner: validators/video_execution_plan_lint.py
+  VIDEO_EXECUTION_PLAN_FINGERPRINT_CURRENT:
+    kind: validator
+    owner: validators/video_execution_plan_fingerprint_lint.py
+  FINAL_VIDEO_PROMPT_VALID:
+    kind: artifact
+    owner: tools/video_prompt_artifact.py
+  STORYBOARD_TO_VIDEO_PROMPT_HANDOFF_PASS:
+    kind: validator
+    owner: validators/storyboard_to_video_prompt_handoff_lint.py
+  VIDEO_REFERENCE_MEDIA_POLICY_PASS:
+    kind: validator
+    owner: validators/generation_job_binding_lint.py
+  AUDIO_REFERENCE_BINDING_PASS:
+    kind: validator
+    owner: validators/audio_reference_binding_lint.py
+  VIDEO_GENERATION_JOB_PROMPT_BOUND:
+    kind: validator
+    owner: validators/video_generation_job_prompt_lint.py
+  REFERENCE_VISUAL_EVIDENCE_PASS:
+    kind: validator
+    owner: validators/visual_evidence_lint.py
+  REAL_VIDEO_TAKE_AVAILABLE:
+    kind: generation_spine
+    owner: STAGE_05_VIDEO
+  VIDEO_QC_PASS:
+    kind: route_qc
+    owner: STAGE_05_VIDEO_QC
+  VIDEO_EVERYDAY_REALISM_QC_PASS:
+    kind: validator
+    owner: validators/video_realism_qc_lint.py
+  USER_APPROVED_VIDEO:
+    kind: external_approval
+    owner: USER
+  REAL_ENDING_FRAME_EXTRACTED:
+    kind: deterministic_tool
+    owner: tools/ending_frame_capture.py
+  CONTINUITY_SNAPSHOT_PASS:
+    kind: validator
+    owner: validators/continuity_snapshot_lint.py
+    phase: post_video_tail
+  NEXT_VIDEO_UNIT_AVAILABLE:
+    kind: deterministic_tool
+    owner: tools/video_unit_advance.py
+  CURRENT_VIDEO_UNIT_ADVANCED:
+    kind: deterministic_tool
+    owner: tools/video_unit_advance.py
+  CONTINUITY_ENTRY_WRITTEN:
+    kind: deterministic_tool
+    owner: tools/video_unit_advance.py
+  REQUIRED_SEGMENTS_APPROVED:
+    kind: state
+    owner: tools/video_unit_advance.py
+  NO_REMAINING_VIDEO_UNITS:
+    kind: state
+    owner: tools/video_unit_advance.py
+  GENERATION_ENVELOPE_RESOLVED:
+    kind: validator_or_planner
+    owner: STAGE_04_VIDEO_CONDITIONING_BUILD
+  MULTISHOT_STORYBOARD_GRID_GATE_PASS:
+    kind: validator
+    owner: validators/generation_envelope_lint.py
+  GENERATION_ENVELOPE_VALID:
+    kind: validator
+    owner: validators/generation_envelope_lint.py
+  STORYBOARD_ENTITY_BINDING_PASS:
+    kind: validator
+    owner: validators/storyboard_entity_binding_lint.py
+  VIDEO_ENTITY_BINDING_HANDOFF_PASS:
+    kind: validator
+    owner: validators/video_entity_binding_handoff_lint.py
+  STORYBOARD_SEQUENCE_GRID_QC_PASS:
+    kind: validator
+    owner: validators/storyboard_sequence_grid_lint.py
+    phase: qc
+  STORYBOARD_SEQUENCE_GRID_APPROVED_PASS:
+    kind: validator
+    owner: validators/storyboard_sequence_grid_lint.py
+    phase: approved
+  DIRECTOR_PERCEPTION_PASS:
+    kind: validator
+    owner: validators/director_perception_lint.py
+  LONG_VIDEO_QUOTA_CONFIRMATION_PASS:
+    kind: validator_plus_external_confirmation
+    owner: validators/video_quota_confirmation_lint.py
+    external_authority: USER
+    threshold_sec: 15
+    policy: QUALITY_FIRST_AUTO_PASS_COST_SENSITIVE_USER_CONFIRMATION_OVER_15S
+  PERFORMANCE_ASSET_REQUIREMENTS_DERIVED:
+    kind: planner
+    owner: STAGE_02C_PRODUCTION_TRANSLATION
+  NARRATIVE_FX_REQUIREMENTS_DERIVED:
+    kind: planner
+    owner: STAGE_02C_PRODUCTION_TRANSLATION
+  PERFORMANCE_ASSET_COVERAGE_COMPLETE:
+    kind: validator
+    owner: validators/performance_asset_requirement_lint.py
+    phase: freeze
+  NARRATIVE_FX_ASSET_COVERAGE_COMPLETE:
+    kind: validator
+    owner: validators/narrative_fx_asset_lint.py
+    phase: freeze
+  ASSET_LIBRARY_COMPLETENESS_PASS:
+    kind: validator
+    owner: validators/asset_library_completeness_lint.py
+    phase: freeze
+  VOICE_DIRECTION_PLAN_DERIVED:
+    kind: planner
+    owner: STAGE_02C_PRODUCTION_TRANSLATION
+  VOICE_DIRECTION_PLAN_PASS:
+    kind: validator
+    owner: validators/voice_direction_plan_lint.py
+    phase: pre_video
+  VOICE_DIRECTION_PROMPT_HANDOFF_PASS:
+    kind: validator
+    owner: validators/voice_prompt_handoff_lint.py
+    phase: final_prompt
+  VOICE_TTS_HANDOFF_PASS:
+    kind: validator
+    owner: validators/voice_tts_handoff_lint.py
+    phase: picture_lock
+  REQUIRED_VOICE_IDENTITY_ASSETS_RESOLVED:
+    kind: validator
+    owner: validators/voice_direction_plan_lint.py
+    phase: pre_video
+  TEMPORAL_ENTRY_PLAN_PASS:
+    kind: validator
+    owner: validators/temporal_entry_plan_lint.py
+    phase: pre_video
+  TEMPORAL_T0_SUFFICIENCY_PASS:
+    kind: validator
+    owner: validators/temporal_t0_sufficiency_lint.py
+    phase: pre_video
+  EXPERIENCE_PRESSURE_PASS:
+    kind: validator
+    owner: validators/experience_pressure_plan_lint.py
+    phase: director_core
+  CREATURE_PERFORMANCE_PASS:
+    kind: validator
+    owner: validators/creature_performance_plan_lint.py
+    phase: director_core
+  EXPERIENCE_STORYBOARD_COVERAGE_PASS:
+    kind: validator
+    owner: validators/experience_storyboard_coverage_lint.py
+    phase: storyboard_qc
+  EXPERIENCE_VIDEO_PROMPT_HANDOFF_PASS:
+    kind: validator
+    owner: validators/experience_video_prompt_handoff_lint.py
+    phase: final_prompt
+  CONTEXT_LOAD_PLAN_PASS:
+    kind: validator
+    owner: validators/context_load_plan_lint.py
+    phase: pre_task_context
+  EXPERIENCE_COMPLETENESS_PASS:
+    kind: validator
+    owner: validators/experience_completeness_lint.py
+    phase: director_core
+  VIDEO_EXPERIENCE_EXECUTION_QC_PASS:
+    kind: validator
+    owner: validators/video_experience_execution_qc_lint.py
+  VIDEO_CREATURE_PERFORMANCE_QC_PASS:
+    kind: validator
+    owner: validators/video_experience_execution_qc_lint.py

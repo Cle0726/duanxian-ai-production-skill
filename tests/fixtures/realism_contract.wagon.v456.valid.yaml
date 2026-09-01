@@ -1,0 +1,203 @@
+schema_version: 1
+skill_version: 4.5.6
+episode_id: REGRESSION_NOT_CANON_REALISM_WAGON
+contracts:
+- contract_id: RC_WAGON_ENV
+  scene_id: SC_WAGON_REALISM
+  location_entity_id: WAGON_INTERIOR_REALISM_TEST
+  event_node_ids: []
+  shot_ids: []
+  asset_ids:
+  - ASSET_WAGON_CANON_REALISM
+  source_refs:
+  - REGRESSION_NOT_CANON
+  baseline_mode: REALISM_REQUIRED
+  profile: VEHICLE
+  source_fact_class: EXPLICIT_SOURCE_FACT
+  expected_cast: []
+  unexpected_humans_allowed: true
+  environment_requirements:
+    environment_kind: VEHICLE
+    specific_type: VINTAGE_WAGON
+    required_zone_ids:
+    - DRIVER_ZONE
+    - FRONT_PASSENGER_ZONE
+    - REAR_BENCH
+    - AISLE
+    required_anchor_ids:
+    - DRIVER_SEAT
+    - FRONT_PASSENGER_SEAT
+    - REAR_SEAT_LEFT
+    - DRIVER_CONTROLS
+    - WINDSHIELD
+    - DOOR_MAIN
+    required_access_path_ids:
+    - PATH_ENTRY_TO_AISLE
+    - PATH_AISLE_TO_DRIVER
+    scale_plausibility_required: true
+    functional_layout_required: true
+    ingress_egress_required: true
+    circulation_required: true
+    vehicle:
+      vehicle_type: VINTAGE_WAGON
+      driver_zone_id: DRIVER_ZONE
+      passenger_zone_ids:
+      - FRONT_PASSENGER_ZONE
+      - REAR_BENCH
+      front_direction_code: AXIS_TO_FRONT_WINDSHIELD
+      driver_forward_visibility_required: true
+      passenger_capacity: 3
+      entry_anchor_ids:
+      - DOOR_MAIN
+    capacity_constraints:
+    - zone_id: DRIVER_ZONE
+      min_humans: 0
+      max_humans: 1
+    - zone_id: FRONT_PASSENGER_ZONE
+      min_humans: 0
+      max_humans: 1
+    - zone_id: REAR_BENCH
+      min_humans: 0
+      max_humans: 2
+  object_affordances: []
+  social_spatial_constraints: []
+  continuity_requirements:
+    world_state_ref: null
+    no_unexplained_character_relocation: false
+    no_unexplained_prop_state_change: false
+    no_unexplained_environment_reset: false
+    no_unexplained_wetness_damage_reset: false
+    no_unexplained_task_drop: false
+  required_categories:
+  - ENVIRONMENT_FUNCTIONAL_REALISM
+  - VEHICLE_REALISM
+  exception_scopes: []
+  status: LOCKED
+  reality_basis:
+    basis_type: SOURCE_EXPLICIT
+    reference_requirement: COMMON_KNOWLEDGE_OK
+    verification_status: NOT_REQUIRED
+    reference_refs: []
+    rationale: REGRESSION_NOT_CANON vehicle function baseline
+- contract_id: RC_WAGON_01
+  scene_id: SC_WAGON_REALISM
+  location_entity_id: WAGON_INTERIOR_REALISM_TEST
+  event_node_ids:
+  - EV_WAGON_REALISM
+  shot_ids:
+  - SH_REALISM_01
+  asset_ids:
+  - ASSET_WAGON_REALISM_FORWARD
+  source_refs:
+  - REGRESSION_NOT_CANON
+  baseline_mode: REALISM_REQUIRED
+  profile: VEHICLE
+  source_fact_class: EXPLICIT_SOURCE_FACT
+  expected_cast:
+  - character_id: JIELA
+    expected_count: 1
+    functional_role: DRIVER
+    required_zone_id: DRIVER_ZONE
+    required_position_id: DRIVER_SEAT
+    required_posture: SIT
+    required_support_surface_id: DRIVER_SEAT
+    required_eyeline_targets:
+    - WINDSHIELD
+    no_duplicate: true
+  - character_id: KAIDENG
+    expected_count: 1
+    functional_role: FRONT_PASSENGER
+    required_zone_id: FRONT_PASSENGER_ZONE
+    required_position_id: FRONT_PASSENGER_SEAT
+    required_posture: SIT
+    required_support_surface_id: FRONT_PASSENGER_SEAT
+    required_eyeline_targets: []
+    no_duplicate: true
+  - character_id: XILIYA
+    expected_count: 1
+    functional_role: REAR_PASSENGER
+    required_zone_id: REAR_BENCH
+    required_position_id: REAR_SEAT_LEFT
+    required_posture: SIT
+    required_support_surface_id: REAR_SEAT_LEFT
+    required_eyeline_targets: []
+    no_duplicate: true
+  unexpected_humans_allowed: false
+  environment_requirements:
+    environment_kind: VEHICLE
+    specific_type: VINTAGE_WAGON
+    required_zone_ids:
+    - DRIVER_ZONE
+    - FRONT_PASSENGER_ZONE
+    - REAR_BENCH
+    - AISLE
+    required_anchor_ids:
+    - DRIVER_SEAT
+    - FRONT_PASSENGER_SEAT
+    - REAR_SEAT_LEFT
+    - DRIVER_CONTROLS
+    - WINDSHIELD
+    - DOOR_MAIN
+    required_access_path_ids: []
+    scale_plausibility_required: true
+    functional_layout_required: true
+    ingress_egress_required: true
+    circulation_required: true
+    vehicle:
+      vehicle_type: VINTAGE_WAGON
+      driver_zone_id: DRIVER_ZONE
+      passenger_zone_ids:
+      - FRONT_PASSENGER_ZONE
+      - REAR_BENCH
+      front_direction_code: AXIS_TO_FRONT_WINDSHIELD
+      driver_forward_visibility_required: true
+      passenger_capacity: 3
+      entry_anchor_ids:
+      - DOOR_MAIN
+    capacity_constraints:
+    - zone_id: DRIVER_ZONE
+      min_humans: 1
+      max_humans: 1
+    - zone_id: FRONT_PASSENGER_ZONE
+      min_humans: 1
+      max_humans: 1
+    - zone_id: REAR_BENCH
+      min_humans: 1
+      max_humans: 2
+  object_affordances:
+  - object_id: DRIVER_CONTROLS
+    function: driving_controls
+    required_user_character_ids:
+    - JIELA
+    required_reachable: true
+    required_supported: true
+    required_operable: true
+  social_spatial_constraints:
+  - character_a: JIELA
+    character_b: KAIDENG
+    relation: CONVERSATIONAL
+    eyeline_access_required: true
+    behavior_reason_ref: null
+  continuity_requirements:
+    world_state_ref: WS_REGRESSION
+    no_unexplained_character_relocation: true
+    no_unexplained_prop_state_change: true
+    no_unexplained_environment_reset: true
+    no_unexplained_wetness_damage_reset: true
+    no_unexplained_task_drop: true
+  required_categories:
+  - ENVIRONMENT_FUNCTIONAL_REALISM
+  - VEHICLE_REALISM
+  - HUMAN_ERGONOMICS
+  - OBJECT_AFFORDANCE
+  - SOCIAL_SPATIAL_PLAUSIBILITY
+  - MUNDANE_PHYSICS
+  - MUNDANE_CONTINUITY
+  exception_scopes: []
+  status: LOCKED
+  reality_basis:
+    basis_type: SOURCE_EXPLICIT
+    reference_requirement: COMMON_KNOWLEDGE_OK
+    verification_status: NOT_REQUIRED
+    reference_refs: []
+    rationale: REGRESSION_NOT_CANON explicit seating/blocking

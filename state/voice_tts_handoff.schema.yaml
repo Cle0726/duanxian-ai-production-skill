@@ -1,0 +1,221 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/voice_tts_handoff.schema.yaml
+title: Duanxian Voice TTS Handoff V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- voice_tts_handoff_id
+- voice_direction_plan_id
+- episode_id
+- dialogue_required
+- picture_lock_ref
+- picture_lock_fingerprint
+- lines
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  voice_tts_handoff_id:
+    type: string
+    minLength: 1
+  voice_direction_plan_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type: string
+    minLength: 1
+  dialogue_required:
+    type: boolean
+  picture_lock_ref:
+    type: string
+    minLength: 1
+  picture_lock_fingerprint:
+    type: string
+    minLength: 16
+  lines:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - line_id
+      - speaker_entity_id
+      - final_spoken_text
+      - start_sec
+      - end_sec
+      - voice_identity_asset_id
+      - performance_loudness
+      - pace_control
+      - pauses
+      - stress_map
+      - pitch_energy_contour
+      - terminal_intonation
+      - tts_adapter_mode
+      - preserved_intent
+      properties:
+        line_id:
+          type: string
+          minLength: 1
+        speaker_entity_id:
+          type: string
+          minLength: 1
+        final_spoken_text:
+          type: string
+          minLength: 1
+        start_sec:
+          type: number
+          minimum: 0
+        end_sec:
+          type: number
+          exclusiveMinimum: 0
+        voice_identity_asset_id:
+          type:
+          - string
+          - 'null'
+        performance_loudness:
+          enum:
+          - HUSHED
+          - SOFT
+          - NEUTRAL
+          - FIRM
+          - RAISED
+          - SHOUT
+          - CALL
+        pace_control:
+          type: object
+          additionalProperties: false
+          required:
+          - entry
+          - mid
+          - terminal
+          properties:
+            entry:
+              enum:
+              - VERY_SLOW
+              - SLOW
+              - BASELINE
+              - QUICK
+              - FAST
+            mid:
+              enum:
+              - VERY_SLOW
+              - SLOW
+              - BASELINE
+              - QUICK
+              - FAST
+            terminal:
+              enum:
+              - VERY_SLOW
+              - SLOW
+              - BASELINE
+              - QUICK
+              - FAST
+              - CLIPPED
+        pauses:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - position
+            - pause_type
+            - duration_class
+            - reason
+            properties:
+              position:
+                type: string
+                minLength: 1
+              pause_type:
+                enum:
+                - PRE_LINE_PROCESSING
+                - THOUGHT_PAUSE
+                - HESITATION
+                - LISTENING_PAUSE
+                - IMPACT_PROCESSING
+                - BREATH_PAUSE
+                - INTERRUPTED
+                - POST_LINE_HOLD
+              duration_class:
+                enum:
+                - MICRO
+                - SHORT
+                - MEDIUM
+                - LONG
+              duration_sec:
+                type:
+                - number
+                - 'null'
+                minimum: 0
+              reason:
+                type: string
+                minLength: 1
+        stress_map:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - text_span
+            - stress_level
+            - reason
+            properties:
+              text_span:
+                type: string
+                minLength: 1
+              stress_level:
+                enum:
+                - PRIMARY_STRESS
+                - SECONDARY_STRESS
+                - DE_EMPHASIS
+              reason:
+                type: string
+                minLength: 1
+        pitch_energy_contour:
+          enum:
+          - LEVEL
+          - RISING_PRESSURE
+          - FALLING_ENERGY
+          - SPIKE_THEN_CONTROL
+          - SUSPENDED
+          - BREAK_CRACK
+        terminal_intonation:
+          enum:
+          - FALL
+          - RISE
+          - FALL_RISE
+          - LEVEL
+          - CLIPPED
+          - BREATH_RELEASED
+          - SUSPENDED
+        texture_adjustments:
+          type: array
+          items:
+            type: string
+        tts_adapter_mode:
+          enum:
+          - DIRECT_TTS_CONTROL
+          - SSML_WHEN_SUPPORTED
+          - DIRECTOR_NOTE_ONLY
+        preserved_intent:
+          type: boolean
+          const: true
+        override_reason:
+          type:
+          - string
+          - 'null'
+  status:
+    enum:
+    - READY_FOR_TTS
+    - NOT_REQUIRED
+    - STALE
+    - BLOCKED
+  handoff_fingerprint:
+    type:
+    - string
+    - 'null'

@@ -1,10 +1,18 @@
 # 断弦 AI Production Skill
 
-**Production-grade AI 漫剧 / AI Video 制作工作流 Skill｜V4.5.7**
+**Production-grade AI 漫剧 / AI Video 制作工作流 Skill｜V4.5.11-M1**
 
 这是一个面向长流程 AI 漫剧与 AI 视频生产的可执行工作流系统。它不把“写 Prompt”当成生产完成，而是把导演规划、资产生产、白描分镜、空间连续性、实体绑定、声音表演、视频参考路由、生成任务和 QC 连接成可验证的状态机。
 
 > 当前仓库以《断弦之歌》的生产需求为主要验证场景，但核心 Controller、Schema、Validator、Reference Resolver、Voice Direction 与 Generation Spine 按可复用工作流设计。
+
+## 当前版本
+
+- **Skill Version**：`V4.5.11`
+- **Revision**：`V4.5.11-M1_V4511_BASE_WITH_V457_THIN_CONTROL`
+- **领域基线**：保留 V4.5.11 的导演、资产、Storyboard、Seedance 2.5、30 秒长叙事、Proxy-First、Temporal Reference Hygiene 与 Editorial Cut Bridge。
+- **融合内容**：加入 V4.5.7 的 Thin Kernel、Route-scoped Lazy Loading、Runtime Freshness、Capability Routing 与 Anti-Shortcut 控制闭环。
+- **融合原则**：只增强控制平面，不回退或覆盖 V4.5.11 领域能力。
 
 ## 核心能力
 
@@ -15,6 +23,11 @@
 - **资产多但不乱**：通过 `entity_id / location_entity_id + reuse_key + asset_family_id + version + lineage` 去重、复用、升级和追踪血缘。
 - **Spatial Canon + Multiview**：世界位置与画面位置分离；反打可以改变 Screen Left/Right，但不能无依据改变 World Zone。
 - **Generation Envelope**：Formal Shot 与真实 Generation Call 分离，支持 `ONER / SEQUENTIAL_MULTISHOT / TIMED_MULTISHOT / FREESTYLE_BROLL`。
+- **Seedance 2.5 长叙事路由**：按参考容量在 15 / 30 秒生成单元间选择，保留完整因果段落，不用废动作填满时长。
+- **Proxy-First 审核**：视频先通过代理媒体完成结构化视觉审核，原始大文件只在必要时进入局部核验。
+- **Temporal Reference Hygiene**：通过 Ending Anchor、Temporal T0 与同镜续接引用隔离，降低尾帧递归污染和时间状态漂移。
+- **Editorial Cut Bridge**：优先用分镜空间占位与剪辑语言闭合跨镜连续性，避免把真实尾帧无条件直传下一镜。
+- **Thin Kernel / Lazy Loading**：按 Stage、Route、Capability 加载最小完整上下文，并由 Runtime Freshness 证据决定 Fast Path 或回源重编译。
 - **Minimum Sufficient Reference Pack**：Stage 03 可以拥有丰富资产库，Stage 05 只把当前镜头真正需要的最小 Reference Pack 发送给生成模型。
 - **Entity Binding → Video Job 闭环**：Storyboard Slot、真实 Entity、Direct `@asset`、Final Video Prompt 和实际 Generation Job `required_bindings` 可机械追踪。
 - **Voice Direction / Prosody 闭环**：重要 Dialogue / VO 使用结构化 `VOICE_DIRECTION_PLAN` 控制 Trigger / Meaning / Objective / Tactic / Subtext，以及 Loudness / Pace / Pause / Stress / Pitch-Energy / Terminal Intonation；Stage 05 生成并验证 `VOICE_PROMPT_HANDOFF`，Stage 06 基于 Picture Lock 生成 `VOICE_TTS_HANDOFF`。
@@ -61,7 +74,7 @@ Picture Lock → VOICE_TTS_HANDOFF → Master
 
 ## Base Visual Authority
 
-当前 V4.5.7 的硬规则：
+当前 V4.5.11-M1 延续的硬规则：
 
 1. 每个被正式 Scene / Event / Shot 使用的 Location / Sub-location，`Tier S/A/B/C` 都必须有一张 Approved **空场景 Clean Master**；
 2. 每个清楚可见的一次性配角 / 功能人物，都必须有一张 Approved **FMH / Minor Human Master**；
@@ -109,29 +122,24 @@ Stage 05 必须证明这些关键控制真正进入 Final Video Prompt；Stage 0
 | `tools/` | 确定性 Planner、Splitter、Resolver、Compiler、Generation Job 工具 |
 | `validators/` | Gate、Binding、Continuity、Asset、Prompt、Voice、Architecture 校验 |
 | `adapters/` | Generation / Web QC 平台适配 |
-| `tests/` | Smoke、Regression、Adversarial、V4.5.7 专项测试 |
+| `tests/` | Smoke、Regression、Adversarial、V4.5.7 / V4.5.11-M1 专项测试 |
 | `docs/` | 架构升级说明与验证报告 |
 
-## Final Audit｜2026-08-24
+## Final Audit｜2026-09-01
 
-最终 Voice Direction 逻辑闭环后进行了全仓库审计。
+V4.5.11-M1 融合安装后的验证结果：
 
-- 35 个 `tests/run_*.py` 回归程序最终均通过；
-- `run_v457_integrity_tests.py` 完整 PASS；
-- `run_v457_logic_closure_tests.py` 完整 PASS；
-- Voice Direction normal + adversarial closure PASS；
-- YAML：137 个，解析错误 0；
-- Python：125 个，语法错误 0；
-- State/Runtime Schema：44 个，Draft 2020-12 Meta Schema 错误 0；
-- `v457_architecture_lint`：`errors=[] / warnings=[]`；
-- Gate Producer：PASS；
-- YAML Duplicate Key：PASS；
-- `__pycache__ / *.pyc / *.pyo`：0；
-- 常见 Secret / API Key 模式扫描：0 命中。
+- Core / Architecture / Context Plan 验证：PASS；
+- 安装前后文件一致性：PASS；
+- 38 个回归入口中 30 个 PASS；
+- 剩余 8 个失败在未修改的 V4.5.11 基线上可原样复现；
+- 融合新增回归：0；
+- Episode State Schema 迁移：PASS，无新增状态结构问题；
+- 当前 `SKILL.md` SHA-256：`E84C66B5AD2730436DA7E6C6F47F0784F363193B564F7EBB701E3A043681E50B`。
 
-本轮审计还修复了 Voice Plan 覆盖绕过、`dialogue_required=false` 绕过、多 Pause/Stress 丢失、Stage 06 背景台词静默跳过、Picture Lock Fingerprint 缺失、Voice Handoff Fingerprint 验真、Ghost Gate Producer、Prompt Artifact Voice 防绕过等问题。
+本次发布的完整验证摘要见 [`FINAL_AUDIT_20260901_V4511_M1.md`](FINAL_AUDIT_20260901_V4511_M1.md)。
 
-在当前 deterministic / schema / static / regression 覆盖范围内，没有已知阻断性逻辑断链。模型 / Provider 生成误差继续交由现有 QC / Retry / Failure Router 处理。
+旧版 V4.5.7 全量审计记录保留在 [`FINAL_AUDIT_20260824.md`](FINAL_AUDIT_20260824.md)。
 
 ## License
 

@@ -1,0 +1,344 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/combat_segment_contract.schema.yaml
+title: Duanxian Combat Segment Contract
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- combat_segment_id
+- segment_role
+- combat_objective
+- entry_combat_state
+- exit_combat_state
+- generation_risk
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  combat_segment_id:
+    type: string
+    minLength: 1
+  video_unit_id:
+    type:
+    - string
+    - 'null'
+  shot_id:
+    type:
+    - string
+    - 'null'
+  segment_role:
+    enum:
+    - FULL_EXCHANGE
+    - ORIENTATION
+    - THREAT_REVEAL
+    - SPATIAL_READ
+    - APPROACH
+    - PROBE
+    - COMMITMENT
+    - CONTACT
+    - CONTROL
+    - REVERSAL
+    - CONSEQUENCE
+    - REACTION
+    - PURSUIT
+    - ESCAPE
+    - PROJECTILE_RELEASE
+    - PROJECTILE_TRAVEL
+    - INTERCEPT
+    - SCALE_REVEAL
+    - RESET
+    - PAYOFF
+  combat_objective:
+    type: string
+    minLength: 1
+  entry_combat_state:
+    type: string
+    minLength: 1
+  exit_combat_state:
+    type: string
+    minLength: 1
+  engagement_distance:
+    type: object
+    additionalProperties: true
+    properties:
+      entry:
+        type:
+        - string
+        - 'null'
+      exit:
+        type:
+        - string
+        - 'null'
+      weapon_reach:
+        type:
+        - string
+        - 'null'
+  read_decision:
+    type: object
+    additionalProperties: true
+    properties:
+      read:
+        type:
+        - string
+        - 'null'
+      decision:
+        type:
+        - string
+        - 'null'
+  attack_defense_exchange:
+    type: object
+    additionalProperties: true
+    properties:
+      attacker:
+        type:
+        - string
+        - 'null'
+      defender:
+        type:
+        - string
+        - 'null'
+      attack_action:
+        type:
+        - string
+        - 'null'
+      defense_response:
+        type:
+        - string
+        - 'null'
+  lanes:
+    type: object
+    additionalProperties: true
+    properties:
+      attack_lane:
+        type:
+        - string
+        - 'null'
+      escape_lane:
+        type:
+        - string
+        - 'null'
+  contact:
+    type: object
+    additionalProperties: true
+    properties:
+      contact_type:
+        enum:
+        - CONTACT
+        - NEAR_MISS
+        - NONE
+        - null
+      contact_point:
+        type:
+        - string
+        - 'null'
+      force_direction:
+        type:
+        - string
+        - 'null'
+      compression:
+        type:
+        - string
+        - 'null'
+  recoil_recovery:
+    type: object
+    additionalProperties: true
+    properties:
+      recoil:
+        type:
+        - string
+        - 'null'
+      recovery:
+        type:
+        - string
+        - 'null'
+  initiative_shift:
+    type:
+    - string
+    - 'null'
+  camera_read:
+    type: object
+    additionalProperties: true
+    properties:
+      function:
+        type:
+        - string
+        - 'null'
+      attention_landing:
+        type:
+        - string
+        - 'null'
+      contact_read:
+        type:
+        - string
+        - 'null'
+  reveal:
+    type: object
+    additionalProperties: true
+    properties:
+      threat_source:
+        type:
+        - string
+        - 'null'
+      audience_knowledge_in:
+        type:
+        - string
+        - 'null'
+      audience_knowledge_out:
+        type:
+        - string
+        - 'null'
+      scale_subject:
+        type:
+        - string
+        - 'null'
+      human_scale_anchor:
+        type:
+        - string
+        - 'null'
+      environment_scale_anchor:
+        type:
+        - string
+        - 'null'
+      reveal_progression:
+        type:
+        - string
+        - 'null'
+  pursuit:
+    type: object
+    additionalProperties: true
+    properties:
+      route:
+        type:
+        - string
+        - 'null'
+      motion_vector:
+        type:
+        - string
+        - 'null'
+      relative_distance_change:
+        type:
+        - string
+        - 'null'
+      obstacle_or_hazard:
+        type:
+        - string
+        - 'null'
+      camera_subject_coupling:
+        type:
+        - string
+        - 'null'
+      momentum_landing:
+        type:
+        - string
+        - 'null'
+  projectile:
+    type: object
+    additionalProperties: true
+    properties:
+      entity_id:
+        type:
+        - string
+        - 'null'
+      source:
+        type:
+        - string
+        - 'null'
+      trajectory:
+        type:
+        - string
+        - 'null'
+      target:
+        type:
+        - string
+        - 'null'
+      state_in:
+        type:
+        - string
+        - 'null'
+      state_out:
+        type:
+        - string
+        - 'null'
+  consequence:
+    type: object
+    additionalProperties: true
+    properties:
+      environment_proof:
+        type:
+        - string
+        - 'null'
+      body_state_change:
+        type:
+        - string
+        - 'null'
+      tactical_result:
+        type:
+        - string
+        - 'null'
+  generation_risk:
+    type: object
+    additionalProperties: false
+    required:
+    - level
+    - primary_contact_count
+    properties:
+      level:
+        enum:
+        - L1
+        - L2
+        - L3
+        - L4
+        - L5
+        - L6
+        - L7
+        - L8
+      primary_contact_count:
+        type: integer
+        minimum: 0
+      bridge_mode:
+        enum:
+        - NONE
+        - FOREGROUND_OCCLUSION
+        - DEBRIS_OCCLUSION
+        - SPEED_SMEAR
+        - IMPACT_FLASH
+        - DUST_ENVELOPE
+        - OBJECT_PASS_WIPE
+      bridge_reason:
+        type:
+        - string
+        - 'null'
+  vfx_coverage:
+    type: object
+    additionalProperties: false
+    properties:
+      effect_level:
+        enum:
+        - NONE
+        - LOCAL
+        - STRUCTURAL
+        - NARRATIVE
+      source_read:
+        type:
+        - string
+        - 'null'
+      geometry_read:
+        type:
+        - string
+        - 'null'
+      contact_read:
+        type:
+        - string
+        - 'null'
+      scale_proof:
+        type:
+        - string
+        - 'null'
+      aftermath_read:
+        type:
+        - string
+        - 'null'

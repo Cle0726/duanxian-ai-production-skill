@@ -1,0 +1,201 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/continuity_snapshot.schema.yaml
+title: Duanxian Continuity Snapshot
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- snapshot_id
+- episode_id
+- source_approved_video_ref
+- ending_frame_ref
+- source_video_fingerprint
+- ending_frame_file_sha256
+- provenance_mode
+- pixel_lineage_depth
+- lineage_evidence_mode
+- degradation_debt
+- snapshot_fingerprint
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.
+  snapshot_id:
+    type: string
+  episode_id:
+    type: string
+  scene_id:
+    type:
+    - string
+    - 'null'
+  segment_id:
+    type:
+    - string
+    - 'null'
+  shot_id:
+    type:
+    - string
+    - 'null'
+  source_approved_video_ref:
+    type: string
+  source_video_fingerprint:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  ending_frame_ref:
+    type: string
+  ending_frame_file_sha256:
+    type: string
+    pattern: ^[0-9a-f]{64}$
+  spatial_continuity_state_ref:
+    type:
+    - string
+    - 'null'
+  shot_boundary_contract_ref:
+    type:
+    - string
+    - 'null'
+  actor_state:
+    type: object
+    additionalProperties: true
+  world_spatial_state:
+    type: array
+    items:
+      type: object
+      properties:
+        entity_id:
+          type: string
+        zone_id:
+          type:
+          - string
+          - 'null'
+        anchor_id:
+          type:
+          - string
+          - 'null'
+        relation:
+          type:
+          - string
+          - 'null'
+        body_orientation:
+          type:
+          - string
+          - 'null'
+        contact_state:
+          type:
+          - string
+          - 'null'
+  frame_projection_state:
+    type: array
+    items:
+      type: object
+      properties:
+        entity_id:
+          type: string
+        horizontal_region:
+          type:
+          - string
+          - 'null'
+        depth_region:
+          type:
+          - string
+          - 'null'
+        screen_direction:
+          type:
+          - string
+          - 'null'
+  motion_phase_state:
+    type: array
+    items:
+      type: object
+      properties:
+        entity_id:
+          type: string
+        motion_phase:
+          type:
+          - string
+          - 'null'
+  wardrobe_state:
+    type: object
+    additionalProperties: true
+  injury_state:
+    type: object
+    additionalProperties: true
+  prop_state:
+    type: object
+    additionalProperties: true
+  environment_state:
+    type: object
+    additionalProperties: true
+  ongoing_action_state:
+    type: object
+    additionalProperties: true
+  screen_direction_state:
+    type: object
+    additionalProperties: true
+  created_at:
+    type:
+    - string
+    - 'null'
+  provenance_mode:
+    enum:
+    - LOCAL_DECODED_VIDEO
+    - PLATFORM_EXTRACTED_VERIFIED
+  extraction_proof_ref:
+    type:
+    - string
+    - 'null'
+  previous_continuity_snapshot_ref:
+    type:
+    - string
+    - 'null'
+  previous_continuity_snapshot_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  pixel_lineage_depth:
+    type: integer
+    minimum: 1
+  lineage_evidence_mode:
+    enum:
+    - ROOT_GENERATED_VIDEO
+    - RECURSIVE_SNAPSHOT
+  degradation_debt:
+    type: object
+    additionalProperties: false
+    required:
+    - sharpness_debt
+    - chroma_gamma_drift_debt
+    - noise_debt
+    - identity_debt
+    - generation_depth
+    properties:
+      sharpness_debt:
+        type: number
+        minimum: 0
+        maximum: 1
+      chroma_gamma_drift_debt:
+        type: number
+        minimum: 0
+        maximum: 1
+      noise_debt:
+        type: number
+        minimum: 0
+        maximum: 1
+      identity_debt:
+        type: number
+        minimum: 0
+        maximum: 1
+      generation_depth:
+        type: integer
+        minimum: 1
+  continuity_motion_capsule:
+    type: object
+    additionalProperties: true
+  snapshot_fingerprint:
+    type: string
+    pattern: ^[0-9a-f]{64}$

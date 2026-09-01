@@ -1,0 +1,200 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/base_visual_authority_manifest.schema.yaml
+title: Duanxian Base Visual Authority Manifest V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- episode_id
+- environments
+- minor_humans
+- actor_authority_index
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  episode_id:
+    type: string
+    minLength: 1
+  environments:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - requirement_id
+      - location_entity_id
+      - reuse_tier
+      - reuse_key
+      - obligation_id
+      - empty_master_asset_id
+      - status
+      properties:
+        requirement_id:
+          type: string
+          minLength: 1
+        location_entity_id:
+          type: string
+          minLength: 1
+        scene_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        reuse_tier:
+          enum:
+          - S
+          - A
+          - B
+          - C
+        reuse_key:
+          type: string
+          minLength: 1
+        obligation_id:
+          type: string
+          minLength: 1
+        empty_master_asset_id:
+          type: string
+          minLength: 1
+        visual_anchor_set_ref:
+          type:
+          - string
+          - 'null'
+        status:
+          enum:
+          - REQUIRED
+          - APPROVED
+          - STALE
+          - BLOCKED
+  minor_humans:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - requirement_id
+      - entity_id
+      - readability
+      - reuse_key
+      - visual_owner
+      - status
+      properties:
+        requirement_id:
+          type: string
+          minLength: 1
+        entity_id:
+          type: string
+          minLength: 1
+        display_name:
+          type:
+          - string
+          - 'null'
+        scene_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        shot_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+        readability:
+          enum:
+          - READABLE
+          - SILHOUETTE_READABLE
+          - DEEP_BACKGROUND
+        reuse_key:
+          type: string
+          minLength: 1
+        visual_owner:
+          enum:
+          - FMH_ASSET
+          - TEXT_ONLY
+        obligation_id:
+          type:
+          - string
+          - 'null'
+        human_master_asset_id:
+          type:
+          - string
+          - 'null'
+        canon_view_set_ref:
+          type:
+          - string
+          - 'null'
+        promotion_state:
+          enum:
+          - SCOPED
+          - PROMOTED_TO_MINOR_CANON
+          - PROMOTED_TO_CHARACTER_CANON
+        status:
+          enum:
+          - REQUIRED
+          - APPROVED
+          - STALE
+          - BLOCKED
+          - NOT_REQUIRED
+  actor_authority_index:
+    type: array
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - entity_id
+      - actor_class
+      - readability
+      - authority_kind
+      properties:
+        entity_id:
+          type: string
+          minLength: 1
+        actor_class:
+          enum:
+          - CHARACTER_CANON
+          - MINOR_HUMAN
+          - CROWD_CLUSTER
+        readability:
+          enum:
+          - READABLE
+          - SILHOUETTE_READABLE
+          - DEEP_BACKGROUND
+        authority_kind:
+          enum:
+          - CHARACTER_AUTHORITY
+          - FMH_ASSET
+          - CROWD_ARCHETYPE_SET
+          - TEXT_ONLY
+        authority_asset_id:
+          type:
+          - string
+          - 'null'
+        minor_human_requirement_id:
+          type:
+          - string
+          - 'null'
+        crowd_archetype_set_ref:
+          type:
+          - string
+          - 'null'
+  crowd_archetype_set_refs:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+  status:
+    enum:
+    - DRAFT
+    - READY_FOR_BUILD
+    - FROZEN
+    - STALE
+    - BLOCKED
+  manifest_fingerprint:
+    type:
+    - string
+    - 'null'

@@ -1,0 +1,13 @@
+assets:
+  - asset_id: SB_01
+    asset_type: STORYBOARD_CLEAN_PANEL
+    layout_type: CLEAN_PANEL
+    storyboard_render_mode: WHITE_LINE_STORYBOARD_ONLY
+    storyboard_human_render_policy: ANONYMOUS_GEOMETRIC_HUMAN_ONLY
+    storyboard_cleanliness:
+      text_present: false
+      arrow_present: false
+      recognizable_face_present: false
+      recognizable_hair_present: false
+      recognizable_costume_detail_present: false
+      identity_specific_feature_present: false

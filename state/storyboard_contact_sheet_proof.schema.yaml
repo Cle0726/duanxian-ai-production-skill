@@ -1,0 +1,112 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/storyboard_contact_sheet_proof.schema.yaml
+title: Duanxian Storyboard Contact Sheet Proof V1
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- storyboard_contact_sheet_proof_id
+- episode_id
+- sequence_id
+- grid_mode
+- panel_count
+- contact_sheet_asset_id
+- contact_sheet_fingerprint
+- splitter_tool
+- rows
+- cols
+- panel_order
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  storyboard_contact_sheet_proof_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type: string
+    minLength: 1
+  sequence_id:
+    type: string
+    minLength: 1
+  scene_id:
+    type:
+    - string
+    - 'null'
+  grid_mode:
+    enum:
+    - SHOT_GRID
+    - BEAT_GRID
+  panel_count:
+    type: integer
+    minimum: 2
+  rows:
+    type: integer
+    minimum: 1
+  cols:
+    type: integer
+    minimum: 1
+  contact_sheet_asset_id:
+    type: string
+    minLength: 1
+  contact_sheet_fingerprint:
+    type: string
+    minLength: 16
+  splitter_tool:
+    type: string
+    const: tools/storyboard_contact_sheet_splitter.py
+  manifest_ref:
+    type:
+    - string
+    - 'null'
+  source_editorial_plan_ref:
+    type:
+    - string
+    - 'null'
+  shot_order:
+    type: array
+    items:
+      type: string
+  panel_order:
+    type: array
+    minItems: 2
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - panel_index
+      - panel_asset_id
+      properties:
+        panel_index:
+          type: integer
+          minimum: 1
+        panel_asset_id:
+          type: string
+          minLength: 1
+        shot_id:
+          type:
+          - string
+          - 'null'
+        beat_id:
+          type:
+          - string
+          - 'null'
+        panel_role:
+          type:
+          - string
+          - 'null'
+  status:
+    enum:
+    - QC_PASS_WAITING_APPROVAL
+    - APPROVED
+    - FAIL
+    - STALE
+  storyboard_contact_sheet_proof_fingerprint:
+    type:
+    - string
+    - 'null'

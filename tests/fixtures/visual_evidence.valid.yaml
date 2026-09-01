@@ -1,0 +1,66 @@
+schema_version: 1
+skill_version: 4.5.3
+records:
+  - evidence_id: VE_RESTAURANT_01
+    asset_id: RESTAURANT_CLOCK_VIEW_01
+    asset_version: 1
+    source_fingerprint_type: FILE_SHA256
+    source_fingerprint: hash_restaurant_v1
+    evidence_status: CURRENT
+    inspector:
+      mode: MULTIMODAL_MODEL
+      actor_id: codex_multimodal
+      inspected_at: '2026-08-18T20:00:00+08:00'
+    observed:
+      fact_codes: [EMPTY_RESTAURANT, CLOCK_TOWER_SIGHTLINE]
+      issue_codes: []
+      summary: 空餐馆，深处窗口可读地建立同一钟楼线索。
+      depicted_entities: [RESTAURANT_01, CLOCK_TOWER_01]
+      transient_entities: []
+      layout_type: SINGLE_FRAME
+      spatial:
+        camera_origin: DINING_FRONT
+        view_direction: BACK_WINDOW_W03
+        visible_anchor_ids: [W03]
+        visible_location_entity_ids: [CLOCK_TOWER_01]
+      appearance:
+        look_domain: INTERIOR
+        lighting_summary: 暖内光配冷雨夜
+        palette_summary: warm tungsten + cool blue
+      cleanliness:
+        visible_text: false
+        arrows_or_motion_lines: false
+        multi_panel: false
+        watermark_or_logo: false
+    role_assessment:
+      safe_roles: [SHOT_VIEW_AUTHORITY, PRIMARY_VISUAL]
+      unsafe_roles: []
+      primary_visual_eligible: true
+      direct_video_eligible: true
+    confidence: HIGH
+  - evidence_id: VE_COLOR_01
+    asset_id: COLOR_RESTAURANT_01
+    asset_version: 1
+    source_fingerprint_type: FILE_SHA256
+    source_fingerprint: hash_color_v1
+    evidence_status: CURRENT
+    inspector:
+      mode: HUMAN
+      actor_id: creator
+      inspected_at: '2026-08-18T20:01:00+08:00'
+    observed:
+      fact_codes: [WARM_INTERIOR_COOL_RAIN_LOOK]
+      issue_codes: []
+      summary: 综合色板仅证明室内暖钨丝与室外冷雨蓝的综合色关系。
+      layout_type: COLOR_SWATCH
+      cleanliness:
+        visible_text: false
+        arrows_or_motion_lines: false
+        multi_panel: false
+        watermark_or_logo: false
+    role_assessment:
+      safe_roles: [COLOR_AUTHORITY]
+      unsafe_roles: [PRIMARY_VISUAL]
+      primary_visual_eligible: false
+      direct_video_eligible: true
+    confidence: HIGH

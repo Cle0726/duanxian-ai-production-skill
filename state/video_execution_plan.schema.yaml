@@ -1,0 +1,468 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/video_execution_plan.schema.yaml
+title: Duanxian Video Execution Plan V1
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- execution_plan_id
+- video_unit_id
+- status
+- video_execution_plan_pass
+- duration_sec
+- source_fingerprints
+- execution_plan_fingerprint
+- reference_integrity
+- spatial_blocking
+- body_prop_occupancy
+- timing
+- windows
+- ending_state
+- assembly_order
+- storyboard_handoff
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  execution_plan_id:
+    type: string
+    minLength: 1
+  video_unit_id:
+    type: string
+    minLength: 1
+  shot_id:
+    type:
+    - string
+    - 'null'
+  scene_id:
+    type:
+    - string
+    - 'null'
+  status:
+    enum:
+    - DRAFT
+    - BLOCKED
+    - FROZEN_FOR_COMPILE
+    - STALE
+  video_execution_plan_pass:
+    type: boolean
+  duration_sec:
+    type: number
+    exclusiveMinimum: 0
+  scene_bound:
+    type: boolean
+  source_fingerprints:
+    type: object
+    additionalProperties: false
+    required:
+    - director
+    - storyboard
+    - shot_execution
+    - scene_color
+    - world_state
+    properties:
+      director:
+        type: string
+        minLength: 1
+      storyboard:
+        type: string
+        minLength: 1
+      shot_execution:
+        type: string
+        minLength: 1
+      scene_color:
+        type: string
+        minLength: 1
+      world_state:
+        type: string
+        minLength: 1
+      generation_envelope:
+        type:
+        - string
+        - 'null'
+  execution_plan_fingerprint:
+    type: string
+    minLength: 16
+  reference_integrity:
+    type: object
+    additionalProperties: true
+    properties:
+      primary_visual:
+        type:
+        - string
+        - 'null'
+      scene_color_authority:
+        type:
+        - string
+        - 'null'
+      scene_color_reference_mode:
+        enum:
+        - LINEAGE_ONLY
+        - TEXT_CONTROL
+        - DIRECT_REFERENCE
+      scene_color_reference_reason:
+        type:
+        - string
+        - 'null'
+      direct_reference_ids:
+        type: array
+        items:
+          type: string
+      conflict_count:
+        type: integer
+        minimum: 0
+      conflicts:
+        type: array
+        items:
+          type: object
+  spatial_blocking:
+    type: object
+    additionalProperties: true
+  body_prop_occupancy:
+    type: object
+    additionalProperties: true
+  timing:
+    type: object
+    additionalProperties: true
+  conflicts:
+    type: array
+    items:
+      type: object
+  windows:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: true
+  ending_state:
+    type: object
+    additionalProperties: true
+  assembly_order:
+    type: string
+  storyboard_handoff:
+    type: object
+    additionalProperties: false
+    required:
+    - source_storyboard_asset_ids
+    - items
+    properties:
+      source_storyboard_asset_ids:
+        type: array
+        minItems: 1
+        uniqueItems: true
+        items:
+          type: string
+          minLength: 1
+      items:
+        type: array
+        minItems: 8
+        maxItems: 8
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - field
+          - applicability
+          properties:
+            field:
+              enum:
+              - CAMERA_MOTION
+              - TIMING
+              - CUT_NOCUT
+              - ACTION_BEAT
+              - PERFORMANCE
+              - EYELINE
+              - SHOT_RELATION
+              - LANDING
+            applicability:
+              enum:
+              - REQUIRED
+              - NOT_APPLICABLE
+            source_text:
+              type:
+              - string
+              - 'null'
+            prompt_anchor:
+              type:
+              - string
+              - 'null'
+            reason:
+              type:
+              - string
+              - 'null'
+      generation_envelope_storyboard_grid_asset_id:
+        type:
+        - string
+        - 'null'
+      generation_envelope_storyboard_grid_fingerprint:
+        type:
+        - string
+        - 'null'
+      cut_handoffs:
+        type: array
+        items:
+          type: object
+          additionalProperties: true
+          required:
+          - cut_id
+          - shot_id
+          - storyboard_panel_asset_id
+          - camera_character
+          - cut_in_trigger
+          - cut_out_trigger
+          properties:
+            cut_id:
+              type: string
+              minLength: 1
+            shot_id:
+              type: string
+              minLength: 1
+            storyboard_panel_asset_id:
+              type: string
+              minLength: 1
+            camera_character:
+              type: string
+              minLength: 1
+            cut_in_trigger:
+              type: string
+              minLength: 1
+            cut_out_trigger:
+              type: string
+              minLength: 1
+            start_sec:
+              type:
+              - number
+              - 'null'
+              minimum: 0
+            boundary_contract_ref:
+              type:
+              - string
+              - 'null'
+            continuity_distance:
+              type:
+              - string
+              - 'null'
+            end_sec:
+              type:
+              - number
+              - 'null'
+              exclusiveMinimum: 0
+  storyboard_entity_binding_map_id:
+    type:
+    - string
+    - 'null'
+  entity_binding_handoff:
+    type: object
+    additionalProperties: false
+    required:
+    - source_binding_map_id
+    - bindings
+    properties:
+      source_binding_map_id:
+        type: string
+        minLength: 1
+      primary_visual_asset_id:
+        type:
+        - string
+        - 'null'
+      bindings:
+        type: array
+        items:
+          type: object
+          additionalProperties: false
+          required:
+          - slot_id
+          - entity_id
+          - entity_type
+          - prompt_entity_label
+          - resolution_mode
+          - reason
+          properties:
+            slot_id:
+              type: string
+              minLength: 1
+            entity_id:
+              type: string
+              minLength: 1
+            entity_type:
+              type: string
+              minLength: 1
+            prompt_entity_label:
+              type: string
+              minLength: 1
+            resolution_mode:
+              enum:
+              - PRIMARY_VISUAL_BAKED
+              - DIRECT_REFERENCE
+              - TEMPORAL_T0_BAKED
+              - TEXT_CONTROL
+              - OMITTED
+            resolved_asset_id:
+              type:
+              - string
+              - 'null'
+            native_token:
+              type:
+              - string
+              - 'null'
+            reason:
+              type: string
+              minLength: 1
+            coverage_evidence_ref:
+              type:
+              - string
+              - 'null'
+            prompt_identity_anchor:
+              type:
+              - string
+              - 'null'
+            blocking_anchor:
+              type:
+              - string
+              - 'null'
+            action_anchor:
+              type:
+              - string
+              - 'null'
+      temporal_entry_plan_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+      temporal_t0_sufficiency_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+      continuity_snapshot_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+  generation_envelope_id:
+    type:
+    - string
+    - 'null'
+  format_mode:
+    type:
+    - string
+    - 'null'
+    enum:
+    - ONER
+    - SEQUENTIAL_MULTISHOT
+    - TIMED_MULTISHOT
+    - FREESTYLE_BROLL
+    - null
+  shot_ids:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+      minLength: 1
+  long_video_quota_confirmation:
+    type:
+    - object
+    - 'null'
+    additionalProperties: false
+    properties:
+      threshold_sec:
+        type: number
+        const: 15
+      question_asked:
+        type: boolean
+      user_response:
+        enum:
+        - HAS_QUOTA
+        - NO_QUOTA
+        - PENDING
+        - null
+      confirmed_by:
+        enum:
+        - USER
+        - null
+      confirmation_ref:
+        type:
+        - string
+        - 'null'
+      confirmation_note:
+        type:
+        - string
+        - 'null'
+  temporal_visual_isolation:
+    type:
+    - object
+    - 'null'
+    additionalProperties: false
+    required:
+    - entry_mode
+    - internal_conditioning_primary
+    - model_t0_owner
+    - prompt_profile
+    - temporal_entry_plan_ref
+    - temporal_entry_plan_fingerprint
+    - provider_transport
+    - visual_isolation_pass
+    properties:
+      entry_mode:
+        enum:
+        - SEAMLESS_EXTEND
+        - GUIDED_CONTINUATION
+        - CUT_REPROJECT
+        - SCENE_REBASE
+      internal_conditioning_primary:
+        type:
+        - string
+        - 'null'
+      model_t0_owner:
+        enum:
+        - PREVIOUS_ENDING_ANCHOR
+        - SHOT_EXECUTION_FRAME
+        - CANON_DERIVED_EXECUTION_FRAME
+      prompt_profile:
+        enum:
+        - DELTA_CONTINUATION_PROMPT
+        - TRANSITION_PROMPT
+        - FULL_SHOT_PROMPT
+      temporal_entry_plan_ref:
+        type: string
+        minLength: 1
+      temporal_entry_plan_fingerprint:
+        type: string
+        pattern: ^[0-9a-f]{64}$
+      temporal_t0_sufficiency_ref:
+        type:
+        - string
+        - 'null'
+      temporal_t0_sufficiency_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+      continuity_snapshot_ref:
+        type:
+        - string
+        - 'null'
+      continuity_snapshot_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+      target_frame_ref:
+        type:
+        - string
+        - 'null'
+      target_frame_fingerprint:
+        type:
+        - string
+        - 'null'
+        pattern: ^[0-9a-f]{64}$
+      provider_transport:
+        type: object
+        additionalProperties: true
+      visual_isolation_pass:
+        type: boolean
+        const: true

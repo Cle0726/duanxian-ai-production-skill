@@ -1,0 +1,168 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/shot_relation_graph.schema.yaml
+title: SHOT_RELATION_GRAPH
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- episode_id
+- shot_order
+- relations
+- status
+properties:
+  schema_version:
+    type: integer
+    const: 2
+  skill_version:
+    type: string
+    pattern: ^4\.5\.
+  episode_id:
+    type: string
+  source_director_runtime_ref:
+    type:
+    - string
+    - 'null'
+  source_director_fingerprint:
+    type:
+    - string
+    - 'null'
+  shot_order:
+    type: array
+    minItems: 1
+    items:
+      type: string
+  relations:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - relation_id
+      - from_shot_id
+      - to_shot_id
+      - relation_type
+      - cut_motivation
+      - status
+      properties:
+        relation_id:
+          type: string
+        from_shot_id:
+          type: string
+        to_shot_id:
+          type: string
+        relation_type:
+          enum:
+          - CONTINUOUS_HOLD
+          - CONTINUITY_CUT
+          - ACTION_CONSEQUENCE
+          - EYELINE_MATCH
+          - LOOK_POV_REVEAL
+          - CLUE_REVEAL_CUT
+          - MATCH_CUT
+          - SOUND_BRIDGE
+          - PARALLEL_CUT
+          - CONTRAST_CUT
+          - ELLIPTICAL_CUT
+          - HARD_LOCATION_CUT
+          - MONTAGE_LINK
+          - OTHER
+        cut_motivation:
+          type: string
+          minLength: 1
+        narrative_attention_target:
+          type:
+          - string
+          - 'null'
+        source_visual_fact:
+          type:
+          - string
+          - 'null'
+        destination_visual_fact:
+          type:
+          - string
+          - 'null'
+        shared_entity_ids:
+          type: array
+          items:
+            type: string
+        world_relations:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+            required:
+            - relation_kind
+            properties:
+              relation_kind:
+                enum:
+                - VISIBLE_FROM
+                - EXTERIOR_INTERIOR_SAME_ENTITY
+                - SAME_LOCATION_DIFFERENT_LAYER
+                - CONTAINS
+                - ADJACENT
+                - SAME_OBJECT_DIFFERENT_SCALE
+                - UNRELATED
+                - UNKNOWN
+              entity_id:
+                type:
+                - string
+                - 'null'
+              from_location_id:
+                type:
+                - string
+                - 'null'
+              to_location_id:
+                type:
+                - string
+                - 'null'
+              sightline_anchor:
+                type:
+                - string
+                - 'null'
+        bridge_requirements:
+          type: array
+          items:
+            enum:
+            - SOURCE_CLUE_VISIBLE
+            - DESTINATION_IDENTITY_PROVEN
+            - LOCATION_RELATION_PROVEN
+            - EXIT_ENTRY_PAIR_ALIGNED
+            - EYELINE_ALIGNED
+            - ACTION_VECTOR_ALIGNED
+            - MOTIF_ALIGNED
+            - SOUND_BRIDGE_DEFINED
+            - NO_SPATIAL_CONTINUITY_REQUIRED
+        forbidden_interpretations:
+          type: array
+          items:
+            type: string
+        asset_obligation_ids:
+          type: array
+          items:
+            type: string
+        status:
+          enum:
+          - DRAFT
+          - LOCKED
+          - REVISE_REQUIRED
+        spatial_relation_ids:
+          type: array
+          items:
+            type: string
+        spatial_proof_status:
+          enum:
+          - NOT_REQUIRED
+          - PENDING
+          - PASS
+          - FAIL
+          - UNKNOWN
+  status:
+    enum:
+    - DRAFT
+    - LOCKED
+    - REVISE_REQUIRED
+  graph_fingerprint:
+    type:
+    - string
+    - 'null'

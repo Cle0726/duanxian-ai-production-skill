@@ -1,0 +1,42 @@
+runtime_type: VIDEO_CONDITIONING_RUNTIME
+schema_version: 2
+skill_version: 4.5.2
+status: VALID
+scope:
+  episode: EP01
+  shot: SH01
+source_fingerprints:
+  storyboard: sb1
+  state: st1
+runtime_fingerprint: bad-first-target
+video_units:
+- video_unit_id: VU01
+  shot_ids:
+  - SH01
+  conditioning_strategy: FIRST_TARGET
+  primary_assets:
+  - asset_id: VIDCOND_SH01_FIRST
+    role: VIDEO_FIRST_FRAME
+    approval_status: APPROVED_VIDEO_CONDITIONING
+    direct_video_eligible: true
+    fingerprint: f1
+    time_scope: ENTRY
+  auxiliary_assets:
+  - COLOR_SC01
+  - STORYBOARD_SC01
+  qc_status: PASS
+  approval_ref: APR_COND_01
+readiness: PASS
+invalidation_triggers:
+- STORYBOARD_CHANGED
+- WORLD_STATE_CHANGED
+- PRIMARY_ASSET_CHANGED
+boundary_pairs:
+- relation_id: REL_TEST
+  from_video_unit_id: VU01
+  to_video_unit_id: VU01
+  exit_asset_id: null
+  entry_asset_id: VIDCOND_SH01_FIRST
+  source_visual_fact: fixture
+  destination_visual_fact: fixture
+  alignment_status: PASS

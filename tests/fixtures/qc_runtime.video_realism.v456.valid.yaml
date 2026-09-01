@@ -1,0 +1,38 @@
+runtime_type: QC_RUNTIME
+schema_version: 1
+skill_version: 4.5.6
+status: VALID
+scope:
+  scene_id: SC_WAGON_REALISM
+  shot_ids:
+  - SH_REALISM_01
+source_versions: {}
+source_fingerprints: {}
+runtime_fingerprint: rt-qc-realism
+open_dimensions: []
+readiness: {}
+candidate_policy: {}
+retry_state: {}
+salvage_state: {}
+platform_profile_ref: null
+invalidation_triggers: []
+realism_readiness: PASS
+realism_open_failures: []
+video_realism_evidence:
+  evidence_status: CURRENT
+  video_take_fingerprint: hash-video-take-realism
+  inspector_mode: MULTIMODAL_MODEL
+  scene_id: SC_WAGON_REALISM
+  shot_ids:
+  - SH_REALISM_01
+  category_verdicts:
+    ENVIRONMENT_FUNCTIONAL_REALISM: PASS
+    VEHICLE_REALISM: PASS
+    HUMAN_ERGONOMICS: PASS
+    OBJECT_AFFORDANCE: PASS
+    SOCIAL_SPATIAL_PLAUSIBILITY: PASS
+    MUNDANE_PHYSICS: PASS
+    MUNDANE_CONTINUITY: PASS
+  overall_verdict: PASS
+  issue_codes: []
+  notes: REGRESSION_NOT_CANON

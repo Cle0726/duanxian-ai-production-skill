@@ -1,0 +1,37 @@
+schema_version: 1
+skill_version: '4.5.7'
+binding_map_id: BMAP_BAD
+sequence_id: SEQ_BAD
+status: LOCKED
+frame_projection_derived_from_camera: true
+slots:
+  - slot_id: H_A
+    slot_kind: HUMAN
+    entity_id: CHAR_A
+    entity_type: CHARACTER
+    prompt_entity_label: 角色A
+    visual_owner: CHARACTER_CANON
+    criticality: CRITICAL
+    direct_reference_policy: AUTO_MINIMUM_SUFFICIENT
+    approved_asset_ids: [CHAR_A_3Q]
+  - slot_id: H_B
+    slot_kind: HUMAN
+    entity_id: CHAR_A
+    entity_type: CHARACTER
+    prompt_entity_label: 错误重复角色A
+    visual_owner: CHARACTER_CANON
+    criticality: CRITICAL
+    direct_reference_policy: AUTO_MINIMUM_SUFFICIENT
+    approved_asset_ids: [CHAR_A_3Q]
+panel_states:
+  - panel_asset_id: SB_BAD
+    shot_id: SH_BAD
+    entity_states:
+      - slot_id: H_A
+        world_zone: Z1
+        frame_region: LEFT
+        depth_region: MG
+        body_orientation: FORWARD
+        pose_state: STANDING
+        action_state: WALKING
+        action_phase: START

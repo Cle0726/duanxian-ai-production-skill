@@ -1,0 +1,46 @@
+schema_version: 5
+skill_version: 4.5.2
+assets:
+- asset_id: SB_SH01_P01
+  asset_display_name: SH01 clean panel
+  native_token: null
+  asset_type: STORYBOARD_CLEAN_PANEL
+  scope: REGRESSION_NOT_CANON
+  authority_role: STORYBOARD_VISUAL_EVIDENCE
+  version: 1
+  status: APPROVED
+  file_path: null
+  fingerprint_type: STRUCTURED_SHA256
+  fingerprint: sb1
+  approval_ref: APR_SB1
+  source_refs: []
+  parent_refs: []
+  shot_id: SH01
+  video_unit_id: null
+  time_scope: ENTRY
+  layout_type: CLEAN_PANEL
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles:
+  - STORYBOARD_VISUAL_EVIDENCE
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+    promotion_required: true
+    promoted_for_shot: null
+    promotion_qc: NOT_RUN
+  archive_status: NOT_REQUESTED
+  location_entity_id: RESTAURANT_01
+  relation_ids: []
+  obligation_ids: []
+  visual_relation_role: CLEAN_STORYBOARD_PANEL
+  storyboard_render_mode: WHITE_LINE_STORYBOARD_ONLY
+  storyboard_cleanliness:
+    visible_text: false
+    visible_numbers: false
+    arrows_or_motion_lines: false
+    timecode: false
+    shot_or_panel_labels: false
+    cut_or_camera_labels: false
+    caption_boxes: false
+    subtitle_or_logo: false

@@ -1,0 +1,108 @@
+schema_version: 1
+skill_version: 4.5.4
+records:
+- evidence_id: VE_ASSET_WAGON_FORWARD
+  asset_id: ASSET_WAGON_FORWARD
+  asset_version: 1
+  source_fingerprint_type: FILE_SHA256
+  source_fingerprint: hash-fwd
+  evidence_status: CURRENT
+  inspector:
+    mode: MULTIMODAL_MODEL
+    actor_id: REGRESSION
+    inspected_at: '2026-08-19T00:00:00+08:00'
+  observed:
+    fact_codes:
+    - CABIN_FORWARD_AXIS_READABLE
+    issue_codes: []
+    summary: regression visual proof
+    depicted_entities:
+    - WAGON_INTERIOR_01
+    transient_entities: []
+    layout_type: SINGLE_FRAME
+    spatial:
+      camera_origin: REAR_BENCH
+      view_direction: AXIS_TO_FRONT_WINDSHIELD
+      visible_anchor_ids:
+      - WINDSHIELD
+      - DRIVER_SEAT
+      - PASSENGER_SEAT
+      - DASHBOARD
+      visible_location_entity_ids:
+      - WAGON_INTERIOR_01
+      view_role: FORWARD
+      view_roles:
+      - FORWARD
+      camera_origin_zone_id: REAR_BENCH
+      camera_origin_anchor_id: CAM_REAR_CENTER
+      view_target_entity_id: WAGON_INTERIOR_01
+      view_target_anchor_id: WINDSHIELD
+      view_direction_code: AXIS_TO_FRONT_WINDSHIELD
+    appearance:
+      look_domain: INTERIOR
+      lighting_summary: test
+      palette_summary: test
+    cleanliness:
+      visible_text: false
+      arrows_or_motion_lines: false
+      multi_panel: false
+      watermark_or_logo: false
+  role_assessment:
+    safe_roles:
+    - PRIMARY_VIEW
+    unsafe_roles: []
+    primary_visual_eligible: true
+    direct_video_eligible: true
+  confidence: HIGH
+  notes: null
+- evidence_id: VE_ASSET_WAGON_REVERSE
+  asset_id: ASSET_WAGON_REVERSE
+  asset_version: 1
+  source_fingerprint_type: FILE_SHA256
+  source_fingerprint: hash-rev
+  evidence_status: CURRENT
+  inspector:
+    mode: MULTIMODAL_MODEL
+    actor_id: REGRESSION
+    inspected_at: '2026-08-19T00:00:00+08:00'
+  observed:
+    fact_codes:
+    - CABIN_REVERSE_AXIS_READABLE
+    issue_codes: []
+    summary: regression visual proof
+    depicted_entities:
+    - WAGON_INTERIOR_01
+    transient_entities: []
+    layout_type: SINGLE_FRAME
+    spatial:
+      camera_origin: FRONT_CABIN
+      view_direction: AXIS_TO_REAR_BENCH
+      visible_anchor_ids:
+      - REAR_BENCH_ANCHOR
+      visible_location_entity_ids:
+      - WAGON_INTERIOR_01
+      view_role: REVERSE
+      view_roles:
+      - REVERSE
+      camera_origin_zone_id: FRONT_CABIN
+      camera_origin_anchor_id: CAM_FRONT_CENTER
+      view_target_entity_id: WAGON_INTERIOR_01
+      view_target_anchor_id: REAR_BENCH_ANCHOR
+      view_direction_code: AXIS_TO_REAR_BENCH
+    appearance:
+      look_domain: INTERIOR
+      lighting_summary: test
+      palette_summary: test
+    cleanliness:
+      visible_text: false
+      arrows_or_motion_lines: false
+      multi_panel: false
+      watermark_or_logo: false
+  role_assessment:
+    safe_roles:
+    - PRIMARY_VIEW
+    unsafe_roles: []
+    primary_visual_eligible: true
+    direct_video_eligible: true
+  confidence: HIGH
+  notes: null

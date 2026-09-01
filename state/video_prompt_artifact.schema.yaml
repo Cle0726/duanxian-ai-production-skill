@@ -1,0 +1,131 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/video_prompt_artifact.schema.yaml
+title: Duanxian Video Prompt Artifact V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- prompt_id
+- video_unit_id
+- status
+- prompt_ref
+- prompt_fingerprint
+- content_char_count
+- execution_plan_ref
+- execution_plan_fingerprint
+- source_fingerprints
+- storyboard_handoff_pass
+- voice_handoff_pass
+- voice_direction_plan_id
+- voice_prompt_handoff_id
+- voice_prompt_handoff_fingerprint
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(0|1|2|3|4|5|6|7|8|9|10|11)$
+  prompt_id:
+    type: string
+    minLength: 1
+  video_unit_id:
+    type: string
+    minLength: 1
+  shot_id:
+    type:
+    - string
+    - 'null'
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  prompt_ref:
+    type: string
+    minLength: 1
+  prompt_fingerprint:
+    type: string
+    minLength: 16
+  content_char_count:
+    type: integer
+    minimum: 1
+  execution_plan_ref:
+    type: string
+    minLength: 1
+  execution_plan_fingerprint:
+    type: string
+    minLength: 16
+  source_fingerprints:
+    type: object
+    additionalProperties:
+      type: string
+  storyboard_handoff_pass:
+    type: boolean
+    const: true
+  segment_type:
+    enum:
+    - AUTO
+    - COMBAT
+    - NON_COMBAT
+  created_at:
+    type:
+    - string
+    - 'null'
+  generation_envelope_id:
+    type:
+    - string
+    - 'null'
+  format_mode:
+    type:
+    - string
+    - 'null'
+    enum:
+    - ONER
+    - SEQUENTIAL_MULTISHOT
+    - TIMED_MULTISHOT
+    - FREESTYLE_BROLL
+    - null
+  shot_ids:
+    type: array
+    uniqueItems: true
+    items:
+      type: string
+      minLength: 1
+  voice_handoff_pass:
+    type: boolean
+    const: true
+  voice_direction_plan_id:
+    type: string
+    minLength: 1
+  voice_prompt_handoff_id:
+    type: string
+    minLength: 1
+  voice_prompt_handoff_fingerprint:
+    type: string
+    minLength: 16
+  prompt_profile:
+    type:
+    - string
+    - 'null'
+    enum:
+    - DELTA_CONTINUATION_PROMPT
+    - TRANSITION_PROMPT
+    - FULL_SHOT_PROMPT
+    - null
+  temporal_entry_plan_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  temporal_t0_sufficiency_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$
+  continuity_snapshot_fingerprint:
+    type:
+    - string
+    - 'null'
+    pattern: ^[0-9a-f]{64}$

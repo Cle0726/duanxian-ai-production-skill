@@ -1,0 +1,54 @@
+schema_version: 1
+skill_version: 4.5.7
+episode_id: EP01
+sequence_id: SQ_BAD
+editing_mode: ASSEMBLY_FIRST
+status: DRAFT
+shot_order:
+- SH01
+- SH02
+- SH03
+shots:
+- shot_id: SH01
+  viewpoint_role: OBJECTIVE_OBSERVER
+  shot_size_family: MEDIUM
+  subject_view: FRONTAL
+  entry_function: x
+  exit_function: x
+  editorial_weight: NORMAL
+  breathing_function: NONE
+- shot_id: SH02
+  viewpoint_role: OBJECTIVE_OBSERVER
+  shot_size_family: MEDIUM
+  subject_view: FRONTAL
+  entry_function: x
+  exit_function: x
+  editorial_weight: NORMAL
+  breathing_function: NONE
+- shot_id: SH03
+  viewpoint_role: OBJECTIVE_OBSERVER
+  shot_size_family: MEDIUM
+  subject_view: FRONTAL
+  entry_function: x
+  exit_function: x
+  editorial_weight: NORMAL
+  breathing_function: NONE
+edits:
+- edit_id: E01
+  from_shot_id: SH01
+  to_shot_id: SH02
+  edit_function: INFORMATION_CHANGE
+  cut_trigger: INFORMATION_CHANGE
+  cut_timing: AFTER_ACTION
+  transition_type: HARD_CUT
+  continuity_strategy:
+  - SCREEN_DIRECTION_HOLD
+  audio_bridge: NONE
+  status: DRAFT
+sequence_strategy:
+  sequence_logic: CAUSAL
+shuffle_test:
+  status: FAIL
+  counterfactual_swap_breaks_sequence: false
+  dependency_reasons: []
+  rationale: 顺序可互换

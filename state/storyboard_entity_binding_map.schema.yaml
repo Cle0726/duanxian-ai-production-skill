@@ -1,0 +1,218 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/storyboard_entity_binding_map.schema.yaml
+title: Duanxian Storyboard Entity Binding Map V1
+type: object
+additionalProperties: false
+required:
+- schema_version
+- skill_version
+- binding_map_id
+- sequence_id
+- status
+- frame_projection_derived_from_camera
+- slots
+- panel_states
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|8|9|10|11)$
+  binding_map_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type:
+    - string
+    - 'null'
+  scene_id:
+    type:
+    - string
+    - 'null'
+  sequence_id:
+    type: string
+    minLength: 1
+  status:
+    enum:
+    - DRAFT
+    - LOCKED
+    - STALE
+  source_storyboard_proof_ref:
+    type:
+    - string
+    - 'null'
+  frame_projection_derived_from_camera:
+    type: boolean
+    const: true
+  slots:
+    type: array
+    uniqueItems: false
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - slot_id
+      - slot_kind
+      - entity_id
+      - entity_type
+      - prompt_entity_label
+      - visual_owner
+      - criticality
+      - direct_reference_policy
+      - approved_asset_ids
+      properties:
+        slot_id:
+          type: string
+          pattern: ^[HPECV]_[A-Z0-9]+$
+        slot_kind:
+          enum:
+          - HUMAN
+          - PROP
+          - ENVIRONMENT
+          - CROWD
+          - VEHICLE
+        entity_id:
+          type: string
+          minLength: 1
+        entity_type:
+          enum:
+          - CHARACTER
+          - MINOR_HUMAN
+          - PROP
+          - ENVIRONMENT
+          - CROWD_ARCHETYPE
+          - VEHICLE
+        prompt_entity_label:
+          type: string
+          minLength: 1
+        visual_owner:
+          enum:
+          - CHARACTER_CANON
+          - MINOR_HUMAN_CANON_VIEW_SET
+          - CROWD_ARCHETYPE_SET
+          - PROP_CANON_VIEW_SET
+          - ENV_VISUAL_ANCHOR_SET
+          - VEHICLE_CANON
+          - SHOT_ASSEMBLY
+          - PRIMARY_VISUAL_BAKED
+        criticality:
+          enum:
+          - CRITICAL
+          - SUPPORT
+          - AMBIENT
+        identity_readability_policy:
+          enum:
+          - REQUIRED
+          - AUTO
+          - NOT_REQUIRED
+        direct_reference_policy:
+          enum:
+          - AUTO_MINIMUM_SUFFICIENT
+          - MUST_DIRECT_IF_NOT_BAKED
+          - ALWAYS_DIRECT
+          - NEVER_DIRECT
+        approved_asset_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        preferred_asset_id:
+          type:
+          - string
+          - 'null'
+        preferred_view_role:
+          type:
+          - string
+          - 'null'
+        notes:
+          type:
+          - string
+          - 'null'
+  panel_states:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - panel_asset_id
+      - shot_id
+      - entity_states
+      properties:
+        panel_asset_id:
+          type: string
+          minLength: 1
+        shot_id:
+          type: string
+          minLength: 1
+        entity_states:
+          type: array
+          items:
+            type: object
+            additionalProperties: false
+            required:
+            - slot_id
+            properties:
+              slot_id:
+                type: string
+                pattern: ^[HPECV]_[A-Z0-9]+$
+              world_zone:
+                type:
+                - string
+                - 'null'
+              anchor_id:
+                type:
+                - string
+                - 'null'
+              anchor_relation:
+                type:
+                - string
+                - 'null'
+              frame_region:
+                type:
+                - string
+                - 'null'
+              depth_region:
+                type:
+                - string
+                - 'null'
+              body_orientation:
+                type:
+                - string
+                - 'null'
+              gaze_target_slot:
+                type:
+                - string
+                - 'null'
+              pose_state:
+                type:
+                - string
+                - 'null'
+              action_state:
+                type:
+                - string
+                - 'null'
+              action_phase:
+                type:
+                - string
+                - 'null'
+              contact_target_slot:
+                type:
+                - string
+                - 'null'
+              held_prop_slots:
+                type: array
+                uniqueItems: true
+                items:
+                  type: string
+                  pattern: ^P_[A-Z0-9]+$
+              motion_vector:
+                type:
+                - string
+                - 'null'
+              blocking_note:
+                type:
+                - string
+                - 'null'

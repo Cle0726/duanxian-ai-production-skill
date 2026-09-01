@@ -1,0 +1,75 @@
+schema_version: 2
+skill_version: 4.5.2
+episode_id: REGRESSION_NOT_CANON
+locations:
+- location_entity_id: RESTAURANT_01
+  display_name: 测试餐馆
+  reuse_tier: B
+  location_kind: INTERIOR
+  parent_location_id: null
+  zones:
+  - DINING
+  anchors:
+  - anchor_id: RESTAURANT_DEEP_WINDOW
+    anchor_type: WINDOW
+    zone_id: DINING
+    connects_to: []
+    visible_targets:
+    - CLOCK_TOWER_01
+  status: LOCKED
+- location_entity_id: CLOCK_TOWER_01
+  display_name: 测试钟楼
+  reuse_tier: B
+  location_kind: BUILDING
+  parent_location_id: null
+  zones:
+  - EXTERIOR
+  - MECHANICAL_ROOM
+  anchors: []
+  status: LOCKED
+- location_entity_id: CLOCK_TOWER_MECH_01
+  display_name: 测试钟楼机械室
+  reuse_tier: B
+  location_kind: INTERIOR
+  parent_location_id: CLOCK_TOWER_01
+  zones:
+  - MECHANICAL_ROOM
+  anchors: []
+  status: LOCKED
+relations:
+- spatial_relation_id: SP_VIS_REST_CLOCK
+  relation_kind: VISIBLE_FROM
+  from_entity_id: RESTAURANT_01
+  to_entity_id: CLOCK_TOWER_01
+  from_anchor_id: RESTAURANT_DEEP_WINDOW
+  to_anchor_id: null
+  direction: DEEP_WINDOW_LINE
+  distance_class: FAR
+  elevation_relation: BELOW
+  occlusion: PARTIAL
+  status: LOCKED
+- spatial_relation_id: SP_ID_CLOCK_EXT_INT
+  relation_kind: EXTERIOR_INTERIOR_SAME_ENTITY
+  from_entity_id: CLOCK_TOWER_01
+  to_entity_id: CLOCK_TOWER_MECH_01
+  from_anchor_id: null
+  to_anchor_id: null
+  direction: null
+  distance_class: CONTACT
+  elevation_relation: SAME
+  occlusion: NONE
+  status: LOCKED
+event_nodes:
+- event_node_id: EV_REVEAL
+  scene_id: SC_TEST
+  location_entity_id: RESTAURANT_01
+  description: 从深处指定窗口建立钟楼线索
+  required_zone_ids:
+  - DINING
+  attention_target_entity_id: CLOCK_TOWER_01
+  required_spatial_relation_ids:
+  - SP_VIS_REST_CLOCK
+status: LOCKED
+spatial_canon_fingerprint: null
+character_routes: []
+planning_diagrams: []

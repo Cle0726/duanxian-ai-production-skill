@@ -1,0 +1,338 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/experience_pressure_plan.schema.yaml
+title: Duanxian Screen Experience Pressure Plan
+type: object
+additionalProperties: true
+required:
+- schema_version
+- skill_version
+- experience_pressure_plan_id
+- episode_id
+- scene_id
+- status
+- production_priority_profile
+- episode_runtime_policy
+- genre_pressure_applicable
+- pressure_beats
+- anti_shortcut_policy
+- experience_coverage_contract
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  experience_pressure_plan_id:
+    type: string
+    minLength: 1
+  episode_id:
+    type: string
+    minLength: 1
+  scene_id:
+    type: string
+    minLength: 1
+  sequence_id:
+    type:
+    - string
+    - 'null'
+  status:
+    enum:
+    - LOCKED
+    - NOT_REQUIRED
+    - REVISE_REQUIRED
+  production_priority_profile:
+    enum:
+    - QUALITY_FIRST
+    - BALANCED
+    - COST_SENSITIVE
+  user_priority_override_ref:
+    type:
+    - string
+    - 'null'
+  episode_runtime_policy:
+    type: object
+    additionalProperties: false
+    required:
+    - mode
+    - preferred_minutes
+    - soft_review_band_minutes
+    - hard_cap_minutes
+    - over_band_policy
+    properties:
+      mode:
+        enum:
+        - PREFERRED_AROUND_20
+        - USER_LOCKED_RUNTIME
+      preferred_minutes:
+        type: number
+        exclusiveMinimum: 0
+      soft_review_band_minutes:
+        type: array
+        minItems: 2
+        maxItems: 2
+        items:
+          type: number
+          exclusiveMinimum: 0
+      hard_cap_minutes:
+        type:
+        - number
+        - 'null'
+        exclusiveMinimum: 0
+      over_band_policy:
+        enum:
+        - REVIEW_NOT_COMPRESS
+        - USER_LOCKED_ENFORCE
+  genre_pressure_applicable:
+    type: boolean
+  genre_targets:
+    type: array
+    uniqueItems: true
+    items:
+      enum:
+      - HORROR
+      - THREAT
+      - SUSPENSE
+      - CRISIS
+      - SURVIVAL
+      - CHASE
+      - DREAD
+      - OTHER
+  threat_importance:
+    enum:
+    - NONE
+    - MINOR
+    - MAJOR
+    - HERO
+  source_story_facts:
+    type: array
+    items:
+      type: string
+      minLength: 1
+  planned_scene_duration_seconds:
+    type:
+    - number
+    - 'null'
+    exclusiveMinimum: 0
+  duration_rationale:
+    type:
+    - string
+    - 'null'
+  immediate_reveal_justification:
+    type:
+    - string
+    - 'null'
+  pressure_beats:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+      required:
+      - beat_id
+      - role
+      - origin
+      - source_anchor
+      - story_state_delta
+      - canon_delta
+      - experience_gain
+      - protected_from_cost_compression
+      - duration_need_seconds
+      - shot_ids
+      - landing_contract
+      - compression
+      properties:
+        beat_id:
+          type: string
+          minLength: 1
+        role:
+          enum:
+          - NORMALCY
+          - OMEN
+          - OFFSCREEN_THREAT
+          - TRACE
+          - NEGATIVE_SPACE_HOLD
+          - PARTIAL_REVEAL
+          - FALSE_CLEAR
+          - REACTION_WITHHOLD
+          - SCALE_REVEAL
+          - ENCROACHMENT
+          - ESCAPE_DENIAL
+          - FULL_REVEAL
+          - COMMITMENT
+          - CONSEQUENCE
+          - AFTERMATH
+          - FALSE_RELIEF
+          - PAYOFF
+        origin:
+          enum:
+          - LOCKED_CANON
+          - SCREEN_EXPERIENCE_ELABORATION
+        source_anchor:
+          type: string
+          minLength: 1
+        story_state_delta:
+          enum:
+          - NONE
+          - LOCKED_SOURCE_FACT_ONLY
+        canon_delta:
+          enum:
+          - NONE
+          - PRESERVE_LOCKED_FACT
+        experience_gain:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            enum:
+            - PRESSURE
+            - UNCERTAINTY
+            - PROXIMITY
+            - ESCAPE_DENIAL
+            - PERCEPTION
+            - SCALE
+            - ANTICIPATION
+            - CONSEQUENCE
+            - SPATIAL_ORIENTATION
+            - FALSE_RELIEF
+        experience_state_in:
+          type: object
+          additionalProperties: true
+        experience_state_out:
+          type: object
+          additionalProperties: true
+        protected_from_cost_compression:
+          type: boolean
+        duration_need_seconds:
+          type: number
+          exclusiveMinimum: 0
+        shot_ids:
+          type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        screen_function:
+          type:
+          - string
+          - 'null'
+        landing_contract:
+          type: object
+          additionalProperties: false
+          required:
+          - required
+          - landing_condition
+          - exit_before_landing_forbidden
+          properties:
+            required:
+              type: boolean
+            landing_condition:
+              type:
+              - string
+              - 'null'
+            exit_before_landing_forbidden:
+              type: boolean
+            landing_evidence_hint:
+              type:
+              - string
+              - 'null'
+        compression:
+          type: object
+          additionalProperties: false
+          required:
+          - action
+          - target_beat_ids
+          - justification
+          - experience_equivalence_evidence
+          properties:
+            action:
+              enum:
+              - KEEP
+              - MERGE
+              - SHORTEN
+              - DELETE
+            target_beat_ids:
+              type: array
+              uniqueItems: true
+              items:
+                type: string
+                minLength: 1
+            justification:
+              type:
+              - string
+              - 'null'
+            experience_equivalence_evidence:
+              type:
+              - string
+              - 'null'
+  cost_policy:
+    type: object
+    additionalProperties: false
+    properties:
+      content_budget_separate_from_take_budget:
+        type: boolean
+      protected_beats_may_be_removed_for_cost:
+        type: boolean
+      extra_segments_allowed_for_experience:
+        type: boolean
+  anti_shortcut_policy:
+    type: object
+    additionalProperties: false
+    required:
+    - protected_beat_delete_policy
+    - protected_beat_merge_policy
+    - protected_beat_shorten_policy
+    - experience_debt_must_be_zero_at_lock
+    - cost_is_not_compression_justification
+    properties:
+      protected_beat_delete_policy:
+        enum:
+        - FORBID
+      protected_beat_merge_policy:
+        enum:
+        - FORBID_UNLESS_PROVEN_EQUIVALENT
+      protected_beat_shorten_policy:
+        enum:
+        - REQUIRE_LANDING_EVIDENCE
+      experience_debt_must_be_zero_at_lock:
+        type: boolean
+      cost_is_not_compression_justification:
+        type: boolean
+  experience_coverage_contract:
+    type: array
+    minItems: 1
+    items:
+      type: object
+      additionalProperties: false
+      required:
+      - dimension
+      - applicability
+      - owner_beat_ids
+      properties:
+        dimension:
+          enum:
+          - THREAT_PRESENCE
+          - THREAT_PROXIMITY
+          - CREATURE_INTENT
+          - CHARACTER_PERCEPTION
+          - ESCAPE_SPACE
+          - SCALE
+          - CONSEQUENCE
+          - AFTERMATH
+          - UNCERTAINTY
+          - ANTICIPATION
+          - SPATIAL_ORIENTATION
+        applicability:
+          enum:
+          - REQUIRED
+          - NOT_APPLICABLE
+        owner_beat_ids:
+          type: array
+          uniqueItems: true
+          items:
+            type: string
+            minLength: 1
+        not_applicable_reason:
+          type:
+          - string
+          - 'null'

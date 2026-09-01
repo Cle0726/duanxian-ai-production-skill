@@ -1,0 +1,51 @@
+schema_version: 3
+skill_version: 4.5.2
+episode_id: STRUCTURAL_FIXTURE_EP
+scene_id: SC_FIX
+segment_id: SEG_FIX
+shot_id: SH_FIX
+entry_mode: CUT_ENTRY
+director:
+  contract_ref: DIR_FIX_SH
+  contract_fingerprint: dirhash
+  invariants:
+  - 保持角色关系与屏幕方向
+continuity:
+  previous_snapshot_ref: null
+  world_state_delta: {}
+  wardrobe_state: {}
+  injury_state: {}
+  prop_state: {}
+storyboard:
+  mandatory_coverage_planned: true
+  status: APPROVED
+  artifact_ref: PREVIS_FIX_SH
+  fingerprint: previshash
+references:
+  runtime_ref: REF_RUNTIME_FIX
+  coverage_status: PASS
+video:
+  execution_state_ref: null
+  readiness: NOT_READY
+  takes_used: 0
+  approved_take_ref: null
+qc:
+  open_dimensions: []
+  verdict: NOT_RUN
+conditioning:
+  runtime_ref: COND_RUNTIME_FIX
+  plan_status: READY
+  video_unit_ids:
+  - VU_FIX_01
+  primary_visual_asset_ids:
+  - VIDCOND_FIX_FIRST
+  readiness: READY
+  approval_ref: APR_FIX_COND
+relations:
+  graph_ref: tests/fixtures/shot_relation_graph.clue_reveal.valid.yaml
+  incoming_relation_ids: []
+  outgoing_relation_ids:
+  - REL_A_B
+  narrative_attention_target: fixture
+  asset_obligation_ref: tests/fixtures/visual_asset_obligation.clue_reveal.valid.yaml
+  relation_readiness: PASS

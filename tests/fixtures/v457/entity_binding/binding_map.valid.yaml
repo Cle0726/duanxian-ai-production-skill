@@ -1,0 +1,107 @@
+schema_version: 1
+skill_version: '4.5.7'
+binding_map_id: BMAP_SEQ_01
+episode_id: EP01
+scene_id: SC01
+sequence_id: SEQ01
+status: LOCKED
+source_storyboard_proof_ref: SB_PROOF_SEQ01
+frame_projection_derived_from_camera: true
+slots:
+  - slot_id: H_A
+    slot_kind: HUMAN
+    entity_id: CHAR_A
+    entity_type: CHARACTER
+    prompt_entity_label: 角色A
+    visual_owner: CHARACTER_CANON
+    criticality: CRITICAL
+    direct_reference_policy: MUST_DIRECT_IF_NOT_BAKED
+    approved_asset_ids: [CHAR_A_3Q]
+    preferred_asset_id: CHAR_A_3Q
+    preferred_view_role: CURRENT_CAMERA_NEAREST
+  - slot_id: H_B
+    slot_kind: HUMAN
+    entity_id: CHAR_B
+    entity_type: CHARACTER
+    prompt_entity_label: 角色B
+    visual_owner: CHARACTER_CANON
+    criticality: CRITICAL
+    direct_reference_policy: AUTO_MINIMUM_SUFFICIENT
+    approved_asset_ids: [CHAR_B_3Q]
+    preferred_asset_id: CHAR_B_3Q
+  - slot_id: P_A
+    slot_kind: PROP
+    entity_id: PROP_SCORE
+    entity_type: PROP
+    prompt_entity_label: 关键谱盒
+    visual_owner: PROP_CANON_VIEW_SET
+    criticality: CRITICAL
+    direct_reference_policy: MUST_DIRECT_IF_NOT_BAKED
+    approved_asset_ids: [PROP_SCORE_BACK]
+    preferred_asset_id: PROP_SCORE_BACK
+    preferred_view_role: REVERSE_3Q
+panel_states:
+  - panel_asset_id: SB_SH01
+    shot_id: SH01
+    entity_states:
+      - slot_id: H_A
+        world_zone: CONTROL_LEFT
+        anchor_id: CONSOLE_01
+        anchor_relation: BESIDE_LEFT
+        frame_region: LEFT
+        depth_region: MG
+        body_orientation: TOWARD_CHAR_B
+        gaze_target_slot: H_B
+        pose_state: STANDING_LEAN_FORWARD
+        action_state: EXTENDING_RIGHT_HAND
+        action_phase: REACH_60_PERCENT
+        held_prop_slots: [P_A]
+        motion_vector: TOWARD_H_B
+      - slot_id: H_B
+        world_zone: CONTROL_CENTER
+        anchor_id: CONSOLE_01
+        anchor_relation: BESIDE_CENTER
+        frame_region: RIGHT
+        depth_region: MG
+        body_orientation: TOWARD_CHAR_A
+        gaze_target_slot: H_A
+        pose_state: STANDING_RECEIVE_POSTURE
+        action_state: PREPARE_TO_RECEIVE
+        action_phase: RECEIVE_PREP_30_PERCENT
+        motion_vector: TOWARD_H_A
+      - slot_id: P_A
+        world_zone: CONTROL_LEFT
+        anchor_id: CHAR_A_RIGHT_HAND
+        anchor_relation: HELD_BY
+  - panel_asset_id: SB_SH02
+    shot_id: SH02
+    entity_states:
+      - slot_id: H_A
+        world_zone: CONTROL_LEFT
+        anchor_id: CONSOLE_01
+        anchor_relation: BESIDE_LEFT
+        frame_region: RIGHT
+        depth_region: MG
+        body_orientation: TOWARD_CHAR_B
+        gaze_target_slot: H_B
+        pose_state: STANDING_LEAN_FORWARD
+        action_state: EXTENDING_RIGHT_HAND
+        action_phase: REACH_70_PERCENT
+        held_prop_slots: [P_A]
+        motion_vector: TOWARD_H_B
+      - slot_id: H_B
+        world_zone: CONTROL_CENTER
+        anchor_id: CONSOLE_01
+        anchor_relation: BESIDE_CENTER
+        frame_region: LEFT
+        depth_region: MG
+        body_orientation: TOWARD_CHAR_A
+        gaze_target_slot: H_A
+        pose_state: STANDING_RECEIVE_POSTURE
+        action_state: PREPARE_TO_RECEIVE
+        action_phase: RECEIVE_PREP_40_PERCENT
+        motion_vector: TOWARD_H_A
+      - slot_id: P_A
+        world_zone: CONTROL_LEFT
+        anchor_id: CHAR_A_RIGHT_HAND
+        anchor_relation: HELD_BY

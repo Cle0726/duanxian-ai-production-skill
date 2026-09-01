@@ -1,0 +1,27 @@
+$schema: "https://json-schema.org/draft/2020-12/schema"
+$id: "duanxian/approval_record.schema.yaml"
+title: "Duanxian Approval Record"
+type: object
+additionalProperties: false
+required: [schema_version, skill_version, approval_id, artifact_id, artifact_status_before, decision]
+properties:
+  schema_version: {type: integer, const: 1}
+  skill_version: {type: string, pattern: '^4\.5\.'}
+  approval_id: {type: string}
+  artifact_id: {type: string}
+  artifact_version: {type: [integer, string, 'null']}
+  artifact_fingerprint_type: {enum: [FILE_SHA256, STRUCTURED_SHA256, CONTENT_SHA256, UNKNOWN]}
+  artifact_fingerprint: {type: [string, 'null']}
+  artifact_status_before: {type: string}
+  decision: {enum: [APPROVED, REVISE, REJECTED]}
+  approved_by: {type: [string, 'null']}
+  approved_at: {type: [string, 'null']}
+  evidence_refs: {type: array, items: {type: string}}
+  approved_asset_ids:
+    type: array
+    uniqueItems: true
+    items: {type: string}
+  approved_asset_fingerprints:
+    type: object
+    additionalProperties: {type: string, minLength: 16}
+  note: {type: [string, 'null']}

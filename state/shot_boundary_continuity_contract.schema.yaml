@@ -1,0 +1,103 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/shot_boundary_continuity_contract.schema.yaml
+title: Duanxian Shot Boundary Continuity Contract
+type: object
+required:
+- schema_version
+- skill_version
+- contract_id
+- inheritance_mode
+- continuity_distance
+properties:
+  schema_version:
+    type: integer
+    const: 1
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(7|11)$
+  contract_id:
+    type: string
+  from_shot_id:
+    type:
+    - string
+    - 'null'
+  to_shot_id:
+    type:
+    - string
+    - 'null'
+  from_state_ref:
+    type:
+    - string
+    - 'null'
+  to_state_ref:
+    type:
+    - string
+    - 'null'
+  inheritance_mode:
+    enum:
+    - DIRECT_CONTINUITY
+    - MATCH_ON_ACTION
+    - CUT_REFRAME
+    - REACTION_CUT
+    - ELLIPSIS
+    - SPATIAL_REORIENTATION
+    - SCENE_CHANGE
+  continuity_distance:
+    enum:
+    - LOW
+    - MEDIUM
+    - HIGH
+    - SCENE_BOUNDARY
+  continuity_precision:
+    enum:
+    - PIXEL_EXACT_T0
+    - WORLD_STATE_STRICT
+    - STORYBOARD_BLOCKING_APPROXIMATE
+    - SCENE_RESET
+  ending_frame_provider_route:
+    enum:
+    - DIRECT_T0_ANCHOR
+    - LINEAGE_ONLY
+    - STAGE06_EDIT_REFERENCE_ONLY
+    - NOT_APPLICABLE
+  storyboard_bridge:
+    type:
+    - object
+    - 'null'
+    properties:
+      storyboard_exit_panel_ref:
+        type:
+        - string
+        - 'null'
+      storyboard_entry_panel_ref:
+        type:
+        - string
+        - 'null'
+      approximate_spatial_match_allowed:
+        type: boolean
+      transition_language:
+        enum:
+        - MATCH_ON_ACTION
+        - CUT_REFRAME
+        - REACTION_CUT
+        - SPATIAL_REORIENTATION
+        - J_CUT
+        - L_CUT
+        - SOUND_BRIDGE
+        - SHAPE_OR_DIRECTION_MATCH
+      required_invariants:
+        type: array
+        items:
+          type: string
+  required_invariants:
+    type: array
+    items:
+      type: string
+  allowed_changes:
+    type: array
+    items:
+      type: string
+  notes:
+    type:
+    - string
+    - 'null'

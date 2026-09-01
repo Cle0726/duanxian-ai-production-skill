@@ -1,0 +1,80 @@
+schema_version: 7
+skill_version: 4.5.7
+assets:
+- asset_id: SHOT_EXEC_01
+  asset_display_name: SH01执行帧
+  native_token: '@SH01执行帧'
+  asset_type: VIDEO_SHOT_EXECUTION_FRAME
+  status: APPROVED_VIDEO_CONDITIONING
+  authority_role: PRIMARY_VISUAL_CONDITIONING
+  scene_color_authority_id: COLOR_SCENE_01
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: true
+- asset_id: CHAR_A_3Q
+  asset_display_name: 角色A
+  native_token: '@角色A'
+  asset_type: CHARACTER_VIEW
+  status: APPROVED
+  authority_role: CHARACTER_IDENTITY
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+  subject_entity_id: CHAR_A
+- asset_id: CHAR_B_3Q
+  asset_display_name: 角色B
+  native_token: '@角色B'
+  asset_type: CHARACTER_VIEW
+  status: APPROVED
+  authority_role: CHARACTER_IDENTITY
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+  subject_entity_id: CHAR_B
+- asset_id: PROP_SCORE_BACK
+  asset_display_name: 关键谱盒
+  native_token: '@关键谱盒'
+  asset_type: PROP_CANON_VIEW
+  status: APPROVED
+  authority_role: PROP_VIEW_AUTHORITY
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+- asset_id: ENV_HERO_0
+  asset_display_name: 控制室正向
+  native_token: '@控制室正向'
+  asset_type: ENVIRONMENT_COVERAGE
+  status: APPROVED
+  authority_role: ENVIRONMENT
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+- asset_id: ENV_45
+  asset_display_name: 控制室45度
+  native_token: '@控制室45度'
+  asset_type: ENVIRONMENT_COVERAGE
+  status: APPROVED
+  authority_role: ENVIRONMENT
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+- asset_id: ENV_90
+  asset_display_name: 控制室90度
+  native_token: '@控制室90度'
+  asset_type: ENVIRONMENT_COVERAGE
+  status: APPROVED
+  authority_role: ENVIRONMENT
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+- asset_id: COLOR_SCENE_01
+  asset_display_name: 控制室色卡
+  native_token: '@控制室色卡'
+  asset_type: SCENE_COLOR_CARD
+  status: APPROVED
+  authority_role: COLOR_AUTHORITY
+  scene_id: SC01
+  look_domain: INTERIOR
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false

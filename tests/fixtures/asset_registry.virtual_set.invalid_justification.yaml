@@ -1,0 +1,232 @@
+schema_version: 5
+skill_version: 4.5.2
+assets:
+- asset_id: ASSET_TOPO
+  asset_display_name: 室外拓扑图
+  asset_type: OUTDOOR_TOPOLOGY_DIAGRAM
+  media_kind: DIAGRAM
+  scope: SC_TEST
+  authority_role: SPATIAL_PLANNING
+  status: APPROVED
+  layout_type: PLANNING_DIAGRAM
+  transient_content_policy: NOT_APPLICABLE
+  allowed_roles:
+  - SPATIAL_PLANNING
+  forbidden_roles:
+  - VIDEO_PRIMARY
+  video_usage:
+    direct_input_allowed: false
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  visual_relation_role: OUTDOOR_TOPOLOGY_DIAGRAM
+  justification:
+    why_required: 锁定雪林节点、坡向、距离与人物逃亡路线
+    required_by:
+    - EV_A
+    - EV_C
+    - ROUTE_ESCAPE
+    source_requirement_refs:
+    - SPATIAL_CANON
+    downstream_use:
+    - EVENT_VIEW_DERIVATION
+    - STORYBOARD_SPATIAL_QC
+    reuse_expectation: ONE_EPISODE
+  derivation:
+    spatial_parent_refs:
+    - SPATIAL_CANON
+    visual_parent_refs: []
+    event_node_ids:
+    - EV_A
+    - EV_C
+    character_route_ids:
+    - ROUTE_ESCAPE
+  cascade_stage: SPATIAL_DIAGRAM
+- asset_id: ASSET_FLOOR
+  asset_display_name: 农舍平面图
+  asset_type: BUILDING_FLOOR_PLAN_DIAGRAM
+  media_kind: DIAGRAM
+  scope: SC_TEST
+  authority_role: SPATIAL_PLANNING
+  status: APPROVED
+  layout_type: PLANNING_DIAGRAM
+  transient_content_policy: NOT_APPLICABLE
+  allowed_roles:
+  - SPATIAL_PLANNING
+  forbidden_roles:
+  - VIDEO_PRIMARY
+  video_usage:
+    direct_input_allowed: false
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  visual_relation_role: FLOOR_PLAN_DIAGRAM
+  justification:
+    why_required: 锁定农舍房间与门路径
+    required_by:
+    - EV_D
+    - ROUTE_ESCAPE
+    source_requirement_refs:
+    - SPATIAL_CANON
+    downstream_use:
+    - INTERIOR_VIEW_DERIVATION
+    reuse_expectation: MULTI_EPISODE
+  derivation:
+    spatial_parent_refs:
+    - SPATIAL_CANON
+    visual_parent_refs: []
+    event_node_ids:
+    - EV_D
+    character_route_ids:
+    - ROUTE_ESCAPE
+  cascade_stage: SPATIAL_DIAGRAM
+- asset_id: ENV_FOREST_CANON
+  asset_display_name: 雪林Clean Canon
+  asset_type: ENVIRONMENT_CLEAN_CANON
+  media_kind: IMAGE
+  scope: SC_TEST
+  authority_role: ENVIRONMENT_CANON
+  status: APPROVED
+  layout_type: SINGLE_FRAME
+  transient_content_policy: CLEAN_CANON
+  allowed_roles:
+  - ENVIRONMENT_CANON
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+    promotion_required: true
+    promoted_for_shot: null
+    promotion_qc: NOT_RUN
+  location_entity_id: FOREST_A
+  visual_relation_role: NONE
+  justification:
+    why_required: 雪林为本场主要Set
+    required_by:
+    - EV_A
+    - EV_C
+    source_requirement_refs:
+    - SPATIAL_CANON
+    downstream_use:
+    - COVERAGE_DERIVATION
+    - STORYBOARD
+    reuse_expectation: ONE_EPISODE
+  derivation:
+    spatial_parent_refs:
+    - D_TOPO
+    visual_parent_refs: []
+    event_node_ids:
+    - EV_A
+    - EV_C
+  cascade_stage: CLEAN_CANON
+- asset_id: ENV_FOREST_HOUSE_REVERSE
+  asset_display_name: 坡角反打农舍
+  asset_type: RECIPROCAL_COVERAGE_VIEW
+  media_kind: IMAGE
+  scope: SC_TEST
+  authority_role: ENVIRONMENT_COVERAGE
+  status: APPROVED
+  layout_type: SINGLE_FRAME
+  transient_content_policy: SHOT_SPECIFIC
+  allowed_roles:
+  - SPATIAL_AUTHORITY
+  - RELATION_PROOF
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+    promotion_required: true
+    promoted_for_shot: null
+    promotion_qc: NOT_RUN
+  location_entity_id: FOREST_A
+  visual_relation_role: RECIPROCAL_COVERAGE
+  justification:
+    why_required: ''
+    required_by:
+    - EV_C
+    - SP_VIS_FOREST_HOUSE
+    source_requirement_refs:
+    - SP_VIS_FOREST_HOUSE
+    downstream_use:
+    - STORYBOARD
+    - VIDEO_CONDITIONING_DERIVATION
+    reuse_expectation: ONE_SCENE
+  derivation:
+    spatial_parent_refs:
+    - D_TOPO
+    - SP_VIS_FOREST_HOUSE
+    visual_parent_refs:
+    - ENV_FOREST_CANON
+    event_node_ids:
+    - EV_C
+    character_route_ids:
+    - ROUTE_ESCAPE
+    predicted_shot_ids:
+    - SH_TEST_02
+    reciprocal_relation_id: SP_VIS_FOREST_HOUSE
+  cascade_stage: COVERAGE
+- asset_id: LOOK_EXT
+  asset_display_name: 室外Look
+  asset_type: SCENE_LOOK_CARD
+  media_kind: IMAGE
+  scope: SC_TEST
+  authority_role: COLOR_AUTHORITY
+  status: APPROVED
+  layout_type: COLOR_SWATCH
+  transient_content_policy: NOT_APPLICABLE
+  allowed_roles:
+  - COLOR_STYLE_REFERENCE
+  forbidden_roles:
+  - SPATIAL_AUTHORITY
+  video_usage:
+    direct_input_allowed: true
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  look_domain: EXTERIOR
+  cascade_stage: LOOK
+  visual_relation_role: SCENE_LOOK_REFERENCE
+  justification:
+    why_required: 多镜室外雪景综合色稳定
+    required_by:
+    - SC_TEST
+    source_requirement_refs:
+    - GLOBAL_COLOR_DNA
+    downstream_use:
+    - STORYBOARD
+    - VIDEO_CONDITIONING
+    - VIDEO
+    reuse_expectation: ONE_EPISODE
+- asset_id: VOICE_FATHER
+  asset_display_name: 父亲声音身份
+  asset_type: VOICE_IDENTITY_ASSET
+  media_kind: AUDIO
+  scope: EP_TEST
+  authority_role: VOICE_IDENTITY
+  status: APPROVED
+  layout_type: UNKNOWN
+  transient_content_policy: NOT_APPLICABLE
+  allowed_roles:
+  - VOICE_IDENTITY_REFERENCE
+  forbidden_roles: []
+  video_usage:
+    direct_input_allowed: false
+    primary_visual_eligible: false
+    promotion_required: false
+    promoted_for_shot: null
+    promotion_qc: NOT_REQUIRED
+  cascade_stage: VOICE
+  visual_relation_role: VOICE_IDENTITY_REFERENCE
+  justification:
+    why_required: 主要角色跨集固定声线
+    required_by:
+    - FATHER
+    source_requirement_refs:
+    - CHARACTER_REQUIREMENT
+    downstream_use:
+    - STAGE_05_DIALOGUE
+    - STAGE_06_MIX
+    reuse_expectation: PROJECT_CANON

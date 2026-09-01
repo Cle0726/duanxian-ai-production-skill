@@ -1,0 +1,95 @@
+schema_version: 1
+skill_version: 4.5.7
+episode_id: EP01
+scene_id: SC01
+sequence_id: SQ01
+editing_mode: ASSEMBLY_FIRST
+status: LOCKED
+sequence_strategy:
+  opening_viewpoint: 客观环境观察
+  closing_viewpoint: 回到A的反应
+  viewpoint_arc: 客观建立→A对齐→细节证据→A反应
+  cut_density_arc: SPARSE→ACCELERATING→HOLD
+  rhythm_strategy: 前慢后紧，线索出现后给反应停顿
+  sequence_logic: CAUSAL
+shot_order:
+- SH01
+- SH02
+- SH03
+shots:
+- shot_id: SH01
+  viewpoint_role: OBJECTIVE_OBSERVER
+  shot_size_family: WIDE
+  subject_view: FRONT_3_4
+  entry_function: 建立A与门的空间关系
+  exit_function: A的视线被门把手吸引
+  protected_moment: A停下并看向门把手
+  editorial_weight: NORMAL
+  breathing_function: NONE
+  information_state_in: 观众只知道A接近门
+  information_revealed: A的注意力被门把手吸引
+  information_withheld: 门把手具体异常仍不可读
+  information_state_out: 观众知道A发现了值得注意的异常
+- shot_id: SH02
+  viewpoint_role: DETAIL_EVIDENCE
+  shot_size_family: INSERT
+  subject_view: OTHER
+  entry_function: 回答A看到了什么
+  exit_function: 证据成立后把注意权交回A
+  protected_moment: 门把手上新鲜水迹被看清
+  editorial_weight: NORMAL
+  breathing_function: NONE
+  information_state_in: 观众知道A在看门把手
+  information_revealed: 门把手上有新鲜水迹
+  information_withheld: A对此异常的判断仍未给出
+  information_state_out: 观众获得外部证据
+- shot_id: SH03
+  viewpoint_role: REACTION_ACCESS
+  shot_size_family: CU
+  subject_view: FRONT_3_4
+  entry_function: 让观众读取线索进入A后的反应
+  exit_function: 反应落定后结束Sequence
+  protected_moment: 眼神收紧但没有立刻动作
+  editorial_weight: HOLD
+  breathing_function: NONE
+  information_state_in: 观众已知道水迹证据
+  information_revealed: A的眼神确认这不是普通现象
+  information_withheld: A下一步行动
+  information_state_out: 观众知道A已将证据判断为威胁
+edits:
+- edit_id: E01
+  from_shot_id: SH01
+  to_shot_id: SH02
+  edit_function: GAZE_REVEAL
+  cut_trigger: GAZE_TRIGGER
+  cut_timing: ON_GAZE_LANDING
+  transition_type: HARD_CUT
+  continuity_strategy:
+  - EYELINE_MATCH
+  - SPATIAL_ANCHOR_HOLD
+  information_delta: 观众第一次看清A注视的门把手水迹
+  rhythm_function: 从建立空间转为证据读取
+  audio_bridge: NONE
+  status: LOCKED
+- edit_id: E02
+  from_shot_id: SH02
+  to_shot_id: SH03
+  edit_function: REACTION_ACCESS
+  cut_trigger: REACTION_THRESHOLD
+  cut_timing: BEFORE_REACTION
+  transition_type: HARD_CUT
+  continuity_strategy:
+  - PERFORMANCE_CONTINUITY
+  - LIGHT_COLOR_CONTINUITY
+  information_delta: 从外部证据转为A的内部判断泄露
+  rhythm_function: 证据后留出一次反应停顿
+  audio_bridge: NONE
+  status: LOCKED
+editorial_fingerprint: 1234567890abcdef
+shuffle_test:
+  status: PASS
+  counterfactual_swap_breaks_sequence: true
+  dependency_reasons:
+  - SH01视线落点必须先建立，SH02证据才可被理解
+  - SH02证据必须先出现，SH03反应才具有因果意义
+  rationale: 交换SH02与SH03会让反应先于证据，破坏因果。

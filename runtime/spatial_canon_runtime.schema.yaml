@@ -1,0 +1,96 @@
+$schema: https://json-schema.org/draft/2020-12/schema
+$id: duanxian/runtime/spatial_canon_runtime.schema.yaml
+title: SPATIAL_CANON_RUNTIME V2 — Virtual Set + Required View Runtime
+type: object
+additionalProperties: true
+required:
+- runtime_type
+- schema_version
+- skill_version
+- status
+- scope
+- source_fingerprints
+- runtime_fingerprint
+- locations
+- relations
+- event_nodes
+- character_routes
+- planning_diagrams
+properties:
+  runtime_type:
+    const: SPATIAL_CANON_RUNTIME
+  schema_version:
+    type: integer
+    const: 2
+  skill_version:
+    type: string
+    pattern: ^4\.5\.(2|3|4|5|6|7|8|11)$
+  status:
+    enum:
+    - VALID
+    - STALE
+    - REBUILD_REQUIRED
+  scope:
+    type: object
+    additionalProperties: true
+  source_fingerprints:
+    type: object
+    additionalProperties: true
+  runtime_fingerprint:
+    type: string
+  locations:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  relations:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  event_nodes:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  invalidation_triggers:
+    type: array
+    items:
+      type: string
+  character_routes:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  planning_diagrams:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  look_domain_refs:
+    type: array
+    items:
+      type: string
+  view_requirements:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  view_coverage_matrix:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  functional_profiles:
+    type: array
+    items:
+      type: object
+      additionalProperties: true
+  realism_contract_ref:
+    type:
+    - string
+    - 'null'
+  realism_contract_fingerprint:
+    type:
+    - string
+    - 'null'

@@ -1,0 +1,7 @@
+schema_version: 1
+skill_version: '4.5.7'
+contract_id: BC_01
+inheritance_mode: DIRECT_CONTINUITY
+continuity_distance: LOW
+required_invariants: [CHAR_A_WORLD_POSITION, PROP_SCORE_HOLDER]
+allowed_changes: [FRAME_REPROJECTION]
